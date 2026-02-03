@@ -1,4 +1,4 @@
-# template_2025-2026-clean-template
+# template_2025-2026
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/kdg-ti/inf-curriculum/domain-data-ai/y2-databanken-2/2025-2026/template_2025-2026-clean-template.git
+git remote add origin https://gitlab.com/kdg-ti/db2_rdb2/2025-2026/template_2025-2026.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-* [Set up project integrations](https://gitlab.com/kdg-ti/inf-curriculum/domain-data-ai/y2-databanken-2/2025-2026/template_2025-2026-clean-template/-/settings/integrations)
+* [Set up project integrations](https://gitlab.com/kdg-ti/db2_rdb2/2025-2026/template_2025-2026/-/settings/integrations)
 
 ## Collaborate with your team
 
