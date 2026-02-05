@@ -1,0 +1,1 @@
+SELECT SYSDATE from DUAL
