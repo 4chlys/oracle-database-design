@@ -2,12 +2,12 @@ Milestone 1: analyse 0NF
 --
 
 
-* **teamnaam:**  `<insert teamnaam here>`
-* **S1:** `<insert naam student 1>`
+* **teamnaam:**  `INF202_4_TDR_romeo_jonas`
+* **S1:** `Romeo Weyns`
 * **S2:** `<insert naam student 2>`
 
 
-Student S1 - Veel op veel - `<insert name Here>`
+Student S1 - Veel op veel - `Romeo Weyns`
 --
 
 1 Conceptueel model
