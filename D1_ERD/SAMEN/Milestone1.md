@@ -23,30 +23,59 @@ S1:
 ONF S1
 --
 
-`<REPLACE WITH OWN ATTRIBUTES>`
-- **Game_id**
-- Player_ID
-- Voornaam
-- Achternaam
-- geboortedatum_speler
-- email_speler
-- adres_speler
-- Stad_speler
-- Land_speler
-- Studio_id
-- Studionaam
-- CEO
-- Oprichtingsdatum
-- Stad_Studio
-- Land_Studio
-- Spelnaam
-- Gameserver_id
-- Gameserver_naam
-- Starttijd
-- Eindtijd
-- Score
-- Releasejaar
-- interessant_weetje
+- **Ticket_ID** (PK)
+- Ticket_Price
+- Ticket_Date
+- Ticket_Purchase_Date
+- Ticket_Description
+- Ticket_Barcode
+- Ticket_Type
+- Ticket_Status
+- Ticket_QR_Code
+- TicketPlatform_ID
+- TicketPlatform_Name
+- TicketPlatform_URL
+- Visitor_ID
+- Visitor_Firstname
+- Visitor_Lastname
+- Visitor_Birthdate
+- Visitor_Email
+- Visitor_Street
+- Visitor_Zipcode
+- Visitor_City
+- Visitor_Country
+- Visitor_Gender
+- Festival_ID
+- Festival_Company
+- Festival_Founding_Year
+- Festival_Name
+- Festival_StartDate
+- Festival_EndDate
+- Festival_Location
+- Festival_Country
+- Festival_Opening_Hour
+- Festival_Closing_Hour
+- Festival_Capacity
+
+---
+
+- **Festival_ID**(PK)
+- Festival_Company
+- Festival_Founding_Year
+- Festival_Name
+- Festival_StartDate
+- Festival_EndDate
+- Festival_Location
+- Festival_Country
+- Festival_Opening_Hour
+- Festival_Closing_Hour
+- Festival_Capacity
+- Permit_ID
+- Permit_Category
+- Permit_Description
+- Permit_Reception_Date
+- Permit_Expiration_Date
+- Permit_Application_Date
 
 
 ---
