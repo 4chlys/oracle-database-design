@@ -4,7 +4,7 @@ Milestone 1: analyse 0NF
 
 * **teamnaam:**  `INF202_4_TDR_romeo_jonas`
 * **S1:** `Romeo Weyns`
-* **S2:** `<insert naam student 2>`
+* **S2:** `Jonas Friedhoff`
 
 
 Student S1 - Veel op veel - `Romeo Weyns`
@@ -82,7 +82,7 @@ ONF S1
 
 
 
-Student 2 - 2 niveau's diep - `<insert name Here>`
+Student 2 - 2 niveau's diep - `Jonas Friedhoff`
 --
 
 Conceptueel model
