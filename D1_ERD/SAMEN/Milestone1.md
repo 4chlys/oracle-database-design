@@ -98,28 +98,26 @@ Conceptueel model
 3 ONF S2
 --
 
-`<REPLACE WITH OWN ATTRIBUTES>`
-- **game_id**
-- game_title
-- release_date
-- last_updated
-- patch_title
-- channel_id
-- channel_name
-- channel_description
-- channel_url
-- subscriber_count
-- video_id
-- video_title
-- viewer_count
-- video_likes
-- video_url
-- duration
-- player_id
-- first_name
-- last_name
-- email
-- dob
-- category_id
-- category_name
-- category_description
+- artist_name
+- artist_birthdate
+- artist_price
+- artist_land_of_birth
+- performance_festival
+- performance_genre
+- performance_start_time
+- performance_end_time
+- performance_description
+- performance_date
+- festival_name
+- festival_location
+- festival_description
+- genre_name
+- stage_name
+- stage_style
+- stage_standing_capacity
+- stage_toilet_count
+- stage_description
+- stage_roofed_status
+- genre_origin_year
+- genre_origin_place
+- genre_BPM
