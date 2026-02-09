@@ -22,59 +22,59 @@ S1:
 ONF S1
 --
 
-- **Ticket_ID** (PK)
-- Ticket_Price
-- Ticket_Date
-- Ticket_Purchase_Date
-- Ticket_Description
-- Ticket_Barcode
-- Ticket_Type
-- Ticket_Status
-- Ticket_QR_Code
-- TicketPlatform_ID
-- TicketPlatform_Name
-- TicketPlatform_URL
-- Visitor_ID
-- Visitor_Firstname
-- Visitor_Lastname
-- Visitor_Birthdate
-- Visitor_Email
-- Visitor_Street
-- Visitor_Zipcode
-- Visitor_City
-- Visitor_Country
-- Visitor_Gender
-- Festival_ID
-- Festival_Company
-- Festival_Founding_Year
-- Festival_Name
-- Festival_StartDate
-- Festival_EndDate
-- Festival_Location
-- Festival_Country
-- Festival_Opening_Hour
-- Festival_Closing_Hour
-- Festival_Capacity
+- **Ticket_ID(PK) : VARCHAR**
+- Ticket_Price : NUMBER
+- Ticket_Date : DATE
+- Ticket_Purchase_Date : DATE
+- Ticket_Description : VARCHAR
+- Ticket_Barcode : VARCHAR
+- Ticket_Type : VARCHAR
+- Ticket_Status : VARCHAR
+- Ticket_QR_Code : VARCHAR
+- TicketPlatform_ID : VARCHAR
+- TicketPlatform_Name : VARCHAR
+- TicketPlatform_URL : VARCHAR
+- Visitor_ID : VARCHAR
+- Visitor_Firstname : VARCHAR
+- Visitor_Lastname : VARCHAR
+- Visitor_Birthdate : DATE
+- Visitor_Email : VARCHAR
+- Visitor_Street : VARCHAR
+- Visitor_Zipcode : VARCHAR
+- Visitor_City : VARCHAR
+- Visitor_Country : VARCHAR
+- Visitor_Gender : VARCHAR
+- Festival_ID : VARCHAR
+- Festival_Company : VARCHAR
+- Festival_Founding_Year : NUMBER
+- Festival_Name : VARCHAR
+- Festival_StartDate : DATE
+- Festival_EndDate : DATE
+- Festival_Location : VARCHAR
+- Festival_Country : VARCHAR
+- Festival_Opening_Hour : VARCHAR
+- Festival_Closing_Hour : VARCHAR
+- Festival_Capacity : NUMBER
 
 ---
 
-- **Festival_ID**(PK)
-- Festival_Company
-- Festival_Founding_Year
-- Festival_Name
-- Festival_StartDate
-- Festival_EndDate
-- Festival_Location
-- Festival_Country
-- Festival_Opening_Hour
-- Festival_Closing_Hour
-- Festival_Capacity
-- Permit_ID
-- Permit_Category
-- Permit_Description
-- Permit_Reception_Date
-- Permit_Expiration_Date
-- Permit_Application_Date
+- **Festival_ID(PK) : VARCHAR**
+- Festival_Company : VARCHAR
+- Festival_Founding_Year : NUMBER
+- Festival_Name : VARCHAR
+- Festival_StartDate : DATE
+- Festival_EndDate : DATE
+- Festival_Location : VARCHAR
+- Festival_Country : VARCHAR
+- Festival_Opening_Hour : VARCHAR
+- Festival_Closing_Hour : VARCHAR
+- Festival_Capacity : NUMBER
+- Permit_ID : VARCHAR
+- Permit_Category : VARCHAR
+- Permit_Description : VARCHAR
+- Permit_Reception_Date : DATE
+- Permit_Expiration_Date : DATE
+- Permit_Application_Date : DATE
 
 ---
 
