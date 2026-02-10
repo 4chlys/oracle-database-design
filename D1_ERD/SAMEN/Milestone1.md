@@ -46,7 +46,7 @@ ONF S1
 - Visitor_Gender : VARCHAR
 - Festival_ID : VARCHAR
 - Festival_Company : VARCHAR
-- Festival_Founding_Year : NUMBER
+- Festival_Founding_Year : INTEGER
 - Festival_Name : VARCHAR
 - Festival_StartDate : DATE
 - Festival_EndDate : DATE
@@ -54,13 +54,13 @@ ONF S1
 - Festival_Country : VARCHAR
 - Festival_Opening_Hour : VARCHAR
 - Festival_Closing_Hour : VARCHAR
-- Festival_Capacity : NUMBER
+- Festival_Capacity : INTEGER
 
 ---
 
 - **Festival_ID(PK) : VARCHAR**
 - Festival_Company : VARCHAR
-- Festival_Founding_Year : NUMBER
+- Festival_Founding_Year : INTEGER
 - Festival_Name : VARCHAR
 - Festival_StartDate : DATE
 - Festival_EndDate : DATE
@@ -68,7 +68,7 @@ ONF S1
 - Festival_Country : VARCHAR
 - Festival_Opening_Hour : VARCHAR
 - Festival_Closing_Hour : VARCHAR
-- Festival_Capacity : NUMBER
+- Festival_Capacity : INTEGER
 - Permit_ID : VARCHAR
 - Permit_Category : VARCHAR
 - Permit_Description : VARCHAR
