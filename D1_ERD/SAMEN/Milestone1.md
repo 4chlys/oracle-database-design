@@ -96,7 +96,7 @@ Conceptueel model
 3 ONF S2
 --
 
-- **festival_id(PK) : VARCHAR**
+- **Festival_ID(PK) : VARCHAR**
 - Festival_Name : VARCHAR
 - Festival_Description : VARCHAR
 - Festival_Location : VARCHAR
