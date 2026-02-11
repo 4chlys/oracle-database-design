@@ -105,6 +105,7 @@ Conceptueel model
 - Festival_Location_City: VARCHAR
 - Festival_Location_Country : VARCHAR
 - Festival_Price : NUMBER
+- Festival_Price_Currency : VARCHAR
 - Festival_Visitor_Count : INTEGER
 - Festival_Date : DATE
 - Stage_Name : VARCHAR
@@ -116,6 +117,7 @@ Conceptueel model
 - Artist_Name : VARCHAR
 - Artist_Birthdate : DATE
 - Artist_Price : NUMBER
+- Artist_Price_Currency : VARCHAR
 - Artist_Land_Of_Birth : VARCHAR
 - Performance_Start_Time : NUMBER
 - Performance_End_Time : NUMBER
