@@ -102,7 +102,8 @@ Conceptueel model
 - **Festival_ID(PK) : VARCHAR**
 - Festival_Name : VARCHAR
 - Festival_Description : VARCHAR
-- Festival_Location : VARCHAR
+- Festival_Location_City: VARCHAR
+- Festival_Location_Country : VARCHAR
 - Festival_Price : NUMBER
 - Festival_Visitor_Count : INTEGER
 - Festival_Date : DATE
