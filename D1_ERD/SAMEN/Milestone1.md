@@ -24,6 +24,7 @@ ONF S1
 
 - **Ticket_ID(PK) : VARCHAR**
 - Ticket_Price : NUMBER
+- Ticket_Currency : VARCHAR
 - Ticket_Date : DATE
 - Ticket_Purchase_Date : DATE
 - Ticket_Description : VARCHAR
@@ -45,6 +46,7 @@ ONF S1
 - Visitor_Country : VARCHAR
 - Visitor_Gender : VARCHAR
 - Festival_ID : VARCHAR
+- Festival_Name : VARCHAR
 - Festival_Company : VARCHAR
 - Festival_Founding_Year : INTEGER
 - Festival_Name : VARCHAR
@@ -59,6 +61,7 @@ ONF S1
 ---
 
 - **Festival_ID(PK) : VARCHAR**
+- Festival_Name : VARCHAR
 - Festival_Company : VARCHAR
 - Festival_Founding_Year : INTEGER
 - Festival_Name : VARCHAR
