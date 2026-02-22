@@ -35,13 +35,13 @@ Stap 3: Domeinen - constraints
 
 
     S2
-- Influencer_youtubevideo duration between 1 minute and 24 hours
-- Videos category name must start with a capital.
+- Genre_Origin_Year moet in de vergangenis liggen.
+- Performance_Start_Time moet voor Performance_End_Time liggen.
 
 
 Tijd
 ---
 - S1: Game_session: De gamesession start_date en end_date houdt de historiek bij.
-- S2: Influencer_youtubechannel has a creation date. All child videos are created after this date. 
+- S2: Genre_Origin_Year moet voor Festival_Date zijn.
 
 
