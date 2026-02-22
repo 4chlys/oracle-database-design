@@ -1,7 +1,7 @@
-Milestone 2: Normalisatie/Integratie
+Milestone 2: Normalisation/Integration
 --
 
-Stap 1 Normalisatie
+Step 1 Normalisation
 --
 
     S1
@@ -19,7 +19,7 @@ Stap 1 Normalisatie
 
 
 
-Stap 2: integratie
+Step 2: Integration
 --
 [SAMEN_integratie.pdf](SAMEN_integratie.pdf)
 
@@ -27,12 +27,12 @@ Stap 2: integratie
 ![Finaal_ERD.png](..%2F..%2FD1_ERD%2FSAMEN%2FFinaal_ERD.png)
 
 
-Stap 3: Domeinen - constraints
+Step 3: Domain - constraints
 --- 
     S1
 - Ticket: price > 0
-- Ticket: barcode tussen 8 en 14 tekens
-- Visitor: birthdate - (positief) integer & < current_date
+- Ticket: barcode between 8 and 14 characters
+- Visitor: birthdate - (positive) integer & < current_date
 - Festival: end_date > start_date
 - Festival: closing_hour > opening_hour
 - Festival: capacity > 0
@@ -46,10 +46,10 @@ TODO:
 - Performance_Start_Time moet voor Performance_End_Time liggen.
 
 
-Tijd
+Time
 ---
-- S1: Festival: De festival start_date en end_date houdt de historiek bij.
-- S1: Permit: De permit reception_date en expiration_date houdt de historiek bij.
+- S1: Festival: The festival start_date and end_date keep track of the history.
+- S1: Permit: The permit reception_date and expiration_date keep track of the history.
 TODO:
 - S2: Genre_Origin_Year moet voor Festival_Date zijn.
 
