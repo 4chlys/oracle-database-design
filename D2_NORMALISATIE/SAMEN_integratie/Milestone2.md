@@ -12,7 +12,7 @@ Stap 1 Normalisatie
 
 
     S2
-[S2_normalisatie_computergames.pdf](..%2FS2_normalisatie%2FS2_normalisatie_computergames.pdf)
+[S2_normalisatie.pdf](..%2FS2_normalisatie%2FS2_normalisatie.pdf)
 
 ![S2_normalisatie.png](..%2FS2_normalisatie%2FS2_normalisatie.png)
 ![S2_na_normalisatie.png](..%2F..%2FD1_ERD%2FS2%2FS2_na_normalisatie.png)
