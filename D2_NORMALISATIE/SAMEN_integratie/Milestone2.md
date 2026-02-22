@@ -43,8 +43,8 @@ Step 3: Domain - constraints
 TODO:
 
     S2
-- Genre_Origin_Year moet in de vergangenis liggen.
-- Performance_Start_Time moet voor Performance_End_Time liggen.
+- Genre_Origin_Year must be in the past
+- Performance_Start_Time < Performance_End_Time
 
 
 Time
@@ -52,6 +52,6 @@ Time
 - S1: Festival: The festival start_date and end_date keep track of the history.
 - S1: Permit: The permit reception_date and expiration_date keep track of the history.
 TODO:
-- S2: Genre_Origin_Year moet voor Festival_Date zijn.
+- S2: Genre_Origin_Year must be before the Festival_Date
 
 

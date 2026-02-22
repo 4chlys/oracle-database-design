@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<architect-project version="1.0" appversion="1.0.9">
+ <project-name>s1</project-name>
+ <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
+ <project-data-sources>
+  <data-source id="DS0">
+   <property key="Logical" value="PlayPen Database" />
+  </data-source>
+ </project-data-sources>
+ <source-databases>
+ </source-databases>
+ <target-database id="ppdb" dbcs-ref="DS0">
+  <table id="TAB1" populated="true" UUID="4378577c-6304-4a4b-874d-f635b6fda3d8" name="City" objectType="TABLE" physicalName="City" >
+   <remarks></remarks>
+   <folder id="FOLTAB11" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL2" populated="true" UUID="2e8cd63f-920c-45c5-9ad6-90262b7e3577" autoIncrement="false" autoIncrementSequenceName="City_ID_seq" defaultValue="" name="City_ID" nullable="0" physicalName="City_ID" precision="0" primaryKeySeq="0" referenceCount="3" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL3" populated="true" UUID="0bea3f3c-8c03-45d4-8d41-7744d1b2b48f" autoIncrement="false" autoIncrementSequenceName="Zipcode_seq" defaultValue="" name="Zipcode" nullable="1" physicalName="Zipcode" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL4" populated="true" UUID="979b6327-9bde-4657-8700-85b7bbd089d5" autoIncrement="false" autoIncrementSequenceName="City_seq" defaultValue="" name="City" nullable="1" physicalName="City" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL5" populated="true" UUID="2c2c4e02-0ddb-4781-8ebc-3c30f34d361f" autoIncrement="false" autoIncrementSequenceName="Country_seq" defaultValue="" name="Country" nullable="1" physicalName="Country" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB13" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB12" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB14" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX6" populated="true" UUID="2b348212-f996-4e07-84bf-9a98b04db690" clustered="false" name="City_pk" physicalName="City_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC7" populated="true" UUID="4bde5b59-56da-41a7-a4d1-9a0985e8b7dd" ascendingOrDescending="UNSPECIFIED" column-ref="COL2" name="City_pk" physicalName="City_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB8" populated="true" UUID="2b1f7e2a-8d4c-4bb8-a2e4-21d354bf6035" name="Company" objectType="TABLE" physicalName="Company" >
+   <remarks></remarks>
+   <folder id="FOLTAB81" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL9" populated="true" UUID="a6b1d2b0-07d6-4efe-b328-a5696effa601" autoIncrement="false" autoIncrementSequenceName="Company_ID_seq" defaultValue="" name="Company_ID" nullable="0" physicalName="Company_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL10" populated="true" UUID="f14574c4-c6d7-4908-b085-ae9cd741b275" autoIncrement="false" autoIncrementSequenceName="Company_Name_seq" defaultValue="" name="Company_Name" nullable="1" physicalName="Company_Name" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL11" populated="true" UUID="6d8a8a2a-873e-4bae-8fe7-c87ced81905e" autoIncrement="false" autoIncrementSequenceName="Company_Founding_Year_seq" defaultValue="" name="Company_Founding_Year" nullable="1" physicalName="Company_Founding_Year" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB83" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB82" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB84" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX12" populated="true" UUID="3f4067dd-d77a-4b1f-8211-78dc34145630" clustered="false" name="Company_pk" physicalName="Company_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC13" populated="true" UUID="258b0848-6380-42ad-bed2-5484317662a3" ascendingOrDescending="UNSPECIFIED" column-ref="COL9" name="Company_pk" physicalName="Company_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB14" populated="true" UUID="4fadb42b-d1a0-4860-b06b-494ed88ad549" name="Festival" objectType="TABLE" physicalName="Festival" >
+   <remarks></remarks>
+   <folder id="FOLTAB141" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL15" populated="true" UUID="1d3923bc-164c-4903-bf1b-76bcac4c4329" autoIncrement="false" autoIncrementSequenceName="Festival_ID_seq" defaultValue="" name="Festival_ID" nullable="0" physicalName="Festival_ID" precision="0" primaryKeySeq="0" referenceCount="4" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL16" populated="true" UUID="73eeb2f3-f803-4334-8bbb-d81d83c8c848" autoIncrement="false" autoIncrementSequenceName="Festival_Name_seq" defaultValue="" name="Festival_Name" nullable="1" physicalName="Festival_Name" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL17" populated="true" UUID="f687630a-be6e-4a61-80f8-e06cda450df1" autoIncrement="false" autoIncrementSequenceName="Company_ID_seq" defaultValue="" name="Company_ID" nullable="1" physicalName="Company_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL18" populated="true" UUID="7992f948-f8b6-43b8-831f-6de3cd012bbf" autoIncrement="false" autoIncrementSequenceName="Festival_StartDate_seq" defaultValue="" name="Festival_StartDate" nullable="1" physicalName="Festival_StartDate" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL19" populated="true" UUID="0830f6f6-2aec-4d79-b374-fcbf022e8a5c" autoIncrement="false" autoIncrementSequenceName="Festival_EndDate_seq" defaultValue="" name="Festival_EndDate" nullable="1" physicalName="Festival_EndDate" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL20" populated="true" UUID="fea746ec-7136-4bde-a107-198e1e04c74a" autoIncrement="false" autoIncrementSequenceName="Festival_Location_seq" defaultValue="" name="Festival_Location" nullable="1" physicalName="Festival_Location" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL21" populated="true" UUID="de19fc5b-09a2-415f-9666-8951e992d290" autoIncrement="false" autoIncrementSequenceName="City_ID_seq" defaultValue="" name="City_ID" nullable="1" physicalName="City_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL22" populated="true" UUID="61ec2362-278b-4178-b0a5-84bdeb86c78f" autoIncrement="false" autoIncrementSequenceName="Festival_Opening_Hour_seq" defaultValue="" name="Festival_Opening_Hour" nullable="1" physicalName="Festival_Opening_Hour" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL23" populated="true" UUID="3bcd3ece-3430-4019-9836-5f4687a428d8" autoIncrement="false" autoIncrementSequenceName="Festival_Closing_Hour_seq" defaultValue="" name="Festival_Closing_Hour" nullable="1" physicalName="Festival_Closing_Hour" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL24" populated="true" UUID="82d2c4c4-196c-47be-a860-c27f33ed0905" autoIncrement="false" autoIncrementSequenceName="Festival_Capacity_seq" defaultValue="" name="Festival_Capacity" nullable="1" physicalName="Festival_Capacity" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB143" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB142" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB144" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX25" populated="true" UUID="32277e24-6275-47df-9987-438c43eaf969" clustered="false" name="Festival_pk" physicalName="Festival_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC26" populated="true" UUID="f2bd226b-b5ad-4e4f-a49c-61a5daa2d5ea" ascendingOrDescending="UNSPECIFIED" column-ref="COL15" name="Festival_pk" physicalName="Festival_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB27" populated="true" UUID="4b6d7919-d234-4b2b-82ee-05388a185d61" name="TicketPlatform" objectType="TABLE" physicalName="TicketPlatform" >
+   <remarks></remarks>
+   <folder id="FOLTAB271" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL28" populated="true" UUID="56ca9adc-3cab-4b7b-b204-6722f16a2a84" autoIncrement="false" autoIncrementSequenceName="TicketPlatform_ID_seq" defaultValue="" name="TicketPlatform_ID" nullable="0" physicalName="TicketPlatform_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL29" populated="true" UUID="bc88d6e7-a1fe-48e1-b8ef-160e9d1a1d06" autoIncrement="false" autoIncrementSequenceName="TicketPlatform_Name_seq" defaultValue="" name="TicketPlatform_Name" nullable="1" physicalName="TicketPlatform_Name" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL30" populated="true" UUID="15b0a6fa-49ce-42a8-86fc-278d5b7c3198" autoIncrement="false" autoIncrementSequenceName="TicketPlatform_URL_seq" defaultValue="" name="TicketPlatform_URL" nullable="1" physicalName="TicketPlatform_URL" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB273" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB272" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB274" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX31" populated="true" UUID="eb61db60-004b-466f-917d-d0571a742334" clustered="false" name="TicketPlatform_pk" physicalName="TicketPlatform_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC32" populated="true" UUID="e2f5f758-8694-47ed-80f0-3580d5f857b9" ascendingOrDescending="UNSPECIFIED" column-ref="COL28" name="TicketPlatform_pk" physicalName="TicketPlatform_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB33" populated="true" UUID="f640ab52-286c-4f7e-919b-848e3b1a9257" name="Visitor" objectType="TABLE" physicalName="Visitor" >
+   <remarks></remarks>
+   <folder id="FOLTAB331" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL34" populated="true" UUID="00f39a05-cd3f-4bd4-a295-24ec6ec715f7" autoIncrement="false" autoIncrementSequenceName="Visitor_ID_seq" defaultValue="" name="Visitor_ID" nullable="0" physicalName="Visitor_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL35" populated="true" UUID="97af7fe1-0de2-4f3c-9684-0d62a7b950c7" autoIncrement="false" autoIncrementSequenceName="Visitor_Firstname_seq" defaultValue="" name="Visitor_Firstname" nullable="1" physicalName="Visitor_Firstname" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL36" populated="true" UUID="f30453b1-1f01-4f22-8a2d-68efc3c13f48" autoIncrement="false" autoIncrementSequenceName="Visitor_Lastname_seq" defaultValue="" name="Visitor_Lastname" nullable="1" physicalName="Visitor_Lastname" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL37" populated="true" UUID="c9d5f7f2-ec1f-4704-941a-5c5c07eb3909" autoIncrement="false" autoIncrementSequenceName="Visitor_Birthdate_seq" defaultValue="" name="Visitor_Birthdate" nullable="1" physicalName="Visitor_Birthdate" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL38" populated="true" UUID="12959183-df7e-4342-9659-bcc080f17a3a" autoIncrement="false" autoIncrementSequenceName="Visitor_Email_seq" defaultValue="" name="Visitor_Email" nullable="1" physicalName="Visitor_Email" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL39" populated="true" UUID="d9538378-ea56-448e-9f74-9b436764d5bb" autoIncrement="false" autoIncrementSequenceName="Visitor_Street_seq" defaultValue="" name="Visitor_Street" nullable="1" physicalName="Visitor_Street" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL40" populated="true" UUID="7aaf08c2-aa05-4361-8ff7-df35bb50f19f" autoIncrement="false" autoIncrementSequenceName="City_ID_seq" defaultValue="" name="City_ID" nullable="1" physicalName="City_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL41" populated="true" UUID="dc456b8c-6769-4a23-a509-902c1b35c4b8" autoIncrement="false" autoIncrementSequenceName="Visitor_Gender_seq" defaultValue="" name="Visitor_Gender" nullable="1" physicalName="Visitor_Gender" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB333" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB332" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB334" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX42" populated="true" UUID="d0ac65a4-9e33-464d-850a-9ac018ee9564" clustered="false" name="Visitor_pk" physicalName="Visitor_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC43" populated="true" UUID="4911c1ce-d925-47c8-88ec-ab00c0a34229" ascendingOrDescending="UNSPECIFIED" column-ref="COL34" name="Visitor_pk" physicalName="Visitor_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB44" populated="true" UUID="bf245495-73b9-4167-9c5f-dad53b9fa8d6" name="Ticket" objectType="TABLE" physicalName="Ticket" >
+   <remarks></remarks>
+   <folder id="FOLTAB441" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL45" populated="true" UUID="5d7d101f-a8cf-47ce-a778-7af2ed738b52" autoIncrement="false" autoIncrementSequenceName="Ticket_ID_seq" defaultValue="" name="Ticket_ID" nullable="0" physicalName="Ticket_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL46" populated="true" UUID="ff749c23-0965-4c1f-8513-be35ac5da3c2" autoIncrement="false" autoIncrementSequenceName="Ticket_Currency_seq" defaultValue="" name="Ticket_Currency" nullable="1" physicalName="Ticket_Currency" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL47" populated="true" UUID="d6a2a0f0-e80d-429e-b580-0f77e74220d0" autoIncrement="false" autoIncrementSequenceName="Ticket_Purchase_Date_seq" defaultValue="" name="Ticket_Purchase_Date" nullable="1" physicalName="Ticket_Purchase_Date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL48" populated="true" UUID="0bd32857-4be4-4020-ba6e-e1bd6587ca0b" autoIncrement="false" autoIncrementSequenceName="Ticket_Description_seq" defaultValue="" name="Ticket_Description" nullable="1" physicalName="Ticket_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL49" populated="true" UUID="98e0aa30-bc54-449b-bf0d-4cc7ef0a255e" autoIncrement="false" autoIncrementSequenceName="Ticket_Barcode_seq" defaultValue="" name="Ticket_Barcode" nullable="1" physicalName="Ticket_Barcode" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL50" populated="true" UUID="c95081eb-c913-411a-a4d5-fbd2d2b1d662" autoIncrement="false" autoIncrementSequenceName="Ticket_Type_seq" defaultValue="" name="Ticket_Type" nullable="1" physicalName="Ticket_Type" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL51" populated="true" UUID="999df4eb-c977-4d4a-a158-9cf989073ddf" autoIncrement="false" autoIncrementSequenceName="Ticket_Status_seq" defaultValue="" name="Ticket_Status" nullable="1" physicalName="Ticket_Status" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL52" populated="true" UUID="bb3b47bd-5105-4b47-abe8-2316c9d8ae54" autoIncrement="false" autoIncrementSequenceName="Ticket_QR_Code_seq" defaultValue="" name="Ticket_QR_Code" nullable="1" physicalName="Ticket_QR_Code" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL53" populated="true" UUID="3d3c784b-1cd0-47ce-86af-122ec4c68ec1" autoIncrement="false" autoIncrementSequenceName="TicketPlatform_ID_seq" defaultValue="" name="TicketPlatform_ID" nullable="1" physicalName="TicketPlatform_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL54" populated="true" UUID="34e2f037-dc33-4c6c-ba67-af598986b5cc" autoIncrement="false" autoIncrementSequenceName="Visitor_ID_seq" defaultValue="" name="Visitor_ID" nullable="1" physicalName="Visitor_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL55" populated="true" UUID="36ca8653-ca95-4839-8b02-2b63845f9ecc" autoIncrement="false" autoIncrementSequenceName="Festival_ID_seq" defaultValue="" name="Festival_ID" nullable="1" physicalName="Festival_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB443" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB442" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB444" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX56" populated="true" UUID="998470e0-54e1-4434-89c6-6cf6fda82f93" clustered="false" name="Ticket_pk" physicalName="Ticket_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC57" populated="true" UUID="9aaef54f-d18b-4e6e-b343-555a9af1948d" ascendingOrDescending="UNSPECIFIED" column-ref="COL45" name="Ticket_pk" physicalName="Ticket_pk" />
+    </index>
+   </folder>
+  </table>
+  <table id="TAB58" populated="true" UUID="a5a90e0e-65ff-4f81-81a8-546b816da8d2" name="Permit" objectType="TABLE" physicalName="Permit" >
+   <remarks></remarks>
+   <folder id="FOLTAB581" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL59" populated="true" UUID="c05c7474-ef20-49da-a0dc-90dd93102e73" autoIncrement="false" autoIncrementSequenceName="Permit_ID_seq" defaultValue="" name="Permit_ID" nullable="0" physicalName="Permit_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL60" populated="true" UUID="b206a4c8-e2ae-42d6-8aa5-46b484583038" autoIncrement="false" autoIncrementSequenceName="Permit_Category_seq" defaultValue="" name="Permit_Category" nullable="1" physicalName="Permit_Category" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL61" populated="true" UUID="ca4e748e-947f-4aea-9c21-f58ad8e4ca57" autoIncrement="false" autoIncrementSequenceName="Permit_Description_seq" defaultValue="" name="Permit_Description" nullable="1" physicalName="Permit_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL62" populated="true" UUID="6959ea88-c1c8-4583-9959-dda4fec81963" autoIncrement="false" autoIncrementSequenceName="Permit_Reception_Date_seq" defaultValue="" name="Permit_Reception_Date" nullable="1" physicalName="Permit_Reception_Date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL63" populated="true" UUID="d55f864a-2476-45d8-99ad-aac532993024" autoIncrement="false" autoIncrementSequenceName="Permit_Expiration_Date_seq" defaultValue="" name="Permit_Expiration_Date" nullable="1" physicalName="Permit_Expiration_Date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL64" populated="true" UUID="582beca6-6113-4e03-bae9-6869210733e4" autoIncrement="false" autoIncrementSequenceName="Permit_Application_Date_seq" defaultValue="" name="Permit_Application_Date" nullable="1" physicalName="Permit_Application_Date" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+     <remarks></remarks>
+    </column>
+    <column id="COL65" populated="true" UUID="bfac6877-7957-4e95-882b-64f32e8bd96c" autoIncrement="false" autoIncrementSequenceName="Festival_ID_seq" defaultValue="" name="Festival_ID" nullable="1" physicalName="Festival_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    </folder>
+    <folder id="FOLTAB583" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    </folder>
+    <folder id="FOLTAB582" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    </folder>
+    <folder id="FOLTAB584" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX66" populated="true" UUID="5cc0f933-b648-41d9-93e0-96d5c7173453" clustered="false" name="Permit_pk" physicalName="Permit_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC67" populated="true" UUID="88267ee4-0794-4e8c-b561-9fb9b8567a14" ascendingOrDescending="UNSPECIFIED" column-ref="COL59" name="Permit_pk" physicalName="Permit_pk" />
+    </index>
+   </folder>
+  </table>
+  <relationships>
+   <relationship id="REL68" populated="true" UUID="c7e3a633-c4d8-4968-bba9-7af08f2abb10" deferrability="7" deleteRule="0" fk-table-ref="TAB14" fkCardinality="7" identifying="false" name="Festival_City_FK" physicalName="Festival_City_FK" pk-table-ref="TAB1" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP69" populated="true" UUID="1514f036-4eed-428e-85d3-87e14c8d7634" fk-column-ref="COL21" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL70" populated="true" UUID="dd11bfd7-389f-4356-93f9-7c191afb9837" deferrability="7" deleteRule="0" fk-table-ref="TAB33" fkCardinality="7" identifying="false" name="Visitor_City_FK" physicalName="Visitor_City_FK" pk-table-ref="TAB1" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP71" populated="true" UUID="7930328c-0843-4ffe-9f47-6acf062f114b" fk-column-ref="COL40" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   </relationship>
+   <relationship id="REL72" populated="true" UUID="2c99f6a8-db99-4681-b5d6-cec5aeab25ad" deferrability="7" deleteRule="0" fk-table-ref="TAB14" fkCardinality="6" identifying="false" name="Festival_Company_FK" physicalName="Festival_Company_FK" pk-table-ref="TAB8" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP73" populated="true" UUID="833c2039-9b78-4f22-ae4a-9d800686ff28" fk-column-ref="COL17" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL9" />
+   </relationship>
+   <relationship id="REL74" populated="true" UUID="2f99ca39-2996-4b6b-8638-18f655621c9d" deferrability="7" deleteRule="0" fk-table-ref="TAB44" fkCardinality="6" identifying="false" name="Ticket_Festival_FK" physicalName="Ticket_Festival_FK" pk-table-ref="TAB14" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP75" populated="true" UUID="7c47bedb-7876-4fc2-a930-fed8c3588655" fk-column-ref="COL55" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL15" />
+   </relationship>
+   <relationship id="REL76" populated="true" UUID="437e78ed-819f-4b12-83f4-86453aedf429" deferrability="7" deleteRule="0" fk-table-ref="TAB58" fkCardinality="7" identifying="false" name="Permit_Festival_FK" physicalName="Permit_Festival_FK" pk-table-ref="TAB14" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP77" populated="true" UUID="04b1ed36-4120-47a4-a19e-832f5bfe7c64" fk-column-ref="COL65" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL15" />
+   </relationship>
+   <relationship id="REL78" populated="true" UUID="e031a955-7f9f-4e35-921c-7ba903ea63ac" deferrability="7" deleteRule="0" fk-table-ref="TAB44" fkCardinality="6" identifying="false" name="Ticket_TicketPlatform_FK" physicalName="Ticket_TicketPlatform_FK" pk-table-ref="TAB27" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP79" populated="true" UUID="d125d428-581f-4165-a77b-cd0e3716d876" fk-column-ref="COL53" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL28" />
+   </relationship>
+   <relationship id="REL80" populated="true" UUID="4e6e1312-6670-45fe-9a1c-db627299f076" deferrability="7" deleteRule="0" fk-table-ref="TAB44" fkCardinality="6" identifying="false" name="Ticket_Visitor_FK" physicalName="Ticket_Visitor_FK" pk-table-ref="TAB33" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP81" populated="true" UUID="67b56e6a-6b84-450a-a490-aa3cf3aadd26" fk-column-ref="COL54" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL34" />
+   </relationship>
+  </relationships>
+ </target-database>
+ <ddl-generator type="ca.sqlpower.architect.ddl.GenericDDLGenerator" allow-connection="true"> </ddl-generator>
+ <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
+ <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
+ <play-pen zoom="1.0" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+  <table-pane table-ref="TAB1" x="1064" y="102" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB8" x="654" y="315" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB14" x="942" y="438" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB27" x="414" y="939" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB33" x="553" y="96" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB44" x="302" y="456" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB58" x="1216" y="815" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL72" pkConnection="0.8591549295774648" fkConnection="0.30177514792899407" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL68" pkConnection="0.4891304347826087" fkConnection="0.5099009900990099" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL70" pkConnection="0.6823529411764706" fkConnection="0.375886524822695" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL78" pkConnection="0.575107296137339" fkConnection="0.2538860103626943" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-link relationship-ref="REL80" pkConnection="0.27835051546391754" fkConnection="0.7823834196891192" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL74" pkConnection="0.6272189349112426" fkConnection="0.3825136612021858" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL76" pkConnection="0.6485148514851485" fkConnection="0.37948717948717947" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+ </play-pen>
+ <critic-manager>
+  <critic-grouping platformType="Generic" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PrimaryKeyCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.RelationshipMappingTypeCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.EmptyRelationshipCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.AlphaNumericSequenceNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetDefaultOnColumnWithNoDefaultCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SetNullOnNonNullableColumnCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DuplicateNameCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="DB2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.DB2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="H2" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.H2UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="HSQLDB" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.HSQLDBUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="MySQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLCommentCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.MySQLUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="Oracle" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OraclePhysicalNameCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleReservedWordsCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.OracleUnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="PostgreSQL" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.PostgreSQLReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerUnsupportedFeaturesCritic" severity="ERROR"/>
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServerReservedWordsCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2000" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2000UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+  <critic-grouping platformType="SQL Server 2005" enabled="true">
+   <critic-settings class="ca.sqlpower.architect.ddl.critic.impl.SQLServer2005UnsupportedFeaturesCritic" severity="ERROR"/>
+  </critic-grouping>
+ </critic-manager>
+ <profiles topNCount="10">
+  </profiles>
+  <olap>
+   <olap-session id="0" db-ref="ppdb">
+    <Schema id="1" name="New OLAP Schema"/>
+   </olap-session>
+  </olap>
+  <olap-gui>
+   <olap-edit-session osession-ref="0">
+    <play-pen zoom="1.0" viewportX="0" viewportY="0">
+    </play-pen>
+   </olap-edit-session>
+  </olap-gui>
+</architect-project>
