@@ -41,6 +41,7 @@ Step 3: Domain - constraints
 - Permit: application_date < reception_date
 
 TODO:
+
     S2
 - Genre_Origin_Year moet in de vergangenis liggen.
 - Performance_Start_Time moet voor Performance_End_Time liggen.
