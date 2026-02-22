@@ -40,7 +40,7 @@ Stap 3: Domeinen - constraints
 - Permit: reception_date < expiration_date
 - Permit: application_date < reception_date
 
-
+TODO:
     S2
 - Genre_Origin_Year moet in de vergangenis liggen.
 - Performance_Start_Time moet voor Performance_End_Time liggen.
@@ -50,6 +50,7 @@ Tijd
 ---
 - S1: Festival: De festival start_date en end_date houdt de historiek bij.
 - S1: Permit: De permit reception_date en expiration_date houdt de historiek bij.
+TODO:
 - S2: Genre_Origin_Year moet voor Festival_Date zijn.
 
 
