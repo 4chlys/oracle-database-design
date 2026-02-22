@@ -5,7 +5,7 @@ Stap 1 Normalisatie
 --
 
     S1
-[S1_normalisatie_computergames.pdf](..%2FS1_normalisatie%2FS1_normalisatie_computergames.pdf)
+[S1_normalisatie.pdf](..%2FS1_normalisatie%2FS1_normalisatie.pdf)
 
 ![S1_normalisatie.png](..%2FS1_normalisatie%2FS1_normalisatie.png)
 ![S1_na_normalisatie.png](..%2F..%2FD1_ERD%2FS1%2FS1_na_normalisatie.png)
@@ -21,7 +21,7 @@ Stap 1 Normalisatie
 
 Stap 2: integratie
 --
-[S1S2_computergames_Integration.pdf](S1S2_computergames_Integration.pdf)
+[SAMEN_integratie.pdf](SAMEN_integratie.pdf)
 
 ![SAMEN_integratie.png](SAMEN_integratie.png)
 ![Finaal_ERD.png](..%2F..%2FD1_ERD%2FSAMEN%2FFinaal_ERD.png)
@@ -30,8 +30,15 @@ Stap 2: integratie
 Stap 3: Domeinen - constraints
 --- 
     S1
-- Player: zipcodes - minimum 4 characters
-- Computergame: release_date < last_updated
+- Ticket: price > 0
+- Ticket: barcode tussen 8 en 14 tekens
+- Visitor: birthdate - (positief) integer & < current_date
+- Festival: end_date > start_date
+- Festival: closing_hour > opening_hour
+- Festival: capacity > 0
+- Company: founding_year < current_year
+- Permit: reception_date < expiration_date
+- Permit: application_date < reception_date
 
 
     S2
@@ -41,7 +48,8 @@ Stap 3: Domeinen - constraints
 
 Tijd
 ---
-- S1: Game_session: De gamesession start_date en end_date houdt de historiek bij.
+- S1: Festival: De festival start_date en end_date houdt de historiek bij.
+- S1: Permit: De permit reception_date en expiration_date houdt de historiek bij.
 - S2: Genre_Origin_Year moet voor Festival_Date zijn.
 
 
