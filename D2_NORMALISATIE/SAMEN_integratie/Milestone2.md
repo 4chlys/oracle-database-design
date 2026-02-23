@@ -40,6 +40,7 @@ Step 3: Domain - constraints
 - Permit: reception_date < expiration_date
 - Permit: application_date < reception_date
 
+---
     S2
 - Stage_Toilet_Count, Stage_Standing_Capacity, Artist_Price, Genre_BPM all >= 0
 - Artist_Birthday and Genre_Origin_Year < current_date
@@ -54,5 +55,3 @@ Time
 TODO:
 - S2: Genre_Origin_Year must be before the Festival_Date
 - S2: Artist_Birthday must be before the Festival_Date
-
-
