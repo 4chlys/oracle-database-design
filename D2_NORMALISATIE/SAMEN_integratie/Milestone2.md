@@ -44,8 +44,8 @@ Step 3: Domain - constraints
     S2
 - Stage_Toilet_Count, Stage_Standing_Capacity, Artist_Price, Genre_BPM all >= 0
 - Artist_Birthday and Genre_Origin_Year < current_date
-- Artist_Land_Of_Birth must be at least 4 letters
-- All currencies must be 3 letters 
+- Artist_Land_Of_Birth must be at least four letters
+- All currencies must be three letters 
 
 
 Time
