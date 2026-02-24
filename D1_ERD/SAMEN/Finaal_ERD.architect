@@ -258,25 +258,28 @@
   <table id="TAB71" populated="true" UUID="a1000000-0000-0000-0000-000000000008" name="Stage" objectType="TABLE" physicalName="Stage" >
    <remarks></remarks>
    <folder id="FOLTAB711" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL72" populated="true" UUID="b8000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Festival_ID_stage_fk_seq" defaultValue="" name="Festival_ID" nullable="0" physicalName="Festival_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL72" populated="true" UUID="48ce54a8-f610-4daf-9485-72ac591f58de" autoIncrement="false" autoIncrementSequenceName="Stage_Stage_ID_seq" defaultValue="" name="Stage_ID" nullable="0" physicalName="Stage_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL73" populated="true" UUID="b8000000-0000-0000-0000-000000000002" autoIncrement="false" autoIncrementSequenceName="Stage_Name_seq" defaultValue="" name="Stage_Name" nullable="0" physicalName="Stage_Name" precision="0" primaryKeySeq="1" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL73" populated="true" UUID="b8000000-0000-0000-0000-000000000002" autoIncrement="false" autoIncrementSequenceName="Stage_Name_seq" defaultValue="" name="Stage_Name" nullable="1" physicalName="Stage_Name" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL74" populated="true" UUID="b8000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Stage_Style_Description_seq" defaultValue="" name="Stage_Style_Description" nullable="1" physicalName="Stage_Style_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL74" populated="true" UUID="b8000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Festival_ID_stage_fk_seq" defaultValue="" name="Festival_ID" nullable="1" physicalName="Festival_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL75" populated="true" UUID="b8000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Stage_Standing_Capacity_seq" defaultValue="" name="Stage_Standing_Capacity" nullable="1" physicalName="Stage_Standing_Capacity" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL75" populated="true" UUID="b8000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Stage_Style_Description_seq" defaultValue="" name="Stage_Style_Description" nullable="1" physicalName="Stage_Style_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL76" populated="true" UUID="b8000000-0000-0000-0000-000000000005" autoIncrement="false" autoIncrementSequenceName="Stage_Toilet_Count_seq" defaultValue="" name="Stage_Toilet_Count" nullable="1" physicalName="Stage_Toilet_Count" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL76" populated="true" UUID="b8000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Stage_Standing_Capacity_seq" defaultValue="" name="Stage_Standing_Capacity" nullable="1" physicalName="Stage_Standing_Capacity" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL77" populated="true" UUID="b8000000-0000-0000-0000-000000000006" autoIncrement="false" autoIncrementSequenceName="Stage_Description_seq" defaultValue="" name="Stage_Description" nullable="1" physicalName="Stage_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL77" populated="true" UUID="b8000000-0000-0000-0000-000000000005" autoIncrement="false" autoIncrementSequenceName="Stage_Toilet_Count_seq" defaultValue="" name="Stage_Toilet_Count" nullable="1" physicalName="Stage_Toilet_Count" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL78" populated="true" UUID="b8000000-0000-0000-0000-000000000007" autoIncrement="false" autoIncrementSequenceName="Stage_Roofed_Status_seq" defaultValue="" name="Stage_Roofed_Status" nullable="1" physicalName="Stage_Roofed_Status" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+    <column id="COL78" populated="true" UUID="b8000000-0000-0000-0000-000000000006" autoIncrement="false" autoIncrementSequenceName="Stage_Description_seq" defaultValue="" name="Stage_Description" nullable="1" physicalName="Stage_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
+    <column id="COL79" populated="true" UUID="b8000000-0000-0000-0000-000000000007" autoIncrement="false" autoIncrementSequenceName="Stage_Roofed_Status_seq" defaultValue="" name="Stage_Roofed_Status" nullable="1" physicalName="Stage_Roofed_Status" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
      <remarks></remarks>
     </column>
     </folder>
@@ -285,9 +288,8 @@
     <folder id="FOLTAB712" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
     <folder id="FOLTAB714" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX79" populated="true" UUID="c1000000-0000-0000-0000-000000000008" clustered="false" name="Stage_pk" physicalName="Stage_pk" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC80" populated="true" UUID="d1000000-0000-0000-0000-000000000008" ascendingOrDescending="UNSPECIFIED" column-ref="COL72" name="Stage_pk" physicalName="Stage_pk" />
-     <index-column id="IDC81" populated="true" UUID="d1000000-0000-0000-0000-000000000009" ascendingOrDescending="UNSPECIFIED" column-ref="COL73" name="Stage_pk" physicalName="Stage_pk" />
+    <index id="IDX80" populated="true" UUID="c1000000-0000-0000-0000-000000000008" clustered="false" name="Stage_pk" physicalName="Stage_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC81" populated="true" UUID="a031e5c4-036e-404a-b531-6274bfbe7eb5" ascendingOrDescending="UNSPECIFIED" column-ref="COL72" name="Stage_ID" physicalName="Stage_ID" />
     </index>
    </folder>
   </table>
@@ -326,16 +328,16 @@
   <table id="TAB91" populated="true" UUID="a1000000-0000-0000-0000-000000000010" name="Performance" objectType="TABLE" physicalName="Performance" >
    <remarks></remarks>
    <folder id="FOLTAB911" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL92" populated="true" UUID="ba000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Festival_ID_perf_fk_seq" defaultValue="" name="Festival_ID" nullable="0" physicalName="Festival_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL92" populated="true" UUID="7d01ca0c-1833-4d83-af62-a58165d89bb5" autoIncrement="true" autoIncrementSequenceName="Performance_Performance_ID_seq" defaultValue="" name="Performance_ID" nullable="0" physicalName="Performance_ID" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL93" populated="true" UUID="ba000000-0000-0000-0000-000000000002" autoIncrement="false" autoIncrementSequenceName="Stage_Name_perf_fk_seq" defaultValue="" name="Stage_Name" nullable="0" physicalName="Stage_Name" precision="0" primaryKeySeq="1" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL93" populated="true" UUID="ba000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Performance_Start_Time_seq" defaultValue="" name="Performance_Start_Time" nullable="1" physicalName="Performance_Start_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL94" populated="true" UUID="ba000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Artist_ID_perf_fk_seq" defaultValue="" name="Artist_ID" nullable="0" physicalName="Artist_ID" precision="0" primaryKeySeq="2" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL94" populated="true" UUID="ba000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Festival_ID_perf_fk_seq" defaultValue="" name="Festival_ID" nullable="1" physicalName="Festival_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL95" populated="true" UUID="ba000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Performance_Start_Time_seq" defaultValue="" name="Performance_Start_Time" nullable="0" physicalName="Performance_Start_Time" precision="0" primaryKeySeq="3" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="92" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+    <column id="COL95" populated="true" UUID="ba000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Artist_ID_perf_fk_seq" defaultValue="" name="Artist_ID" nullable="1" physicalName="Artist_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL96" populated="true" UUID="ba000000-0000-0000-0000-000000000005" autoIncrement="false" autoIncrementSequenceName="Performance_End_Time_seq" defaultValue="" name="Performance_End_Time" nullable="1" physicalName="Performance_End_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="92" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
@@ -347,83 +349,82 @@
     <column id="COL98" populated="true" UUID="ba000000-0000-0000-0000-000000000007" autoIncrement="false" autoIncrementSequenceName="Genre_ID_perf_fk_seq" defaultValue="" name="Genre_ID" nullable="1" physicalName="Genre_ID" precision="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
+    <column id="COL99" populated="true" UUID="ebf3fc56-6004-4ae8-bde9-a37a08c1e012" autoIncrement="false" autoIncrementSequenceName="Stage_New Column_seq" defaultValue="" name="Stage_ID" nullable="1" physicalName="Stage_ID" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+     <remarks></remarks>
+    </column>
     </folder>
     <folder id="FOLTAB913" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
     <folder id="FOLTAB912" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
     <folder id="FOLTAB914" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX99" populated="true" UUID="c1000000-0000-0000-0000-000000000010" clustered="false" name="Performance_pk" physicalName="Performance_pk" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC100" populated="true" UUID="d1000000-0000-0000-0000-000000000011" ascendingOrDescending="UNSPECIFIED" column-ref="COL92" name="Performance_pk" physicalName="Performance_pk" />
-     <index-column id="IDC101" populated="true" UUID="d1000000-0000-0000-0000-000000000012" ascendingOrDescending="UNSPECIFIED" column-ref="COL93" name="Performance_pk" physicalName="Performance_pk" />
-     <index-column id="IDC102" populated="true" UUID="d1000000-0000-0000-0000-000000000013" ascendingOrDescending="UNSPECIFIED" column-ref="COL94" name="Performance_pk" physicalName="Performance_pk" />
-     <index-column id="IDC103" populated="true" UUID="d1000000-0000-0000-0000-000000000014" ascendingOrDescending="UNSPECIFIED" column-ref="COL95" name="Performance_pk" physicalName="Performance_pk" />
+    <index id="IDX100" populated="true" UUID="c1000000-0000-0000-0000-000000000010" clustered="false" name="Performance_pk" physicalName="Performance_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC101" populated="true" UUID="ebcc43f2-c574-490c-b502-51dddf828592" ascendingOrDescending="UNSPECIFIED" column-ref="COL92" name="Performance_ID" physicalName="Performance_ID" />
     </index>
    </folder>
   </table>
-  <table id="TAB104" populated="true" UUID="a1000000-0000-0000-0000-000000000011" name="Genre" objectType="TABLE" physicalName="Genre" >
+  <table id="TAB102" populated="true" UUID="a1000000-0000-0000-0000-000000000011" name="Genre" objectType="TABLE" physicalName="Genre" >
    <remarks></remarks>
-   <folder id="FOLTAB1041" populated="true" name="Columns" physicalName="Columns" type="1">
-    <column id="COL105" populated="true" UUID="bb000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Genre_ID_seq" defaultValue="" name="Genre_ID" nullable="0" physicalName="Genre_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+   <folder id="FOLTAB1021" populated="true" name="Columns" physicalName="Columns" type="1">
+    <column id="COL103" populated="true" UUID="bb000000-0000-0000-0000-000000000001" autoIncrement="false" autoIncrementSequenceName="Genre_ID_seq" defaultValue="" name="Genre_ID" nullable="0" physicalName="Genre_ID" precision="0" primaryKeySeq="0" referenceCount="2" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL106" populated="true" UUID="bb000000-0000-0000-0000-000000000002" autoIncrement="false" autoIncrementSequenceName="Genre_Name_seq" defaultValue="" name="Genre_Name" nullable="1" physicalName="Genre_Name" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL104" populated="true" UUID="bb000000-0000-0000-0000-000000000002" autoIncrement="false" autoIncrementSequenceName="Genre_Name_seq" defaultValue="" name="Genre_Name" nullable="1" physicalName="Genre_Name" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL107" populated="true" UUID="bb000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Genre_Origin_Year_seq" defaultValue="" name="Genre_Origin_Year" nullable="1" physicalName="Genre_Origin_Year" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL105" populated="true" UUID="bb000000-0000-0000-0000-000000000003" autoIncrement="false" autoIncrementSequenceName="Genre_Origin_Year_seq" defaultValue="" name="Genre_Origin_Year" nullable="1" physicalName="Genre_Origin_Year" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL108" populated="true" UUID="bb000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Genre_Origin_Location_genre_fk_seq" defaultValue="" name="Genre_Origin_Location" nullable="1" physicalName="Genre_Origin_Location" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL106" populated="true" UUID="bb000000-0000-0000-0000-000000000004" autoIncrement="false" autoIncrementSequenceName="Genre_Origin_Location_genre_fk_seq" defaultValue="" name="Genre_Origin_Location" nullable="1" physicalName="Genre_Origin_Location" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL109" populated="true" UUID="bb000000-0000-0000-0000-000000000005" autoIncrement="false" autoIncrementSequenceName="Genre_BPM_seq" defaultValue="" name="Genre_BPM" nullable="1" physicalName="Genre_BPM" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL107" populated="true" UUID="bb000000-0000-0000-0000-000000000005" autoIncrement="false" autoIncrementSequenceName="Genre_BPM_seq" defaultValue="" name="Genre_BPM" nullable="1" physicalName="Genre_BPM" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
     </folder>
-    <folder id="FOLTAB1043" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
+    <folder id="FOLTAB1023" populated="true" name="Exported Keys" physicalName="Exported Keys" type="3">
     </folder>
-    <folder id="FOLTAB1042" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
+    <folder id="FOLTAB1022" populated="true" name="Imported Keys" physicalName="Imported Keys" type="2">
     </folder>
-    <folder id="FOLTAB1044" populated="true" name="Indices" physicalName="Indices" type="4">
-    <index id="IDX110" populated="true" UUID="c1000000-0000-0000-0000-000000000011" clustered="false" name="Genre_pk" physicalName="Genre_pk" primaryKeyIndex="true" unique="false" >
-     <index-column id="IDC111" populated="true" UUID="d1000000-0000-0000-0000-000000000015" ascendingOrDescending="UNSPECIFIED" column-ref="COL105" name="Genre_pk" physicalName="Genre_pk" />
+    <folder id="FOLTAB1024" populated="true" name="Indices" physicalName="Indices" type="4">
+    <index id="IDX108" populated="true" UUID="c1000000-0000-0000-0000-000000000011" clustered="false" name="Genre_pk" physicalName="Genre_pk" primaryKeyIndex="true" unique="false" >
+     <index-column id="IDC109" populated="true" UUID="d1000000-0000-0000-0000-000000000015" ascendingOrDescending="UNSPECIFIED" column-ref="COL103" name="Genre_pk" physicalName="Genre_pk" />
     </index>
    </folder>
   </table>
   <relationships>
-   <relationship id="REL112" populated="true" UUID="e1000000-0000-0000-0000-000000000001" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="TicketPlatform_Ticket_FK" physicalName="TicketPlatform_Ticket_FK" pk-table-ref="TAB17" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP113" populated="true" UUID="e8a99dcd-7281-48e2-ad94-9d6be225a08f" fk-column-ref="COL12" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL18" />
+   <relationship id="REL110" populated="true" UUID="e1000000-0000-0000-0000-000000000001" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="TicketPlatform_Ticket_FK" physicalName="TicketPlatform_Ticket_FK" pk-table-ref="TAB17" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP111" populated="true" UUID="e8a99dcd-7281-48e2-ad94-9d6be225a08f" fk-column-ref="COL12" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL18" />
    </relationship>
-   <relationship id="REL114" populated="true" UUID="e1000000-0000-0000-0000-000000000002" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="Visitor_Ticket_FK" physicalName="Visitor_Ticket_FK" pk-table-ref="TAB23" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP115" populated="true" UUID="c928b359-d4ac-43fa-a390-e9c3a5a60d16" fk-column-ref="COL13" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL24" />
+   <relationship id="REL112" populated="true" UUID="e1000000-0000-0000-0000-000000000002" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="Visitor_Ticket_FK" physicalName="Visitor_Ticket_FK" pk-table-ref="TAB23" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP113" populated="true" UUID="c928b359-d4ac-43fa-a390-e9c3a5a60d16" fk-column-ref="COL13" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL24" />
    </relationship>
-   <relationship id="REL116" populated="true" UUID="e1000000-0000-0000-0000-000000000004" deferrability="7" deleteRule="0" fk-table-ref="TAB23" fkCardinality="7" identifying="false" name="City_Visitor_FK" physicalName="City_Visitor_FK" pk-table-ref="TAB34" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP117" populated="true" UUID="f1000000-0000-0000-0000-000000000004" fk-column-ref="COL30" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
+   <relationship id="REL114" populated="true" UUID="e1000000-0000-0000-0000-000000000004" deferrability="7" deleteRule="0" fk-table-ref="TAB23" fkCardinality="7" identifying="false" name="City_Visitor_FK" physicalName="City_Visitor_FK" pk-table-ref="TAB34" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP115" populated="true" UUID="f1000000-0000-0000-0000-000000000004" fk-column-ref="COL30" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
    </relationship>
-   <relationship id="REL118" populated="true" UUID="e1000000-0000-0000-0000-000000000006" deferrability="7" deleteRule="0" fk-table-ref="TAB41" fkCardinality="7" identifying="false" name="City_Festival_FK" physicalName="City_Festival_FK" pk-table-ref="TAB34" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP119" populated="true" UUID="f1000000-0000-0000-0000-000000000006" fk-column-ref="COL49" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
+   <relationship id="REL116" populated="true" UUID="e1000000-0000-0000-0000-000000000006" deferrability="7" deleteRule="0" fk-table-ref="TAB41" fkCardinality="7" identifying="false" name="City_Festival_FK" physicalName="City_Festival_FK" pk-table-ref="TAB34" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP117" populated="true" UUID="f1000000-0000-0000-0000-000000000006" fk-column-ref="COL49" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
    </relationship>
-   <relationship id="REL120" populated="true" UUID="e1000000-0000-0000-0000-000000000003" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="Festival_Ticket_FK" physicalName="Festival_Ticket_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP121" populated="true" UUID="4de860f5-cb8c-406d-836d-e9cc14995f0f" fk-column-ref="COL14" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
+   <relationship id="REL118" populated="true" UUID="e1000000-0000-0000-0000-000000000003" deferrability="7" deleteRule="0" fk-table-ref="TAB1" fkCardinality="6" identifying="false" name="Festival_Ticket_FK" physicalName="Festival_Ticket_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP119" populated="true" UUID="4de860f5-cb8c-406d-836d-e9cc14995f0f" fk-column-ref="COL14" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
    </relationship>
-   <relationship id="REL122" populated="true" UUID="e1000000-0000-0000-0000-000000000007" deferrability="7" deleteRule="0" fk-table-ref="TAB61" fkCardinality="7" identifying="false" name="Festival_Permit_FK" physicalName="Festival_Permit_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP123" populated="true" UUID="ce32a514-d666-4406-b046-f53782953910" fk-column-ref="COL68" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
+   <relationship id="REL120" populated="true" UUID="e1000000-0000-0000-0000-000000000007" deferrability="7" deleteRule="0" fk-table-ref="TAB61" fkCardinality="7" identifying="false" name="Festival_Permit_FK" physicalName="Festival_Permit_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP121" populated="true" UUID="ce32a514-d666-4406-b046-f53782953910" fk-column-ref="COL68" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
    </relationship>
-   <relationship id="REL124" populated="true" UUID="e1000000-0000-0000-0000-000000000008" deferrability="7" deleteRule="0" fk-table-ref="TAB71" fkCardinality="6" identifying="true" name="Festival_Stage_FK" physicalName="Festival_Stage_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP125" populated="true" UUID="aacf78e7-045c-40f2-a6cb-631f85d6cdc6" fk-column-ref="COL72" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
+   <relationship id="REL122" populated="true" UUID="e1000000-0000-0000-0000-000000000008" deferrability="7" deleteRule="0" fk-table-ref="TAB71" fkCardinality="6" identifying="false" name="Festival_Stage_FK" physicalName="Festival_Stage_FK" pk-table-ref="TAB41" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP123" populated="true" UUID="0d50f5d1-a1be-4222-a0fc-2f74626819ea" fk-column-ref="COL74" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL42" />
    </relationship>
-   <relationship id="REL126" populated="true" UUID="e1000000-0000-0000-0000-000000000005" deferrability="7" deleteRule="0" fk-table-ref="TAB41" fkCardinality="6" identifying="false" name="Company_Festival_FK" physicalName="Company_Festival_FK" pk-table-ref="TAB55" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP127" populated="true" UUID="4c0a899a-e304-419e-b2a6-84ba21361b2c" fk-column-ref="COL44" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL56" />
+   <relationship id="REL124" populated="true" UUID="e1000000-0000-0000-0000-000000000005" deferrability="7" deleteRule="0" fk-table-ref="TAB41" fkCardinality="6" identifying="false" name="Company_Festival_FK" physicalName="Company_Festival_FK" pk-table-ref="TAB55" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP125" populated="true" UUID="4c0a899a-e304-419e-b2a6-84ba21361b2c" fk-column-ref="COL44" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL56" />
    </relationship>
-   <relationship id="REL128" populated="true" UUID="e1000000-0000-0000-0000-000000000009" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="6" identifying="true" name="Stage_Performance_FK" physicalName="Stage_Performance_FK" pk-table-ref="TAB71" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP129" populated="true" UUID="5260f253-3ab6-44f4-86d3-07868ecb4a06" fk-column-ref="COL93" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL73" />
-    <column-mapping id="CMP130" populated="true" UUID="4b6f7a2f-37d8-4df2-ae79-a4aac5d6c29c" fk-column-ref="COL92" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL72" />
+   <relationship id="REL126" populated="true" UUID="e1000000-0000-0000-0000-000000000009" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="6" identifying="false" name="Stage_Performance_FK" physicalName="Stage_Performance_FK" pk-table-ref="TAB71" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP127" populated="true" UUID="8944b462-bd95-4364-a0d5-cd0373b9e6f9" fk-column-ref="COL99" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL72" />
    </relationship>
-   <relationship id="REL131" populated="true" UUID="e1000000-0000-0000-0000-000000000010" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="6" identifying="true" name="Artist_Performance_FK" physicalName="Artist_Performance_FK" pk-table-ref="TAB82" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP132" populated="true" UUID="4519837d-bd58-4a16-8394-5cadbf926d00" fk-column-ref="COL94" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL83" />
+   <relationship id="REL128" populated="true" UUID="e1000000-0000-0000-0000-000000000010" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="6" identifying="false" name="Artist_Performance_FK" physicalName="Artist_Performance_FK" pk-table-ref="TAB82" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP129" populated="true" UUID="5b02362d-1cce-413f-8042-08ac1839c496" fk-column-ref="COL95" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL83" />
    </relationship>
-   <relationship id="REL133" populated="true" UUID="e1000000-0000-0000-0000-000000000011" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="7" identifying="false" name="Genre_Performance_FK" physicalName="Genre_Performance_FK" pk-table-ref="TAB104" pkCardinality="2" updateRule="0" >
-    <column-mapping id="CMP134" populated="true" UUID="f1000000-0000-0000-0000-000000000012" fk-column-ref="COL98" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL105" />
+   <relationship id="REL130" populated="true" UUID="e1000000-0000-0000-0000-000000000011" deferrability="7" deleteRule="0" fk-table-ref="TAB91" fkCardinality="7" identifying="false" name="Genre_Performance_FK" physicalName="Genre_Performance_FK" pk-table-ref="TAB102" pkCardinality="2" updateRule="0" >
+    <column-mapping id="CMP131" populated="true" UUID="f1000000-0000-0000-0000-000000000012" fk-column-ref="COL98" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL103" />
    </relationship>
   </relationships>
  </target-database>
@@ -439,20 +440,20 @@
   <table-pane table-ref="TAB55" x="739" y="206" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB61" x="938" y="446" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB71" x="391" y="701" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB82" x="712" y="568" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-pane table-ref="TAB82" x="694" y="557" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB91" x="667" y="743" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-pane table-ref="TAB104" x="1032" y="730" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
-  <table-link relationship-ref="REL112" pkConnection="0.3562231759656652" fkConnection="0.05699481865284974" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
-  <table-link relationship-ref="REL114" pkConnection="0.4397163120567376" fkConnection="0.3175355450236967" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL120" pkConnection="0.3069306930693069" fkConnection="0.24870466321243523" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
-  <table-link relationship-ref="REL116" pkConnection="0.4" fkConnection="0.5531914893617021" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL126" pkConnection="0.4085106382978723" fkConnection="0.7345132743362832" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL118" pkConnection="0.8588235294117647" fkConnection="0.3114754098360656" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL122" pkConnection="0.8360655737704918" fkConnection="0.6929133858267716" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL124" pkConnection="0.16363636363636364" fkConnection="0.7256637168141593" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL128" pkConnection="0.8740157480314961" fkConnection="0.30708661417322836" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
-  <table-link relationship-ref="REL131" pkConnection="0.046948356807511735" fkConnection="0.4339622641509434" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL133" pkConnection="0.6161616161616161" fkConnection="0.3779527559055118" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-pane table-ref="TAB102" x="1032" y="730" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
+  <table-link relationship-ref="REL110" pkConnection="0.3562231759656652" fkConnection="0.05699481865284974" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-link relationship-ref="REL112" pkConnection="0.4397163120567376" fkConnection="0.3175355450236967" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL118" pkConnection="0.3069306930693069" fkConnection="0.24870466321243523" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
+  <table-link relationship-ref="REL114" pkConnection="0.4" fkConnection="0.5531914893617021" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL124" pkConnection="0.4085106382978723" fkConnection="0.7345132743362832" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL116" pkConnection="0.8588235294117647" fkConnection="0.3114754098360656" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
+  <table-link relationship-ref="REL120" pkConnection="0.8360655737704918" fkConnection="0.6929133858267716" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL122" pkConnection="0.16363636363636364" fkConnection="0.7256637168141593" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL126" pkConnection="0.8740157480314961" fkConnection="0.30708661417322836" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL128" pkConnection="0.046948356807511735" fkConnection="0.4339622641509434" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL130" pkConnection="0.6161616161616161" fkConnection="0.3779527559055118" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
  </play-pen>
  <critic-manager>
   <critic-grouping platformType="Generic" enabled="true">
