@@ -52,6 +52,5 @@ Time
 ---
 - S1: Festival: The festival start_date and end_date keep track of the history.
 - S1: Permit: The permit reception_date and expiration_date keep track of the history.
-TODO:
 - S2: Genre_Origin_Year must be before the Festival_Date
 - S2: Artist_Birthday must be before the Festival_Date
