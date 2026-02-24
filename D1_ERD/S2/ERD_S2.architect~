@@ -159,10 +159,10 @@
     <column id="COL43" populated="true" UUID="c26febee-7ebb-4d1b-8dca-7de168d320f6" autoIncrement="false" autoIncrementSequenceName="Stage_ID_seq" defaultValue="" name="Stage_ID" nullable="1" physicalName="Stage_ID" precision="0" referenceCount="3" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL44" populated="true" UUID="0803ae4a-da34-479e-8713-604504a4b1e1" autoIncrement="false" autoIncrementSequenceName="Performance_Start_Time_seq" defaultValue="" name="Performance_Start_Time" nullable="1" physicalName="Performance_Start_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
+    <column id="COL44" populated="true" UUID="0803ae4a-da34-479e-8713-604504a4b1e1" autoIncrement="false" autoIncrementSequenceName="Performance_Start_Time_seq" defaultValue="" name="Performance_Start_Time" nullable="1" physicalName="Performance_Start_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL45" populated="true" UUID="a616f22e-1862-42ba-b068-2f478dd9968d" autoIncrement="false" autoIncrementSequenceName="Performance_End_Time_seq" defaultValue="" name="Performance_End_Time" nullable="1" physicalName="Performance_End_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
+    <column id="COL45" populated="true" UUID="a616f22e-1862-42ba-b068-2f478dd9968d" autoIncrement="false" autoIncrementSequenceName="Performance_End_Time_seq" defaultValue="" name="Performance_End_Time" nullable="1" physicalName="Performance_End_Time" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
     <column id="COL46" populated="true" UUID="17f3f7a8-1f47-46cf-aec1-72c393c840a8" autoIncrement="false" autoIncrementSequenceName="Performance_Description_seq" defaultValue="" name="Performance_Description" nullable="1" physicalName="Performance_Description" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
