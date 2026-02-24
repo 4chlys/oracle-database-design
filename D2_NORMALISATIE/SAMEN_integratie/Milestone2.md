@@ -45,7 +45,9 @@ Step 3: Domain - constraints
 - Stage_Toilet_Count, Stage_Standing_Capacity, Artist_Price, Genre_BPM all >= 0
 - Artist_Birthday and Genre_Origin_Year < current_date
 - Artist_Land_Of_Birth must be at least four letters
-- All currencies must be three letters 
+- All currencies must be exact three letters
+- The combination of Festival_ID and Stage_Name must be unique
+- Performance_End_Time > Performance_Start_Time
 
 
 Time
