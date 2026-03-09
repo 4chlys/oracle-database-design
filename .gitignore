@@ -2,5 +2,8 @@
 .idea/
 .vscode/
 
+#Assignments Folder
+Assignments/
+
 # MacOS
 .DS_Store/

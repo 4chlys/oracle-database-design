@@ -4,6 +4,8 @@ Milestone 2: Normalisation/Integration
 Step 1 Normalisation
 --
 
+[//]: # (TODO: Payment_Date is needed, split street and street_number?)
+
     S1
 [S1_normalisatie.pdf](..%2FS1_normalisatie%2FS1_normalisatie.pdf)
 

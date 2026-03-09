@@ -1,0 +1,51 @@
+Visitor_Email,Festival_Name,TicketPlatform_Name,Ticket_Price,Ticket_Currency,Ticket_Date,Ticket_Purchase_Date,Ticket_Description,Ticket_Barcode,Ticket_Type,Ticket_Status,Ticket_QR_Code
+lena.vermeersch@gmail.com,Tomorrowland,Tomorrowland Shop,350.0,EUR,2023-07-21,2023-02-15,Full Weekend Pass Tomorrowland 2023,TML23001234,Weekend,Used,https://qr.tomorrowland.com/TML23001234
+niels.desmedt@hotmail.com,Rock Werchter,Paylogic,165.0,EUR,2023-06-29,2023-01-20,Rock Werchter 2023 Full Pass,RW230056789,Weekend,Used,https://qr.rockwerchter.be/RW230056789
+sophie.jacobs@outlook.com,Lowlands 2024,Ticketmaster,225.0,EUR,2024-08-15,2024-02-10,Lowlands Festival 3-Day Pass 2024,LW240078912,Weekend,Used,https://qr.lowlands.nl/LW240078912
+thomas.mueller@web.de,Hurricane Festival 2024,Eventim,199.0,EUR,2024-06-21,2024-01-25,Hurricane Festival Weekend Ticket,HU240012345,Weekend,Used,https://qr.hurricane.de/HU240012345
+emma.dubois@gmail.com,Tomorrowland Winter 2025,Tomorrowland Shop,480.0,EUR,2025-03-15,2024-11-01,Tomorrowland Winter 2025 Ski+Festival Pack,TMLW25001111,Weekend,Valid,https://qr.tomorrowland.com/TMLW25001111
+lars.eriksson@gmail.com,Flow Festival 2025,Ticketmaster,189.0,EUR,2025-08-07,2025-01-15,Flow Festival 2025 3-Day Pass,FF250034567,Weekend,Valid,https://qr.flowfestival.com/FF250034567
+ava.johnson@yahoo.com,Coachella 2024,AXS,499.0,USD,2024-04-12,2023-12-01,Coachella 2024 Weekend 1 General Admission,COA24089123,Weekend,Used,https://qr.coachella.com/COA24089123
+carlos.garcia@gmail.com,Primavera Sound 2024,Ticketmaster,285.0,EUR,2024-06-05,2024-01-20,Primavera Sound 2024 Full Pass,PS240045678,Weekend,Used,https://qr.primaverasound.com/PS240045678
+yuki.tanaka@yahoo.co.jp,Fuji Rock 2024,Eventbrite,38000.0,JPY,2024-07-26,2024-02-10,Fuji Rock Festival 2024 3-Day Pass,FR240056789,Weekend,Used,https://qr.fujirockfestival.com/FR240056789
+amara.diallo@gmail.com,Afropunk Brooklyn 2025,Eventbrite,45.0,USD,2025-08-23,2025-03-01,Afropunk Brooklyn 2025 Day Pass,AFP25012345,Day,Valid,https://qr.afropunk.com/AFP25012345
+pieter.claes@telenet.be,Pukkelpop,Paylogic,179.0,EUR,2023-08-17,2023-03-10,Pukkelpop 2023 Full Festival Pass,PKP23023456,Weekend,Used,https://qr.pukkelpop.be/PKP23023456
+olivia.brown@gmail.com,Glastonbury 2024,See Tickets,335.0,GBP,2024-06-26,2023-10-01,Glastonbury 2024 Full Weekend Ticket,GLS24034567,Weekend,Used,https://qr.glastonbury.co.uk/GLS24034567
+marco.rossi@libero.it,Sonar 2024,Ticketmaster,165.0,EUR,2024-06-12,2024-02-01,Sonar 2024 3-Day Advance Ticket,SNR24045678,Weekend,Used,https://qr.sonar.es/SNR24045678
+ravi.sharma@gmail.com,Sunburn Festival 2025,BookMyShow,8500.0,INR,2025-12-27,2025-09-15,Sunburn Festival 2025 3-Day Pass,SBF25056789,Weekend,Valid,https://qr.sunburn.in/SBF25056789
+jake.williams@outlook.com,Lollapalooza Chicago 2024,Ticketmaster,380.0,USD,2024-08-01,2024-02-20,Lollapalooza 2024 4-Day Combo Pass,LLAC24067890,Weekend,Used,https://qr.lollapalooza.com/LLAC24067890
+ingrid.holm@gmail.com,Roskilde Festival 2024,Ticketmaster,1800.0,DKK,2024-06-29,2024-01-10,Roskilde Festival 2024 Full Pass,RSK24078901,Weekend,Used,https://qr.roskilde.dk/RSK24078901
+kwame.asante@yahoo.com,EXIT Festival 2024,Eventbrite,95.0,EUR,2024-07-10,2024-03-01,EXIT Festival 2024 4-Day Pass,EXF24089012,Weekend,Used,https://qr.exitfest.org/EXF24089012
+bart.willems@proximus.be,Graspop Metal Meeting 2024,Paylogic,225.0,EUR,2024-06-19,2024-01-05,Graspop 2024 Full Metal Weekend Pass,GMP24090123,Weekend,Used,https://qr.graspop.be/GMP24090123
+chloe.martin@gmail.com,Dour Festival 2024,Paylogic,149.0,EUR,2024-07-10,2024-02-15,Dour Festival 2024 5-Day Ticket,DOUR24101234,Weekend,Used,https://qr.dourfestival.eu/DOUR24101234
+arjun.patel@gmail.com,Sziget Festival 2024,Ticketmaster,399.0,EUR,2024-08-07,2024-02-10,Sziget 2024 6-Day Full Festival Pass,SZT24112345,Weekend,Used,https://qr.szigetfestival.com/SZT24112345
+leila.moreau@orange.fr,Weather Festival 2025,Billetweb,85.0,EUR,2025-05-24,2025-01-20,Weather Festival 2025 Weekend Pass,WTF25123456,Weekend,Valid,https://qr.weatherfestival.fr/WTF25123456
+finn.obrien@gmail.com,Download Festival 2024,See Tickets,249.0,GBP,2024-06-13,2024-01-15,Download Festival 2024 Weekend Pass,DL24134567,Weekend,Used,https://qr.downloadfestival.co.uk/DL24134567
+nadia.kowalski@wp.pl,UNTOLD Festival 2025,Eventbrite,199.0,EUR,2025-07-31,2025-02-01,UNTOLD Festival 2025 4-Day Pass,UNTL25145678,Weekend,Valid,https://qr.untoldfestival.com/UNTL25145678
+diego.hernandez@gmail.com,Lollapalooza Sao Paulo 2026,Sympla,399.0,BRL,2026-03-27,2025-12-01,Lollapalooza Sao Paulo 2026 3-Day Pass,LLSP26156789,Weekend,Valid,https://qr.lollapalooza.com.br/LLSP26156789
+aiko.yamamoto@gmail.com,Secret Solstice 2024,Eventbrite,295.0,EUR,2024-06-20,2024-02-01,Secret Solstice 2024 4-Day Pass,SS240167890,Weekend,Used,https://qr.secretsolstice.is/SS240167890
+marcus.thompson@gmail.com,EDC Las Vegas 2025,Front Gate Tickets,449.0,USD,2025-05-16,2025-01-10,EDC Las Vegas 2025 3-Day GA Pass,EDCLV2517890,Weekend,Valid,https://qr.edclasvegas.com/EDCLV2517890
+eva.schneider@gmx.de,Lollapalooza Berlin 2025,Ticketmaster,189.0,EUR,2025-09-06,2025-04-01,Lollapalooza Berlin 2025 2-Day Pass,LLAB25189012,Weekend,Valid,https://qr.lollapalooza.de/LLAB25189012
+jonas.bergstrom@gmail.com,Creamfields 2025,Ticketmaster,275.0,GBP,2025-08-21,2025-02-10,Creamfields 2025 4-Day Silver Camp Ticket,CRF25190123,Weekend,Valid,https://qr.creamfields.com/CRF25190123
+priya.nair@gmail.com,Boom Festival 2024,Eventbrite,245.0,EUR,2024-07-24,2024-03-01,Boom Festival 2024 8-Day Full Pass,BM24201234,Weekend,Used,https://qr.boomfestival.org/BM24201234
+louis.fontaine@gmail.com,Tomorrowland,Tomorrowland Shop,380.0,EUR,2023-07-21,2023-03-20,Tomorrowland 2023 1-Day Friday Ticket,TML23002345,Day,Used,https://qr.tomorrowland.com/TML23002345
+selin.yilmaz@hotmail.com,Hideout Festival 2026,Eventbrite,189.0,EUR,2026-07-01,2026-01-15,Hideout Festival 2026 5-Day Pass,HO26212345X,Weekend,Valid,https://qr.hideoutfestival.com/HO26212345X
+nico.adriaens@skynet.be,Tomorrowland,Paylogic,420.0,EUR,2023-07-21,2023-02-28,Tomorrowland 2023 Full Weekend Comfort Pass,TML23003456,Weekend,Used,https://qr.tomorrowland.com/TML23003456
+mia.larsson@gmail.com,Defqon.1 2025,Ticketmaster,169.0,EUR,2025-06-27,2025-01-20,Defqon.1 2025 2-Day Festival Pass,DQ125223456,Weekend,Valid,https://qr.defqon1.com/DQ125223456
+bilal.choudhry@gmail.com,Sensation 2026,Eventim,129.0,EUR,2026-01-10,2025-10-01,Sensation White 2026 Amsterdam 1-Night Pass,SEN26234567,Day,Valid,https://qr.sensation.com/SEN26234567
+chiara.ferretti@gmail.com,Dimensions Festival 2026,Resident Advisor,215.0,EUR,2026-08-27,2026-02-10,Dimensions 2026 5-Day Full Festival Pass,DIM26245678,Weekend,Valid,https://qr.dimensionsfestival.com/DIM26245678
+tom.baert@telenet.be,Rock Werchter,See Tickets,155.0,EUR,2023-06-29,2022-12-15,Rock Werchter 2023 1-Day Saturday Ticket,RW230067890,Day,Used,https://qr.rockwerchter.be/RW230067890
+alicia.vega@gmail.com,Primavera Sound 2024,See Tickets,130.0,EUR,2024-06-05,2024-03-01,Primavera Sound 2024 1-Day Ticket,PS240056789,Day,Used,https://qr.primaverasound.com/PS240056789
+stefan.hoffmann@web.de,Melt Festival 2025,Eventim,155.0,EUR,2025-07-18,2025-02-01,Melt Festival 2025 3-Day Pass,MELT25256789,Weekend,Valid,https://qr.meltfestival.de/MELT25256789
+aisha.mohamed@gmail.com,Outlook Festival 2026,Dice.fm,199.0,EUR,2026-09-03,2026-03-01,Outlook Festival 2026 5-Day Pass,OTL26267890,Weekend,Valid,https://qr.outlookfestival.com/OTL26267890
+lucas.peeters@gmail.com,Pukkelpop,Paylogic,199.0,EUR,2023-08-17,2023-04-01,Pukkelpop 2023 1-Day Saturday Ticket,PKP23034567,Day,Used,https://qr.pukkelpop.be/PKP23034567
+giulia.bianchi@gmail.com,Sonar 2024,Eventbrite,89.0,EUR,2024-06-12,2024-03-01,Sonar 2024 1-Day Daytime Pass,SNR24056789,Day,Used,https://qr.sonar.es/SNR24056789
+henrik.dahl@gmail.com,Roskilde Festival 2024,Eventbrite,950.0,DKK,2024-06-29,2024-02-01,Roskilde 2024 Day Ticket Saturday,RSK24089012,Day,Used,https://qr.roskilde.dk/RSK24089012
+nour.khalil@gmail.com,Awakenings Festival 2025,Resident Advisor,129.0,EUR,2025-06-28,2025-02-20,Awakenings Festival 2025 1-Day Ticket,AWK25278901,Day,Valid,https://qr.awakenings.com/AWK25278901
+jack.murphy@gmail.com,Global Gathering 2026,Ticketmaster,159.0,GBP,2026-07-24,2026-01-15,Global Gathering 2026 Weekend Pass,GG26289012X,Weekend,Valid,https://qr.globalgathering.com/GG26289012X
+yasmin.osei@gmail.com,Boom Festival 2024,Festicket,195.0,EUR,2024-07-24,2024-04-01,Boom Festival 2024 4-Day Pass,BM24302345X,Weekend,Used,https://qr.boomfestival.org/BM24302345X
+ruben.smeets@hotmail.be,Graspop Metal Meeting 2024,See Tickets,179.0,EUR,2024-06-19,2024-02-01,Graspop 2024 1-Day Metal Ticket,GMP24101234,Day,Used,https://qr.graspop.be/GMP24101234
+clara.santos@gmail.com,Lollapalooza Sao Paulo 2026,Sympla,199.0,BRL,2026-03-27,2026-01-10,Lollapalooza Sao Paulo 2026 1-Day Ticket,LLSP26312345,Day,Valid,https://qr.lollapalooza.com.br/LLSP26312345
+zoe.papadopoulos@gmail.com,Extrema Outdoor 2026,Ticketmaster,139.0,EUR,2026-05-22,2026-01-20,Extrema Outdoor 2026 3-Day Pass,EXT26323456,Weekend,Valid,https://qr.extremaoutdoor.com/EXT26323456
+hana.novak@seznam.cz,Sziget Festival 2024,Eventbrite,299.0,EUR,2024-08-07,2024-03-10,Sziget 2024 3-Day Advance Ticket,SZT24334567,Weekend,Used,https://qr.szigetfestival.com/SZT24334567
+fatima.alhassan@gmail.com,We The Fest 2026,Ticket2Me,155.0,USD,2026-07-17,2026-02-01,We The Fest 2026 3-Day International Pass,WTF26345678,Weekend,Valid,https://qr.wethefest.com/WTF26345678
