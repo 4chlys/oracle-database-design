@@ -6,17 +6,18 @@ Milestone 3: Creatie Databank en Security
 ---
 - Mandatory
     **
-- - A: Visitor: Visitor_ID**
-  - B/X: Festival: Festival_ID
+- - A: Vi
+- sitor: Visitor_ID**
+  - B/X: Festival: Festival_ID 
+  - C: TicketPlatform: TicketPlatform_ID
+  - D: Ticket: Ticket_ID
+  - W: Artist: Artist_ID
   - Y: Stage: Stage_ID
   - Z: Performance: Performance_ID
 - other:
-    - C: TicketPlatform: TicketPlatform_ID
-    - D: Ticket: Ticket_ID
     - Company: Company_ID
     - City: City_ID
     - Permit: Permit_ID
-    - Artist: Artist_ID
     - Genre: Genre_ID
 
       Table Counts
@@ -26,11 +27,21 @@ Milestone 3: Creatie Databank en Security
 
 Queries
 --- 
-    S1 @query 1: TODO
-![S1_query1_visitor_festival_ticket.png](screenshots%2FS1_query1_visitor_festival_ticket.png)
+    S1 @query 1: VISITOR (A) - FESTIVAL (B/X) via Ticket (D) + TicketPlatform (C)
+![S1_query1_visitor_festival_ticket_1.png](../S1/SCREENSHOTS/S1_query1_visitor_festival_ticket_1.png)
+![S1_query1_visitor_festival_ticket_2.png](../S1/SCREENSHOTS/S1_query1_visitor_festival_ticket_2.png)
 
-    S1 @query 2: TODO
-![S1_query2_company_festival_permit.png](screenshots%2FS1_query2_company_festival_permit.png)
+    S1 @query 2: COMPANY - FESTIVAL - PERMIT
+![S1_query2_company_festival_permit_1.png](../S1/SCREENSHOTS/S1_query2_company_festival_permit_1.png)
+![S1_query2_company_festival_permit_2.png](../S1/SCREENSHOTS/S1_query2_company_festival_permit_2.png)
+
+    S1 @query 3: VISITOR (A), TICKET (D), CITY, FESTIVAL (B/X)
+![S1_query3_visitor_ticket_city_festival_1.png](../S1/SCREENSHOTS/S1_query3_visitor_ticket_city_festival_1.png)
+![S1_query3_visitor_ticket_city_festival_2.png](../S1/SCREENSHOTS/S1_query3_visitor_ticket_city_festival_2.png)
+
+    S1 @query 4: TICKETPLATFORM (C), TICKET (D), FESTIVAL (B/X), COMPANY (A)
+![S1_query4_ticketplatform_ticket_festival_company_1.png](../S1/SCREENSHOTS/S1_query4_ticketplatform_ticket_festival_company_1.png)
+![S1_query4_ticketplatform_ticket_festival_company_2.png](../S1/SCREENSHOTS/S1_query4_ticketplatform_ticket_festival_company_2.png)
 
     S2 @query 1: FESTIVAL (B/X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (W) – GENRE
 ![S2_query1_festival_stage_performance.png](screenshots%2FS2_query1_festival_stage_performance.png)
