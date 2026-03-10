@@ -30,6 +30,7 @@ GRANT CREATE SESSION TO s1_visitor;
 -- ============================================================
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON PROJECT.Visitor TO s1_visitor WITH GRANT OPTION;
+GRANT SELECT ON PROJECT.City TO s1_visitor; -- Nodig voor het DML gedeelte van S1 Scenario uitwerking.
 GRANT ALTER ON PROJECT.Visitor TO s1_visitor;
 
 
@@ -119,6 +120,9 @@ VALUES ('Thomas', 'Peeters', TO_DATE('11-07-1994', 'DD-MM-YYYY'),
         (SELECT City_ID FROM PROJECT.City WHERE Zipcode = '2000' AND Country = 'Belgium'),
         'Male');
 
+-- Verwijder Thomas Peeters als s1_visitor indien deze reeds bestaat
+DELETE FROM PROJECT.Visitor
+WHERE Visitor_Email = 'thomas.peeters@gmail.com';
 
 -- ---- 6c: DDL voorbeeld – voeg een nieuw attribuut toe aan Visitor ----
 -- Uit te voeren als s1_visitor:
