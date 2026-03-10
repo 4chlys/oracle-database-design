@@ -8,14 +8,15 @@ DROP TABLE City CASCADE CONSTRAINTS PURGE;
 DROP TABLE Company CASCADE CONSTRAINTS PURGE;
 
 -- S1 Tables
-CREATE TABLE Company (
-                         Company_ID             NUMBER GENERATED ALWAYS AS IDENTITY,
-                         Company_Name           VARCHAR2(50 CHAR) NOT NULL,
-                         Company_Founding_Year  NUMBER(4),
-                         CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
-                         CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
-                         CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < 2026),
-                         CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
+CREATE TABLE Company
+(
+    Company_ID            NUMBER GENERATED ALWAYS AS IDENTITY,
+    Company_Name          VARCHAR2(50 CHAR) NOT NULL,
+    Company_Founding_Year NUMBER(4),
+    CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
+    CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
+    CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < 2026),
+    CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
 );
 
 CREATE TABLE City
@@ -43,10 +44,8 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
-                       CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
-                         CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01'),
-                         CONSTRAINT Visitor_Email_chk CHECK (REGEXP_LIKE(Visitor_Email, '^[^@]+@[^@]+\.[^@]+$')),
-                         CONSTRAINT Visitor_Gender_chk CHECK (Visitor_Gender IN ('Male', 'Female', 'Other', 'Prefer not to say'))
+    CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
+    CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01'),
 );
 
 CREATE TABLE TicketPlatform
@@ -59,18 +58,19 @@ CREATE TABLE TicketPlatform
     CONSTRAINT TicketPlatform_URL_UQ UNIQUE (TicketPlatform_URL)
 );
 
-CREATE TABLE Permit (
-                        Permit_ID                 NUMBER GENERATED ALWAYS AS IDENTITY,
-                        Permit_Category           VARCHAR2(50 CHAR),
-                        Permit_Description        VARCHAR2(100 CHAR),
-                        Permit_Reception_Date     DATE,
-                        Permit_Expiration_Date    DATE,
-                        Permit_Application_Date   DATE,
-                        Festival_ID               NUMBER,
-                        CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
-                        CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
-                        CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
-                        CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= Date '2026-03-10')
+CREATE TABLE Permit
+(
+    Permit_ID               NUMBER GENERATED ALWAYS AS IDENTITY,
+    Permit_Category         VARCHAR2(50 CHAR),
+    Permit_Description      VARCHAR2(100 CHAR),
+    Permit_Reception_Date   DATE,
+    Permit_Expiration_Date  DATE,
+    Permit_Application_Date DATE,
+    Festival_ID             NUMBER,
+    CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
+    CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
+    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
+    CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= Date '2026-03-10')
 );
 
 CREATE TABLE Ticket
@@ -95,30 +95,29 @@ CREATE TABLE Ticket
     CONSTRAINT Ticket_TicketPlatform_FK FOREIGN KEY (TicketPlatform_ID) REFERENCES TicketPlatform (TicketPlatform_ID),
     CONSTRAINT Ticket_Price_chk CHECK (Ticket_Price > 0),
     CONSTRAINT Ticket_Barcode_chk CHECK (LENGTH(Ticket_Barcode) BETWEEN 8 AND 14),
-    CONSTRAINT Ticket_Currency_chk CHECK (REGEXP_LIKE(Ticket_Currency, '^[A-Z]{3}$')),
-                        CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= Date '2026-03-10'),
-                        CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
+    CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= Date '2026-03-10'),
+    CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
 );
 
 -- Shared Table (Festival)
-CREATE TABLE Festival (
-                          Festival_ID             NUMBER GENERATED ALWAYS AS IDENTITY,
-                          Festival_Name           VARCHAR2(200 CHAR) NOT NULL,
-                          Company_ID              NUMBER,
-                          Festival_StartDate      DATE,
-                          Festival_EndDate        DATE,
-                          Festival_Location       VARCHAR2(200 CHAR),
-                          City_ID                 NUMBER,
-                          Festival_Opening_Hour   DATE,
-                          Festival_Closing_Hour   DATE,
-                          Festival_Capacity       NUMBER(7),
-                          CONSTRAINT Festival_PK PRIMARY KEY (Festival_ID),
-                          CONSTRAINT Festival_Company_Festival_FK FOREIGN KEY (Company_ID) REFERENCES Company (Company_ID),
-                          CONSTRAINT Festival_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
-                          CONSTRAINT Festival_Dates_chk CHECK (Festival_EndDate > Festival_StartDate),
-                          CONSTRAINT Festival_Hours_chk CHECK (Festival_Closing_Hour > Festival_Opening_Hour),
-                          CONSTRAINT Festival_Cap_chk CHECK (Festival_Capacity > 0),
-                          CONSTRAINT Festival_StartDate_chk CHECK (Festival_StartDate >= Date '2026-03-10')
+CREATE TABLE Festival
+(
+    Festival_ID           NUMBER GENERATED ALWAYS AS IDENTITY,
+    Festival_Name         VARCHAR2(200 CHAR) NOT NULL,
+    Company_ID            NUMBER,
+    Festival_StartDate    DATE,
+    Festival_EndDate      DATE,
+    Festival_Location     VARCHAR2(200 CHAR),
+    City_ID               NUMBER,
+    Festival_Opening_Hour DATE,
+    Festival_Closing_Hour DATE,
+    Festival_Capacity     NUMBER(7),
+    CONSTRAINT Festival_PK PRIMARY KEY (Festival_ID),
+    CONSTRAINT Festival_Company_Festival_FK FOREIGN KEY (Company_ID) REFERENCES Company (Company_ID),
+    CONSTRAINT Festival_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
+    CONSTRAINT Festival_Dates_chk CHECK (Festival_EndDate > Festival_StartDate),
+    CONSTRAINT Festival_Cap_chk CHECK (Festival_Capacity > 0),
+    CONSTRAINT Festival_StartDate_chk CHECK (Festival_StartDate >= Date '2026-03-10')
 );
 
 -- Add Festival foreign keys after Festival table creation (circular dependency, must stay as ALTER)
