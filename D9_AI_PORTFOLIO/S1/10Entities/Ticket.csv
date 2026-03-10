@@ -1,0 +1,22 @@
+Ticket_Price,Ticket_Currency,Ticket_Date,Ticket_Purchase_Date,Ticket_Description,Ticket_Barcode,Ticket_Type,Ticket_Status,Ticket_QR_Code,TicketPlatform_Name,Visitor_Email,Festival_Name
+320.00,EUR,19-JUL-2024,10-JAN-2024,Full weekend pass Tomorrowland,TML20240001AB,Weekend,Used,https://qr.tomorrowland.com/20240001,Ticketmaster Belgium,lena.maes@gmail.com,Tomorrowland Summer 2024
+89.50,EUR,04-JUL-2024,15-MAR-2024,Single day Friday Rock Werchter,RWF20240001CD,Day,Used,https://qr.rockwerchter.be/20240001,See Tickets,jonas.dewolf@hotmail.com,Rock Werchter 2024
+195.00,EUR,15-AUG-2024,01-APR-2024,4-day combi ticket Pukkelpop,PKP20240001EF,Combi,Used,https://qr.pukkelpop.be/20240001,Paylogic,sophie.janssen@outlook.com,Pukkelpop 2024
+290.00,EUR,07-AUG-2024,20-FEB-2024,7-day full island ticket Sziget,SZI20240001GH,Full Festival,Used,https://qr.szigetfestival.com/20240001,Eventbrite,pieter.claes@yahoo.com,Sziget Festival 2024
+145.00,EUR,29-JUN-2024,05-JAN-2024,Weekend ticket Roskilde,RSK20240001IJ,Weekend,Used,https://qr.roskilde.dk/20240001,Tele Ticket Service,nathalie.hermans@gmail.com,Roskilde Festival 2024
+375.00,GBP,25-JUN-2025,15-OCT-2024,Full Glastonbury ticket,GLA20250001KL,Full Festival,Valid,https://qr.glastonbury.co.uk/20250001,Dice FM,adrien.dupont@gmail.com,Glastonbury 2025
+185.00,EUR,29-MAY-2025,01-DEC-2024,3-day Primavera Sound pass,PRM20250001MN,Combi,Valid,https://qr.primaverasound.com/20250001,Fever Up,zara.ahmed@gmail.com,Primavera Sound 2025
+98.00,EUR,18-JUL-2025,10-FEB-2025,Weekend ticket Melt Festival,MLT20250001OP,Weekend,Valid,https://qr.meltfestival.de/20250001,TicketSwap,markus.bauer@web.de,Melt! Festival 2025
+220.00,EUR,08-MAR-2025,01-SEP-2024,Full week Tomorrowland Winter,TMW20250001QR,Full Festival,Used,https://qr.tomorrowland.com/winter20250001,Resident Advisor,elena.kovacs@gmail.com,Tomorrowland Winter 2025
+99.00,EUR,07-SEP-2025,20-APR-2025,2-day Lollapalooza Berlin pass,LLP20250001ST,Weekend,Valid,https://qr.lollaberlin.de/20250001,StubHub International,chloe.martin@gmail.com,Lollapalooza Berlin 2025
+195.00,EUR,15-AUG-2024,03-MAY-2024,Pukkelpop combi – Lena extra,PKP20240002AB,Combi,Used,https://qr.pukkelpop.be/20240002,Paylogic,lena.maes@gmail.com,Pukkelpop 2024
+320.00,EUR,19-JUL-2024,20-FEB-2024,Tomorrowland weekend – Jonas extra,TML20240002CD,Weekend,Used,https://qr.tomorrowland.com/20240002,Paylogic,jonas.dewolf@hotmail.com,Tomorrowland Summer 2024
+375.00,GBP,25-JUN-2025,01-NOV-2024,Glastonbury full – Sophie extra,GLA20250002EF,Full Festival,Valid,https://qr.glastonbury.co.uk/20250002,Dice FM,sophie.janssen@outlook.com,Glastonbury 2025
+145.00,EUR,29-JUN-2024,10-FEB-2024,Roskilde weekend – Pieter extra,RSK20240002GH,Weekend,Used,https://qr.roskilde.dk/20240002,Tele Ticket Service,pieter.claes@yahoo.com,Roskilde Festival 2024
+185.00,EUR,29-MAY-2025,05-JAN-2025,Primavera Sound – Nathalie extra,PRM20250002IJ,Combi,Valid,https://qr.primaverasound.com/20250002,Fever Up,nathalie.hermans@gmail.com,Primavera Sound 2025
+290.00,EUR,07-AUG-2024,01-MAR-2024,Sziget full – Adrien extra,SZI20240002KL,Full Festival,Used,https://qr.szigetfestival.com/20240002,Eventbrite,adrien.dupont@gmail.com,Sziget Festival 2024
+99.00,EUR,07-SEP-2025,10-MAY-2025,Lollapalooza Berlin – Zara extra,LLP20250002MN,Weekend,Valid,https://qr.lollaberlin.de/20250002,StubHub International,zara.ahmed@gmail.com,Lollapalooza Berlin 2025
+220.00,EUR,08-MAR-2025,15-OCT-2024,Tomorrowland Winter – Markus extra,TMW20250002OP,Full Festival,Used,https://qr.tomorrowland.com/winter20250002,Resident Advisor,markus.bauer@web.de,Tomorrowland Winter 2025
+98.00,EUR,18-JUL-2025,01-MAR-2025,Melt Festival – Elena extra,MLT20250002QR,Weekend,Valid,https://qr.meltfestival.de/20250002,TicketSwap,elena.kovacs@gmail.com,Melt! Festival 2025
+89.50,EUR,05-JUL-2024,20-APR-2024,Rock Werchter day – Chloe extra,RWF20240002ST,Day,Used,https://qr.rockwerchter.be/20240002,See Tickets,chloe.martin@gmail.com,Rock Werchter 2024
+99.00,EUR,07-SEP-2025,25-MAY-2025,Lollapalooza Berlin – Lena extra,LLP20250003UV,Weekend,Valid,https://qr.lollaberlin.de/20250003,Ticketmaster Belgium,lena.maes@gmail.com,Lollapalooza Berlin 2025
