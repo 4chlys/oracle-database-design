@@ -154,7 +154,7 @@ VALUES ('Rock Werchter 2024',
         (SELECT Company_ID FROM Company WHERE Company_Name = 'Rock Werchter Productions'),
         TO_DATE('04-07-2024','DD-MM-YYYY'), TO_DATE('07-07-2024','DD-MM-YYYY'),
         'Festivalpark Werchter',
-        (SELECT City_ID FROM City WHERE Zipcode = '3500' AND Country = 'Belgium'),
+        (SELECT City_ID FROM City WHERE Zipcode = '3118' AND Country = 'Belgium'),
         TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '15' HOUR,
         90000);
 
