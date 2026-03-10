@@ -21,7 +21,8 @@ FROM City;
 DELETE
 FROM Company;
 
-COMMIT;-- 1. COMPANY
+COMMIT;
+-- 1. COMPANY
 -- --------------------------------------------------------
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Tomorrowland NV', 2005);
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Rock Werchter Productions', 1975);
@@ -35,7 +36,7 @@ INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Primavera Sou
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Melt! Festival GmbH', 1997);
 
 -- --------------------------------------------------------
--- 2. CITY  (Zipcode is used in all subselects – guarantees 1 row)
+-- 2. CITY
 -- --------------------------------------------------------
 INSERT INTO City (Zipcode, City, Country) VALUES ('2000',   'Antwerp',     'Belgium');
 INSERT INTO City (Zipcode, City, Country) VALUES ('2850',   'Boom',        'Belgium');
@@ -48,9 +49,9 @@ INSERT INTO City (Zipcode, City, Country) VALUES ('08003',  'Barcelona',   'Spai
 INSERT INTO City (Zipcode, City, Country) VALUES ('06773',  'Ferropolis',  'Germany');
 INSERT INTO City (Zipcode, City, Country) VALUES ('10115',  'Berlin',      'Germany');
 
--- --------------------------------------------------------
--- 3. VISITOR  (City_ID via Zipcode + Country – guaranteed unique)
--- --------------------------------------------------------
+
+-- 3. VISITOR
+
 INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
                      Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
 VALUES ('Lena', 'Maes', TO_DATE('15-03-1995','DD-MM-YYYY'), 'lena.maes@gmail.com',
@@ -121,9 +122,9 @@ VALUES ('Chloe', 'Martin', TO_DATE('05-06-1996','DD-MM-YYYY'), 'chloe.martin@gma
         (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
         'Female');
 
--- --------------------------------------------------------
+
 -- 4. TICKETPLATFORM
--- --------------------------------------------------------
+
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticketmaster Belgium', 'https://www.ticketmaster.be');
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('See Tickets',          'https://www.seetickets.com');
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Paylogic',             'https://www.paylogic.com');
@@ -135,9 +136,9 @@ INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ti
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Resident Advisor',     'https://ra.co');
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('StubHub International','https://www.stubhub.com');
 
--- --------------------------------------------------------
+
 -- 5. FESTIVAL  (Company_ID via Company_Name; City_ID via Zipcode+Country)
--- --------------------------------------------------------
+
 INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
                       Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
 VALUES ('Tomorrowland Summer 2024',
@@ -238,9 +239,9 @@ VALUES ('Lollapalooza Berlin 2025',
         TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '12' HOUR,
         85000);
 
--- --------------------------------------------------------
+
 -- 6. PERMIT  (Festival_ID via Festival_Name – unique)
--- --------------------------------------------------------
+
 INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
 VALUES ('Noise', 'Noise exemption permit for outdoor amplified music',
         TO_DATE('01-01-2024','DD-MM-YYYY'), TO_DATE('15-02-2024','DD-MM-YYYY'), TO_DATE('22-07-2024','DD-MM-YYYY'),
@@ -351,9 +352,9 @@ VALUES ('Fire Safety', 'Lollapalooza Berlin pyrotechnics permit',
         TO_DATE('01-04-2025','DD-MM-YYYY'), TO_DATE('01-06-2025','DD-MM-YYYY'), TO_DATE('09-09-2025','DD-MM-YYYY'),
         (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
 
--- --------------------------------------------------------
+
 -- 7. GENRE
--- --------------------------------------------------------
+
 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Electronic',    1970, 'Chicago, USA',          128);
 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Rock',          1955, 'Memphis, USA',           120);
 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Pop',           1960, 'New York, USA',           110);
@@ -365,9 +366,9 @@ INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_B
 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Indie Rock',    1980, 'New York, USA',           115);
 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Reggae',        1960, 'Kingston, Jamaica',       80);
 
--- --------------------------------------------------------
+
 -- 8. ARTIST
--- --------------------------------------------------------
+
 INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
 VALUES ('Martin Garrix',      TO_DATE('14-05-1996','DD-MM-YYYY'), 500000,  'EUR', 'Netherlands');
 INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
@@ -389,9 +390,9 @@ VALUES ('Charlotte de Witte', TO_DATE('15-10-1992','DD-MM-YYYY'), 80000,   'EUR'
 INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
 VALUES ('Bicep',              TO_DATE('01-01-2009','DD-MM-YYYY'), 120000,  'GBP', 'United Kingdom');
 
--- --------------------------------------------------------
+
 -- 9. STAGE  (Festival_ID via Festival_Name)
--- --------------------------------------------------------
+
 INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
 VALUES ('Mainstage',
         (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'),
@@ -512,9 +513,9 @@ VALUES ('Perry Stage',
         'Second stage named after Lolla founder Perry Farrell', 25000, 80,
         'Second headline stage at Lollapalooza Berlin', 0);
 
--- --------------------------------------------------------
+
 -- 10. TICKET  (Visitor_ID via email; Festival_ID via name; TicketPlatform_ID via name)
--- --------------------------------------------------------
+
 
 -- Lena: Tomorrowland + Pukkelpop + Lollapalooza
 INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
@@ -673,9 +674,9 @@ VALUES (89.50, 'EUR', TO_DATE('05-07-2024','DD-MM-YYYY'), TO_DATE('20-04-2024','
         (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'chloe.martin@gmail.com'),
         (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
 
--- --------------------------------------------------------
+
 -- 11. PERFORMANCE  (Stage_ID via Stage_Name+Festival_Name; Artist_ID via name; Genre_ID via name)
--- --------------------------------------------------------
+
 
 -- Tomorrowland Summer 2024 – Mainstage
 INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)

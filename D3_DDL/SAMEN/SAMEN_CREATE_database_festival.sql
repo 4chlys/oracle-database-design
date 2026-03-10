@@ -12,15 +12,14 @@ DROP TABLE Artist CASCADE CONSTRAINTS PURGE;
 DROP TABLE Genre CASCADE CONSTRAINTS PURGE;
 
 -- S1
-CREATE TABLE Company
-(
-    Company_ID            NUMBER GENERATED ALWAYS AS IDENTITY,
-    Company_Name          VARCHAR2(50 CHAR) NOT NULL,
-    Company_Founding_Year NUMBER(4),
-    CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
-    CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
-    CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < EXTRACT(YEAR FROM SYSDATE)),
-    CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
+CREATE TABLE Company (
+                         Company_ID             NUMBER GENERATED ALWAYS AS IDENTITY,
+                         Company_Name           VARCHAR2(50 CHAR) NOT NULL,
+                         Company_Founding_Year  NUMBER(4),
+                         CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
+                         CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
+                         CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < 2026-03-10),
+                         CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
 );
 
 CREATE TABLE City
@@ -49,7 +48,7 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
-    CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < SYSDATE),
+    CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < DATE '2026-03-10'),
     CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01'),
     CONSTRAINT Visitor_Email_chk CHECK (REGEXP_LIKE(Visitor_Email, '^[^@]+@[^@]+\.[^@]+$')),
     CONSTRAINT Visitor_Gender_chk CHECK (Visitor_Gender IN ('Male', 'Female', 'Other', 'Prefer not to say'))
@@ -77,7 +76,7 @@ CREATE TABLE Permit
     CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
     CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
     CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
-    CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= SYSDATE)
+    CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= DATE '2026-03-10')
 );
 
 CREATE TABLE Ticket
@@ -105,7 +104,7 @@ CREATE TABLE Ticket
     CONSTRAINT Ticket_Currency_chk CHECK (REGEXP_LIKE(Ticket_Currency, '^[A-Z]{3}$')),
     CONSTRAINT Ticket_Status_chk CHECK (Ticket_Status IN ('ACTIVE', 'USED', 'CANCELLED', 'REFUNDED')),
     CONSTRAINT Ticket_Type_chk CHECK (Ticket_Type IN ('GENERAL', 'VIP', 'EARLY_BIRD')),
-    CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= SYSDATE),
+    CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= DATE '2026-03-10'),
     CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
 );
 
