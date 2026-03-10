@@ -112,11 +112,11 @@ CREATE TABLE Festival
     Festival_Closing_Hour DATE,
     Festival_Capacity     NUMBER(7),
     CONSTRAINT Festival_PK PRIMARY KEY (Festival_ID),
-    CONSTRAINT Festival_Company_Festival_FK FOREIGN KEY (Company_ID) REFERENCES Company (Company_ID),
-    CONSTRAINT Festival_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
     CONSTRAINT Festival_Dates_chk CHECK (Festival_EndDate > Festival_StartDate),
+    CONSTRAINT Festival_Hours_chk CHECK (Festival_Closing_Hour > Festival_Opening_Hour),
     CONSTRAINT Festival_Cap_chk CHECK (Festival_Capacity > 0),
-    CONSTRAINT Festival_StartDate_chk CHECK (Festival_StartDate >= Date '2026-03-10')
+    CONSTRAINT Festival_Company_Festival_FK FOREIGN KEY (Company_ID) REFERENCES Company (Company_ID),
+    CONSTRAINT Festival_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID)
 );
 
 -- Add Festival foreign keys after Festival table creation (circular dependency)
