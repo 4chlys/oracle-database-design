@@ -1,11 +1,9 @@
 -- S2 QUERIES - Music Festival Database
 -- Student: Jonas Friedhoff
--- S2 tables (WXYZ): Genre , Artist (W), Stage (Y), Performance (Z)
+-- S2 tables (WXYZ): Genre, Artist (W), Stage (Y), Performance (Z)
 -- Shared table: Festival (X)
 
--- ============================================================
 -- Count query: row counts for all tables
--- ============================================================
 
 SELECT 'S2_  : Genre'          AS "Table", COUNT(*) AS "Count" FROM Genre
 UNION ALL
@@ -30,15 +28,13 @@ UNION ALL
 SELECT 'S2_   : Permit',         COUNT(*) FROM Permit;
 
 
--- ============================================================
 -- Query 1 (WXYZ): 2-level deep relationship
 -- Festival → Stage → Performance → Artist + Genre
 -- Shows the full lineup per festival: which artist performs
 -- on which stage, in which genre, and at what time.
 -- All user-data columns from S2 tables are included (no IDs).
 -- Tables joined: Festival (X), Stage (Y), Performance (Z),
---                Artist (), Genre  –  5 tables
--- ============================================================
+--                Artist (), Genre – 5 tables
 
 SELECT
     f.Festival_Name,
@@ -74,13 +70,12 @@ JOIN Genre       g ON g.Genre_ID     = p.Genre_ID
 ORDER BY f.Festival_Name, s.Stage_Name, p.Performance_Start_Time;
 
 
--- ============================================================
+
 -- Query 2 (WXYZ): Many-to-many relationship (Artist ↔ Festival)
 -- An artist can perform at many festivals, and a festival
 -- hosts many artists. The link runs through Performance + Stage.
 -- Tables joined: Artist (W), Performance (Z), Genre,
---                Stage (Y), Festival (X) –  5 tables
--- ============================================================
+--                Stage (Y), Festival (X) – 5 tables
 
 SELECT
     a.Artist_Name,
@@ -104,12 +99,11 @@ JOIN Festival    f ON f.Festival_ID = s.Festival_ID
 ORDER BY a.Artist_Name, f.Festival_Name, p.Performance_Start_Time;
 
 
--- ============================================================
 -- Query 3: Linking previously unshown tables – Festival organisation
 -- Shows how Company, City, and Permit connect to Festival
 -- (and thus indirectly to Stage/Performance/Artist/Genre).
--- Tables joined: Festival, Company, City, Permit  –  4 tables
--- ============================================================
+-- Tables joined: Festival, Company, City, Permit – 4 tables
+
 
 SELECT
     f.Festival_Name,
@@ -134,13 +128,11 @@ LEFT JOIN Permit pe ON pe.Festival_ID = f.Festival_ID
 ORDER BY f.Festival_Name, pe.Permit_Category;
 
 
--- ============================================================
 -- Query 4: Linking previously unshown tables – Ticket sales
 -- Shows how Ticket, Visitor, City (visitor address),
 -- and TicketPlatform connect to Festival.
 -- Tables joined: Festival, Ticket, Visitor, City,
---                TicketPlatform  –  5 tables
--- ============================================================
+--                TicketPlatform – 5 tables
 
 SELECT
     f.Festival_Name,

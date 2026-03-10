@@ -5,15 +5,19 @@ Milestone 3: Creatie Databank en Security
     Identity columns
 ---
 - Mandatory
-    **- A: players: player_id**
-    - B/X: computergames: game_id
-    - Y: youtubevideos: video_id
-    - Z: youtubechannels: channel_id
+    **
+- - A: Visitor: Visitor_ID**
+  - B/X: Festival: Festival_ID
+  - Y: Stage: Stage_ID
+  - Z: Performance: Performance_ID
 - other:
-    - C: gameservers: server_id
-    - W: videocategories: category_id
-    - gamestudios: studio_id
-    - Locations: location_id
+    - C: TicketPlatform: TicketPlatform_ID
+    - D: Ticket: Ticket_ID
+    - Company: Company_ID
+    - City: City_ID
+    - Permit: Permit_ID
+    - Artist: Artist_ID
+    - Genre: Genre_ID
 
       Table Counts
 ---
@@ -22,41 +26,63 @@ Milestone 3: Creatie Databank en Security
 
 Queries
 --- 
-    S1 @query 1: GAMESTUDIO - COMPUTERGAMES (B/X) - PLAYERS (A) - GAMESESSIONS (D) 
-![S1_query1_studios_games_players.png](screenshots%2FS1_query1_studios_games_players.png)
+    S1 @query 1: TODO
+![S1_query1_visitor_festival_ticket.png](screenshots%2FS1_query1_visitor_festival_ticket.png)
 
-    S1 @query 2: PLAYER (A) - GAMESERVERS (C)
-![S1_query3_gameservers.png](screenshots%2FS1_query3_gameservers.png)
+    S1 @query 2: TODO
+![S1_query2_company_festival_permit.png](screenshots%2FS1_query2_company_festival_permit.png)
 
-    S2 @query 1: FESTIVAL (X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (X) – GENRE
-![S2_query1_game_videos.png](screenshots%2FS2_query1_game_videos.png)
+    S2 @query 1: FESTIVAL (B/X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (W) – GENRE
+![S2_query1_festival_stage_performance.png](screenshots%2FS2_query1_festival_stage_performance.png)
 
-    S2 @query 2: ARTIST (W) – PERFORMANCE (Z) – GENRE (W) – STAGE (Y) – FESTIVAL (X)
-![S1_query2_player_locations.png](screenshots%2FS1_query2_player_locations.png)
+    S2 @query 2: ARTIST (W) – PERFORMANCE (Z) – GENRE – STAGE (Y) – FESTIVAL (B/X)
+![S2_query2_artist_performance_genre.png](screenshots%2FS2_query2_artist_performance_genre.png)
 
-    S2 @query 3: FESTIVAL – COMPANY – CITY – PERMIT
+    S2 @query 3: FESTIVAL  – COMPANY – CITY – PERMIT
+![S2_query3_festival_company_city.png](screenshots%2FS2_query3_festival_company_city.png)
 
     S2 @query 4: FESTIVAL – TICKET – VISITOR – CITY – TICKETPLATFORM
+![S2_query4_festival_ticket_visitor.png](screenshots%2FS2_query4_festival_ticket_visitor.png)
 Bewijs Domeinen - constraints M2
 --- 
 
     S1
-- Player: zipcodes - minimum 4 characters
+- Company: founding year must be between 1800 and 2025
 
-![S1_bewijs_zipcodes.png](screenshots%2FS1_bewijs_zipcodes.png)
+![S1_bewijs_company_founding_year.png](screenshots%2FS1_bewijs_company_founding_year.png)
 
-- Computergame: release_date < last_updated
+- Visitor: birthdate must be between 1900-01-01 and 2026-03-10
 
-![S1_bewijs_computergames_date.png](screenshots%2FS1_bewijs_computergames_date.png)
+![S1_bewijs_visitor_birthdate.png](screenshots%2FS1_bewijs_visitor_birthdate.png)
+
+- Permit: application_date < reception_date < expiration_date
+
+![S1_bewijs_permit_dates.png](screenshots%2FS1_bewijs_permit_dates.png)
+
+- Ticket: price > 0, barcode length between 8 and 14, purchase_date <= ticket_date
+
+![S1_bewijs_ticket_constraints.png](screenshots%2FS1_bewijs_ticket_constraints.png)
+
+- Festival: end_date > start_date, closing_hour > opening_hour, capacity > 0
+
+![S1_bewijs_festival_constraints.png](screenshots%2FS1_bewijs_festival_constraints.png)
 
     S2
-- Influencer_youtubevideo duration between 1 minute and 24 hours
+- Genre: BPM >= 0, origin year < 2026
 
-![S2_bewijs_video_duration.png](screenshots%2FS2_bewijs_video_duration.png)
+![S2_bewijs_genre_constraints.png](screenshots%2FS2_bewijs_genre_constraints.png)
 
-- Videos category name must start with a capital.
+- Artist: price >= 0, currency is 3 uppercase letters (ISO 4217), land of birth >= 4 chars, birthday < 2026-03-10
 
-![S2_bewijs_videocategorie_name.png](screenshots%2FS2_bewijs_videocategorie_name.png)
+![S2_bewijs_artist_constraints.png](screenshots%2FS2_bewijs_artist_constraints.png)
+
+- Stage: standing capacity >= 0, toilet count >= 0, roofed status IN (0, 1), name unique per festival
+
+![S2_bewijs_stage_constraints.png](screenshots%2FS2_bewijs_stage_constraints.png)
+
+- Performance: end time > start time
+
+![S2_bewijs_performance_times.png](screenshots%2FS2_bewijs_performance_times.png)
 
 
 Security
@@ -65,58 +91,67 @@ IntelliJ Tree View
 
 ![tables_views.png](screenshots%2Ftables_views.png)
 
-    S1: 
+    S1: user s1_visitor, role festival_s1_role, view v_visitor_ticket
 
-- User Sys privs S1
-```
-SELECT *
-FROM USER_SYS_PRIVS
-WHERE USERNAME = (SELECT USER FROM dual);
-```
-
-![S1_user_sys_privs.png](..%2FS1%2FS1_user_sys_privs.png)
 - User tab privs S1
-```
-  SELECT *
-  FROM USER_TAB_PRIVS
-  WHERE GRANTEE = (SELECT USER FROM dual);
+```sql
+SELECT *
+FROM USER_TAB_PRIVS
+WHERE GRANTEE = (SELECT USER FROM dual);
 ```
 ![S1_user_tab_privs.png](..%2FS1%2FS1_user_tab_privs.png)
-- User col privs S1
-```
+
+- User Role privs S1
+```sql
 SELECT *
-FROM USER_COL_PRIVS;
+FROM USER_ROLE_PRIVS;
 ```
-![S1_user_col_privs.png](..%2FS1%2FS1_user_col_privs.png)
-- view S1 (synonym) 
-![S1_view_topscores.png](..%2FS1%2FS1_view_topscores.png)
+![S1_user_role_privs.png](..%2FS1%2FS1_user_role_privs.png)
+
+- Role Tab privs S1
+```sql
+SELECT *
+FROM role_tab_privs
+WHERE role = 'FESTIVAL_S1_ROLE'
+ORDER BY TABLE_NAME;
+```
+![S1_role_tab_privs.png](..%2FS1%2FS1_role_tab_privs.png)
+
+- view v_visitor_ticket
+![S1_view_v_visitor_ticket.png](..%2FS1%2FS1_view_v_visitor_ticket.png)
+
+- INSERT VIEW - key preserved table (Ticket)
+![S1_key_preserved_table.png](..%2FS1%2FS1_key_preserved_table.png)
 
 
-    S2:
-- User tab privs
-```
-  SELECT *
-  FROM USER_TAB_PRIVS
-  WHERE GRANTEE = (SELECT USER FROM dual);
+    S2: user s2_stage, role festival_s2_role, view v_stage_performance
+
+- User tab privs S2
+```sql
+SELECT *
+FROM USER_TAB_PRIVS
+WHERE GRANTEE = (SELECT USER FROM dual);
 ```
 ![S2_user_tab_privs.png](..%2FS2%2FS2_user_tab_privs.png)
+
 - User Role privs S2
-```
+```sql
 SELECT *
 FROM USER_ROLE_PRIVS;
 ```
 ![S2_user_role_privs.png](..%2FS2%2FS2_user_role_privs.png)
+
 - Role Tab privs S2
+```sql
+SELECT *
+FROM role_tab_privs
+WHERE role = 'FESTIVAL_S2_ROLE'
+ORDER BY TABLE_NAME;
 ```
-  SELECT *
-  FROM role_tab_privs
-  WHERE role = 'ROLE_INFLUENCERS'
-  ORDER BY TABLE_name;
-  ```
 ![S2_Role_tab_privs.png](..%2FS2%2FS2_Role_tab_privs.png)
 
-- view v_gams_chans
-![s2_view_v_game_chans.png](..%2FS2%2Fs2_view_v_game_chans.png)
+- view v_stage_performance
+![S2_view_v_stage_performance.png](..%2FS2%2FS2_view_v_stage_performance.png)
 
-- INSERT VIEW - key preserved table
+- INSERT VIEW - key preserved table (Performance)
 ![S2_key_preserved_table.png](..%2FS2%2FS2_key_preserved_table.png)
