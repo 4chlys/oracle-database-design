@@ -10,7 +10,7 @@ DROP ROLE festival_s2_role;
 DROP VIEW v_stage_performance;
 
 -- 1. Create a Role
---    Table Y (Stage)      : full DML + DDL
+--    Table Y (Stage): full DML + DDL
 --    Table Z (Performance): SELECT, INSERT, DELETE
 CREATE ROLE festival_s2_role;
 
@@ -75,3 +75,7 @@ VALUES (
        AND Festival_ID = (SELECT Festival_ID FROM PROJECT.Festival
                           WHERE Festival_Name = 'Tomorrowland Summer 2024'))
 );
+
+SELECT *
+FROM USER_TAB_PRIVS
+WHERE GRANTEE = (SELECT USER FROM dual);

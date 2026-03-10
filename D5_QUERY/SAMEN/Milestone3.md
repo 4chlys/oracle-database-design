@@ -5,7 +5,7 @@ Milestone 3: Creatie Databank en Security
     Identity columns
 ---
 - Mandatory
-    - A: players: player_id
+    **- A: players: player_id**
     - B/X: computergames: game_id
     - Y: youtubevideos: video_id
     - Z: youtubechannels: channel_id
