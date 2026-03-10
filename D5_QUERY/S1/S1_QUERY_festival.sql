@@ -17,26 +17,27 @@
 --   S1_    : Permit
 -- ============================================================
 
-SELECT 'S1-A   : Visitor' AS table_name, (SELECT COUNT(*) FROM Visitor) AS table_count
-FROM dual
+SELECT 'S1-A   : Visitor' AS table_name, COUNT(*) AS table_count
+FROM Visitor
 UNION ALL
-SELECT 'S1-B/X : Festival' AS table_name, (SELECT COUNT(*) FROM Festival) AS table_count
-FROM dual
+SELECT 'S1-B/X : Festival' AS table_name, COUNT(*) AS table_count
+FROM Festival
 UNION ALL
-SELECT 'S1-C   : TicketPlatform' AS table_name, (SELECT COUNT(*) FROM TicketPlatform) AS table_count
-FROM dual
+SELECT 'S1-C   : TicketPlatform' AS table_name, COUNT(*) AS table_count
+FROM TicketPlatform
 UNION ALL
-SELECT 'S1-D   : Ticket' AS table_name, (SELECT COUNT(*) FROM Ticket) AS table_count
-FROM dual
+SELECT 'S1-D   : Ticket' AS table_name, COUNT(*) AS table_count
+FROM Ticket
 UNION ALL
-SELECT 'S1_    : Company' AS table_name, (SELECT COUNT(*) FROM Company) AS table_count
-FROM dual
+SELECT 'S1_    : Company' AS table_name, COUNT(*) AS table_count
+FROM Company
 UNION ALL
-SELECT 'S1_    : City' AS table_name, (SELECT COUNT(*) FROM City) AS table_count
-FROM dual
+SELECT 'S1_    : City' AS table_name, COUNT(*) AS table_count
+FROM City
 UNION ALL
-SELECT 'S1_    : Permit' AS table_name, (SELECT COUNT(*) FROM Permit) AS table_count
-FROM dual;
+SELECT 'S1_    : Permit' AS table_name, COUNT(*) AS table_count
+FROM Permit
+;
 
 
 -- ============================================================
