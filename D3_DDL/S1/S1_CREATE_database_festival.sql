@@ -45,7 +45,7 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
     CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
-    CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01'),
+    CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01')
 );
 
 CREATE TABLE TicketPlatform
@@ -120,7 +120,7 @@ CREATE TABLE Festival
     CONSTRAINT Festival_StartDate_chk CHECK (Festival_StartDate >= Date '2026-03-10')
 );
 
--- Add Festival foreign keys after Festival table creation (circular dependency, must stay as ALTER)
+-- Add Festival foreign keys after Festival table creation (circular dependency)
 ALTER TABLE Permit
     ADD CONSTRAINT Festival_Permit_FK
         FOREIGN KEY (Festival_ID) REFERENCES Festival (Festival_ID);
@@ -128,6 +128,3 @@ ALTER TABLE Permit
 ALTER TABLE Ticket
     ADD CONSTRAINT Ticket_Festival_FK
         FOREIGN KEY (Festival_ID) REFERENCES Festival (Festival_ID);
-
-select *
-from Company;

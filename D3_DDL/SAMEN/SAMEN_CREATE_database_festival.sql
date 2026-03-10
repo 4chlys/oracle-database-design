@@ -49,7 +49,7 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
     CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
-    CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01'),
+    CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01')
 );
 
 CREATE TABLE TicketPlatform
