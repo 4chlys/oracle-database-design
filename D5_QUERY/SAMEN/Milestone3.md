@@ -35,14 +35,6 @@ Queries
 ![S1_query2_company_festival_permit_1.png](screenshots/S1_query2_company_festival_permit_1.png)
 ![S1_query2_company_festival_permit_2.png](screenshots/S1_query2_company_festival_permit_2.png)
 
-    S1 @query 3: VISITOR (A), TICKET (D), CITY, FESTIVAL (B/X)
-![S1_query3_visitor_ticket_city_festival_1.png](screenshots/S1_query3_visitor_ticket_city_festival_1.png)
-![S1_query3_visitor_ticket_city_festival_2.png](screenshots/S1_query3_visitor_ticket_city_festival_2.png)
-
-    S1 @query 4: TICKETPLATFORM (C), TICKET (D), FESTIVAL (B/X), COMPANY (A)
-![S1_query4_ticketplatform_ticket_festival_company_1.png](screenshots/S1_query4_ticketplatform_ticket_festival_company_1.png)
-![S1_query4_ticketplatform_ticket_festival_company_2.png](screenshots/S1_query4_ticketplatform_ticket_festival_company_2.png)
-
     S2 @query 1: FESTIVAL (B/X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (W) – GENRE
 ![S2_query1_festival_stage_performance.png](screenshots%2FS2_query1_festival_stage_performance.png)
 
