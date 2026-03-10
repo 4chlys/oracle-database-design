@@ -123,3 +123,5 @@ ALTER TABLE Permit ADD CONSTRAINT Festival_Permit_FK
 
 ALTER TABLE Ticket ADD CONSTRAINT Ticket_Festival_FK
     FOREIGN KEY (Festival_ID) REFERENCES Festival (Festival_ID);
+
+select * from Company;

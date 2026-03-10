@@ -1,0 +1,21 @@
+Permit_Category,Permit_Description,Permit_Application_Date,Permit_Reception_Date,Permit_Expiration_Date,Festival_Name
+Noise,Noise exemption permit for outdoor amplified music,01-JAN-2024,15-FEB-2024,22-JUL-2024,Tomorrowland Summer 2024
+Environmental,Environmental impact clearance for large outdoor event,10-JAN-2024,20-FEB-2024,08-JUL-2024,Rock Werchter 2024
+Public Safety,Crowd management and emergency exit permit,05-FEB-2024,01-MAR-2024,19-AUG-2024,Pukkelpop 2024
+Alcohol,License for on-site alcohol sales and distribution,01-MAR-2024,15-APR-2024,15-AUG-2024,Sziget Festival 2024
+Fire Safety,Pyrotechnics and open flame usage permit,10-FEB-2024,05-MAR-2024,10-JUL-2024,Roskilde Festival 2024
+Construction,Temporary stage and infrastructure construction permit,01-NOV-2024,15-DEC-2024,03-JUL-2025,Glastonbury 2025
+Health,Medical services and first aid station permit,01-DEC-2024,20-JAN-2025,05-JUN-2025,Primavera Sound 2025
+Traffic,Road closure and traffic management permit,15-JAN-2025,01-MAR-2025,25-JUL-2025,Melt! Festival 2025
+Noise,Night noise exemption permit for alpine event,01-OCT-2024,01-NOV-2024,16-MAR-2025,Tomorrowland Winter 2025
+Security,Private security and perimeter control permit,01-MAR-2025,15-APR-2025,10-SEP-2025,Lollapalooza Berlin 2025
+Alcohol,Beer and spirits vendor license Tomorrowland,05-FEB-2024,20-MAR-2024,22-JUL-2024,Tomorrowland Summer 2024
+Traffic,Road closure permit A12 motorway approach,10-MAR-2024,01-MAY-2024,22-JUL-2024,Tomorrowland Summer 2024
+Public Safety,Emergency services coordination permit,01-FEB-2024,15-MAR-2024,08-JUL-2024,Rock Werchter 2024
+Noise,Extended late-night noise exemption Rock Werchter,15-FEB-2024,01-APR-2024,08-JUL-2024,Rock Werchter 2024
+Alcohol,Alcohol sales license Pukkelpop,10-MAR-2024,20-APR-2024,19-AUG-2024,Pukkelpop 2024
+Health,First aid and medical tent permit Sziget,01-APR-2024,01-MAY-2024,13-AUG-2024,Sziget Festival 2024
+Construction,Temporary structure permit Roskilde camping,01-JAN-2024,01-FEB-2024,07-JUL-2024,Roskilde Festival 2024
+Noise,Glastonbury 2025 late-night noise exemption,15-DEC-2024,01-FEB-2025,30-JUN-2025,Glastonbury 2025
+Traffic,Melt Festival site access road permit,01-MAR-2025,15-APR-2025,21-JUL-2025,Melt! Festival 2025
+Fire Safety,Lollapalooza Berlin pyrotechnics permit,01-APR-2025,01-JUN-2025,09-SEP-2025,Lollapalooza Berlin 2025

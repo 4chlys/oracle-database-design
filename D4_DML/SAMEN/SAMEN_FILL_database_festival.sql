@@ -1,609 +1,1060 @@
-DELETE FROM Performance;
-DELETE FROM Stage;
-DELETE FROM Permit;
-DELETE FROM Ticket;
-DELETE FROM Festival;
-DELETE FROM Artist;
-DELETE FROM Genre;
-DELETE FROM TicketPlatform;
-DELETE FROM Visitor;
-DELETE FROM City;
-DELETE FROM Company;
+DELETE
+FROM Performance;
+DELETE
+FROM Stage;
+DELETE
+FROM Permit;
+DELETE
+FROM Ticket;
+DELETE
+FROM Festival;
+DELETE
+FROM Artist;
+DELETE
+FROM Genre;
+DELETE
+FROM TicketPlatform;
+DELETE
+FROM Visitor;
+DELETE
+FROM City;
+DELETE
+FROM Company;
 
-COMMIT;
--- ═══════════════════════════════════════
--- 1. COMPANY
--- ═══════════════════════════════════════
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Live Nation Entertainment', 1996);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('AEG Presents', 2002);
+COMMIT;-- 1. COMPANY
+-- --------------------------------------------------------
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Tomorrowland NV', 2005);
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Rock Werchter Productions', 1975);
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Pukkelpop VZW', 1985);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Coachella Goldenvoice', 1999);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Glastonbury Festivals Ltd', 1970);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('FKP Scorpio', 1999);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('ID&T', 1992);
+INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Live Nation Belgium', 1996);
+INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('AEG Presents Europe', 2000);
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Sziget Cultural Management', 1993);
+INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Roskilde Festival Society', 1971);
+INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Glastonbury Festivals Ltd', 1970);
 INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Primavera Sound SL', 2001);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Ultra Music Festival LLC', 1999);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Dour Festival ASBL', 1989);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Graspop Metal Meeting VZW', 1996);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Lowlands Festival BV', 1993);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Secret Solstice ehf', 2014);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Fuji Rock Festival Inc', 1997);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Lollapalooza LLC', 1991);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Download Festival Ltd', 2003);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Burning Man Project', 1986);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Roskilde Festival', 1971);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Exit Festival DOO', 2000);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Sonar SL', 1994);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Boom Festival Lda', 1997);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Flow Festival Oy', 2004);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Moogfest Inc', 2004);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Afropunk LLC', 2005);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('We The Fest PT', 2013);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Untold Events SRL', 2015);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Dreamstate LLC', 2015);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Global Gathering Ltd', 1999);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Electric Daisy Carnival LLC', 1993);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Defqon.1 Events BV', 2003);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Awakenings Foundation', 1997);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Sensation BV', 2000);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Extrema Outdoor BV', 1993);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Decibel Outdoor BV', 2006);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Weather Festival SAS', 2012);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Junction 2 Ltd', 2016);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Dimensions Festival Ltd', 2012);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Outlook Festival Ltd', 2008);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Hideout Festival Ltd', 2011);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Sunburn Events Pvt Ltd', 2007);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Timegate Events Oy', 2010);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Creamfields Ltd', 1998);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('SW4 Events Ltd', 2004);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Festival Republic Ltd', 2001);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('C3 Presents LLC', 2003);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Melt Festival GmbH', 1997);
-INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Rock for People sro', 2001);
+INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Melt! Festival GmbH', 1997);
 
--- ═══════════════════════════════════════
--- 2. CITY
--- ═══════════════════════════════════════
-INSERT INTO City (Zipcode, City, Country) VALUES ('2000', 'Antwerp', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1000', 'Brussels', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('9000', 'Ghent', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('3960', 'Hasselt', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('7370', 'Dour', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('2400', 'Dessel', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('2890', 'Werchter', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('90210', 'Los Angeles', 'USA');
-INSERT INTO City (Zipcode, City, Country) VALUES ('10001', 'New York', 'USA');
-INSERT INTO City (Zipcode, City, Country) VALUES ('60601', 'Chicago', 'USA');
-INSERT INTO City (Zipcode, City, Country) VALUES ('33101', 'Miami', 'USA');
-INSERT INTO City (Zipcode, City, Country) VALUES ('78701', 'Austin', 'USA');
-INSERT INTO City (Zipcode, City, Country) VALUES ('SW1A1AA', 'London', 'United Kingdom');
-INSERT INTO City (Zipcode, City, Country) VALUES ('BS11AA', 'Bristol', 'United Kingdom');
-INSERT INTO City (Zipcode, City, Country) VALUES ('75001', 'Paris', 'France');
-INSERT INTO City (Zipcode, City, Country) VALUES ('69001', 'Lyon', 'France');
-INSERT INTO City (Zipcode, City, Country) VALUES ('20354', 'Hamburg', 'Germany');
-INSERT INTO City (Zipcode, City, Country) VALUES ('10115', 'Berlin', 'Germany');
-INSERT INTO City (Zipcode, City, Country) VALUES ('80331', 'Munich', 'Germany');
-INSERT INTO City (Zipcode, City, Country) VALUES ('08001', 'Barcelona', 'Spain');
-INSERT INTO City (Zipcode, City, Country) VALUES ('28001', 'Madrid', 'Spain');
-INSERT INTO City (Zipcode, City, Country) VALUES ('20121', 'Milan', 'Italy');
-INSERT INTO City (Zipcode, City, Country) VALUES ('00100', 'Rome', 'Italy');
-INSERT INTO City (Zipcode, City, Country) VALUES ('30123', 'Venice', 'Italy');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1016', 'Amsterdam', 'Netherlands');
-INSERT INTO City (Zipcode, City, Country) VALUES ('5600', 'Eindhoven', 'Netherlands');
-INSERT INTO City (Zipcode, City, Country) VALUES ('5000', 'Budapest', 'Hungary');
-INSERT INTO City (Zipcode, City, Country) VALUES ('11000', 'Belgrade', 'Serbia');
-INSERT INTO City (Zipcode, City, Country) VALUES ('101', 'Reykjavik', 'Iceland');
-INSERT INTO City (Zipcode, City, Country) VALUES ('00100', 'Helsinki', 'Finland');
-INSERT INTO City (Zipcode, City, Country) VALUES ('0150', 'Oslo', 'Norway');
-INSERT INTO City (Zipcode, City, Country) VALUES ('4000', 'Roskilde', 'Denmark');
-INSERT INTO City (Zipcode, City, Country) VALUES ('11251', 'Stockholm', 'Sweden');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1010', 'Vienna', 'Austria');
-INSERT INTO City (Zipcode, City, Country) VALUES ('3000', 'Bern', 'Switzerland');
-INSERT INTO City (Zipcode, City, Country) VALUES ('110001', 'New Delhi', 'India');
-INSERT INTO City (Zipcode, City, Country) VALUES ('10001', 'Jakarta', 'Indonesia');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1600001', 'Tokyo', 'Japan');
-INSERT INTO City (Zipcode, City, Country) VALUES ('2000', 'Sydney', 'Australia');
-INSERT INTO City (Zipcode, City, Country) VALUES ('8001', 'Cape Town', 'South Africa');
-INSERT INTO City (Zipcode, City, Country) VALUES ('01310', 'Istanbul', 'Turkey');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1000', 'Mexico City', 'Mexico');
-INSERT INTO City (Zipcode, City, Country) VALUES ('01310', 'Sao Paulo', 'Brazil');
-INSERT INTO City (Zipcode, City, Country) VALUES ('C1000', 'Buenos Aires', 'Argentina');
-INSERT INTO City (Zipcode, City, Country) VALUES ('M5H', 'Toronto', 'Canada');
-INSERT INTO City (Zipcode, City, Country) VALUES ('100600', 'Beijing', 'China');
-INSERT INTO City (Zipcode, City, Country) VALUES ('3000', 'Leuven', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('4000', 'Liege', 'Belgium');
-INSERT INTO City (Zipcode, City, Country) VALUES ('1200', 'Geneva', 'Switzerland');
-INSERT INTO City (Zipcode, City, Country) VALUES ('20001', 'Warsaw', 'Poland');
+-- --------------------------------------------------------
+-- 2. CITY  (Zipcode is used in all subselects – guarantees 1 row)
+-- --------------------------------------------------------
+INSERT INTO City (Zipcode, City, Country) VALUES ('2000',   'Antwerp',     'Belgium');
+INSERT INTO City (Zipcode, City, Country) VALUES ('2850',   'Boom',        'Belgium');
+INSERT INTO City (Zipcode, City, Country) VALUES ('3500',   'Hasselt',     'Belgium');
+INSERT INTO City (Zipcode, City, Country) VALUES ('1000',   'Brussels',    'Belgium');
+INSERT INTO City (Zipcode, City, Country) VALUES ('1117BP', 'Budapest',    'Hungary');
+INSERT INTO City (Zipcode, City, Country) VALUES ('4000',   'Roskilde',    'Denmark');
+INSERT INTO City (Zipcode, City, Country) VALUES ('BA44AF', 'Glastonbury', 'United Kingdom');
+INSERT INTO City (Zipcode, City, Country) VALUES ('08003',  'Barcelona',   'Spain');
+INSERT INTO City (Zipcode, City, Country) VALUES ('06773',  'Ferropolis',  'Germany');
+INSERT INTO City (Zipcode, City, Country) VALUES ('10115',  'Berlin',      'Germany');
 
--- ═══════════════════════════════════════
--- 3. VISITOR
--- ═══════════════════════════════════════
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Lena', 'Vermeersch', TO_DATE('1995-03-14', 'YYYY-MM-DD'), 'lena.vermeersch@gmail.com', 'Nationalestraat 22', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Niels', 'De Smedt', TO_DATE('1990-07-22', 'YYYY-MM-DD'), 'niels.desmedt@hotmail.com', 'Meir 5', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Sophie', 'Jacobs', TO_DATE('1998-11-03', 'YYYY-MM-DD'), 'sophie.jacobs@outlook.com', 'Leliegracht 8', (SELECT City_ID FROM City WHERE City = 'Amsterdam' AND Country = 'Netherlands' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Thomas', 'Mueller', TO_DATE('1985-05-19', 'YYYY-MM-DD'), 'thomas.mueller@web.de', 'Unter den Linden 10', (SELECT City_ID FROM City WHERE City = 'Berlin' AND Country = 'Germany' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Emma', 'Dubois', TO_DATE('2001-02-28', 'YYYY-MM-DD'), 'emma.dubois@gmail.com', 'Rue de Rivoli 14', (SELECT City_ID FROM City WHERE City = 'Paris' AND Country = 'France' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Lars', 'Eriksson', TO_DATE('1993-08-11', 'YYYY-MM-DD'), 'lars.eriksson@gmail.com', 'Storgatan 3', (SELECT City_ID FROM City WHERE City = 'Stockholm' AND Country = 'Sweden' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Ava', 'Johnson', TO_DATE('1999-12-05', 'YYYY-MM-DD'), 'ava.johnson@yahoo.com', 'Sunset Blvd 101', (SELECT City_ID FROM City WHERE City = 'Los Angeles' AND Country = 'USA' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Carlos', 'Garcia', TO_DATE('1987-04-17', 'YYYY-MM-DD'), 'carlos.garcia@gmail.com', 'Gran Via 45', (SELECT City_ID FROM City WHERE City = 'Madrid' AND Country = 'Spain' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Yuki', 'Tanaka', TO_DATE('1996-09-30', 'YYYY-MM-DD'), 'yuki.tanaka@yahoo.co.jp', 'Shibuya 2-3-4', (SELECT City_ID FROM City WHERE City = 'Tokyo' AND Country = 'Japan' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Amara', 'Diallo', TO_DATE('2000-01-15', 'YYYY-MM-DD'), 'amara.diallo@gmail.com', 'Long Street 55', (SELECT City_ID FROM City WHERE City = 'Cape Town' AND Country = 'South Africa' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Pieter', 'Claes', TO_DATE('1992-06-25', 'YYYY-MM-DD'), 'pieter.claes@telenet.be', 'Groenplaats 1', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Olivia', 'Brown', TO_DATE('1997-03-08', 'YYYY-MM-DD'), 'olivia.brown@gmail.com', 'Baker Street 221B', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Marco', 'Rossi', TO_DATE('1988-10-20', 'YYYY-MM-DD'), 'marco.rossi@libero.it', 'Via Veneto 12', (SELECT City_ID FROM City WHERE City = 'Rome' AND Country = 'Italy' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Hana', 'Novak', TO_DATE('2002-07-14', 'YYYY-MM-DD'), 'hana.novak@seznam.cz', 'Wenceslas Sq 5', (SELECT City_ID FROM City WHERE City = 'Vienna' AND Country = 'Austria' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Ravi', 'Sharma', TO_DATE('1994-04-02', 'YYYY-MM-DD'), 'ravi.sharma@gmail.com', 'MG Road 88', (SELECT City_ID FROM City WHERE City = 'New Delhi' AND Country = 'India' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Jake', 'Williams', TO_DATE('1986-08-09', 'YYYY-MM-DD'), 'jake.williams@outlook.com', 'Fifth Ave 500', (SELECT City_ID FROM City WHERE City = 'New York' AND Country = 'USA' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Ingrid', 'Holm', TO_DATE('2003-01-30', 'YYYY-MM-DD'), 'ingrid.holm@gmail.com', 'Karl Johans gt 10', (SELECT City_ID FROM City WHERE City = 'Oslo' AND Country = 'Norway' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Kwame', 'Asante', TO_DATE('1990-05-18', 'YYYY-MM-DD'), 'kwame.asante@yahoo.com', 'Accra Mall Rd 3', (SELECT City_ID FROM City WHERE City = 'Cape Town' AND Country = 'South Africa' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Zoe', 'Papadopoulos', TO_DATE('1999-09-27', 'YYYY-MM-DD'), 'zoe.papadopoulos@gmail.com', 'Ermou 20', (SELECT City_ID FROM City WHERE City = 'Vienna' AND Country = 'Austria' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Bart', 'Willems', TO_DATE('1983-12-12', 'YYYY-MM-DD'), 'bart.willems@proximus.be', 'Keyserlei 18', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Chloe', 'Martin', TO_DATE('2001-06-06', 'YYYY-MM-DD'), 'chloe.martin@gmail.com', 'Rue des Halles 9', (SELECT City_ID FROM City WHERE City = 'Brussels' AND Country = 'Belgium' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Arjun', 'Patel', TO_DATE('1995-02-14', 'YYYY-MM-DD'), 'arjun.patel@gmail.com', 'Nariman Point 7', (SELECT City_ID FROM City WHERE City = 'New Delhi' AND Country = 'India' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Leila', 'Moreau', TO_DATE('1998-08-03', 'YYYY-MM-DD'), 'leila.moreau@orange.fr', 'Avenue Montaigne 22', (SELECT City_ID FROM City WHERE City = 'Paris' AND Country = 'France' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Finn', 'OBrien', TO_DATE('1993-11-19', 'YYYY-MM-DD'), 'finn.obrien@gmail.com', 'OConnell St 14', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Nadia', 'Kowalski', TO_DATE('2000-04-25', 'YYYY-MM-DD'), 'nadia.kowalski@wp.pl', 'Nowy Swiat 6', (SELECT City_ID FROM City WHERE City = 'Warsaw' AND Country = 'Poland' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Diego', 'Hernandez', TO_DATE('1989-07-07', 'YYYY-MM-DD'), 'diego.hernandez@gmail.com', 'Reforma 200', (SELECT City_ID FROM City WHERE City = 'Mexico City' AND Country = 'Mexico' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Aiko', 'Yamamoto', TO_DATE('1997-03-21', 'YYYY-MM-DD'), 'aiko.yamamoto@gmail.com', 'Harajuku 1-2', (SELECT City_ID FROM City WHERE City = 'Tokyo' AND Country = 'Japan' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Marcus', 'Thompson', TO_DATE('1985-10-10', 'YYYY-MM-DD'), 'marcus.thompson@gmail.com', 'Peachtree St 300', (SELECT City_ID FROM City WHERE City = 'New York' AND Country = 'USA' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Eva', 'Schneider', TO_DATE('2002-01-08', 'YYYY-MM-DD'), 'eva.schneider@gmx.de', 'Kurfuerstendamm 15', (SELECT City_ID FROM City WHERE City = 'Berlin' AND Country = 'Germany' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Jonas', 'Bergstrom', TO_DATE('1996-05-16', 'YYYY-MM-DD'), 'jonas.bergstrom@gmail.com', 'Kungsgatan 4', (SELECT City_ID FROM City WHERE City = 'Stockholm' AND Country = 'Sweden' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Priya', 'Nair', TO_DATE('1991-09-11', 'YYYY-MM-DD'), 'priya.nair@gmail.com', 'MG Road 12', (SELECT City_ID FROM City WHERE City = 'New Delhi' AND Country = 'India' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Louis', 'Fontaine', TO_DATE('1994-12-30', 'YYYY-MM-DD'), 'louis.fontaine@gmail.com', 'Boulevard Haussmann 8', (SELECT City_ID FROM City WHERE City = 'Paris' AND Country = 'France' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Selin', 'Yilmaz', TO_DATE('2003-03-03', 'YYYY-MM-DD'), 'selin.yilmaz@hotmail.com', 'Istiklal Cd 55', (SELECT City_ID FROM City WHERE City = 'Istanbul' AND Country = 'Turkey' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Nico', 'Adriaens', TO_DATE('1988-06-28', 'YYYY-MM-DD'), 'nico.adriaens@skynet.be', 'Frankrijklei 10', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Mia', 'Larsson', TO_DATE('1999-11-14', 'YYYY-MM-DD'), 'mia.larsson@gmail.com', 'Drottninggatan 7', (SELECT City_ID FROM City WHERE City = 'Stockholm' AND Country = 'Sweden' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Bilal', 'Choudhry', TO_DATE('1992-04-19', 'YYYY-MM-DD'), 'bilal.choudhry@gmail.com', 'Gulberg Main Blvd 4', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Chiara', 'Ferretti', TO_DATE('2001-08-22', 'YYYY-MM-DD'), 'chiara.ferretti@gmail.com', 'Corso Buenos Aires 30', (SELECT City_ID FROM City WHERE City = 'Milan' AND Country = 'Italy' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Tom', 'Baert', TO_DATE('1987-02-04', 'YYYY-MM-DD'), 'tom.baert@telenet.be', 'Turnhoutsebaan 120', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Alicia', 'Vega', TO_DATE('1995-07-17', 'YYYY-MM-DD'), 'alicia.vega@gmail.com', 'Paseo de Gracia 50', (SELECT City_ID FROM City WHERE City = 'Barcelona' AND Country = 'Spain' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Stefan', 'Hoffmann', TO_DATE('1990-10-05', 'YYYY-MM-DD'), 'stefan.hoffmann@web.de', 'Schillerstrasse 8', (SELECT City_ID FROM City WHERE City = 'Munich' AND Country = 'Germany' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Aisha', 'Mohamed', TO_DATE('1998-01-24', 'YYYY-MM-DD'), 'aisha.mohamed@gmail.com', 'Nairobi Rd 77', (SELECT City_ID FROM City WHERE City = 'Cape Town' AND Country = 'South Africa' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Lucas', 'Peeters', TO_DATE('2000-09-09', 'YYYY-MM-DD'), 'lucas.peeters@gmail.com', 'Belgielei 5', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Giulia', 'Bianchi', TO_DATE('1993-05-31', 'YYYY-MM-DD'), 'giulia.bianchi@gmail.com', 'Piazza Navona 3', (SELECT City_ID FROM City WHERE City = 'Rome' AND Country = 'Italy' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Henrik', 'Dahl', TO_DATE('1986-12-16', 'YYYY-MM-DD'), 'henrik.dahl@gmail.com', 'Stroget 22', (SELECT City_ID FROM City WHERE City = 'Roskilde' AND Country = 'Denmark' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Nour', 'Khalil', TO_DATE('2002-06-13', 'YYYY-MM-DD'), 'nour.khalil@gmail.com', 'Hamra St 14', (SELECT City_ID FROM City WHERE City = 'Beirut' AND Country = 'Lebanon' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Jack', 'Murphy', TO_DATE('1997-10-28', 'YYYY-MM-DD'), 'jack.murphy@gmail.com', 'Dame Street 5', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Ruben', 'Smeets', TO_DATE('1994-08-15', 'YYYY-MM-DD'), 'ruben.smeets@hotmail.be', 'Amerikalei 30', (SELECT City_ID FROM City WHERE City = 'Antwerp' AND Country = 'Belgium' AND ROWNUM = 1), 'Male');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Clara', 'Santos', TO_DATE('2003-11-02', 'YYYY-MM-DD'), 'clara.santos@gmail.com', 'Avenida Paulista 1500', (SELECT City_ID FROM City WHERE City = 'Sao Paulo' AND Country = 'Brazil' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Yasmin', 'Osei', TO_DATE('1991-03-07', 'YYYY-MM-DD'), 'yasmin.osei@gmail.com', 'Cantonments Rd 8', (SELECT City_ID FROM City WHERE City = 'Cape Town' AND Country = 'South Africa' AND ROWNUM = 1), 'Female');
-INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email, Visitor_Street, City_ID, Visitor_Gender) VALUES ('Fatima', 'Al-Hassan', TO_DATE('1991-11-22', 'YYYY-MM-DD'), 'fatima.alhassan@gmail.com', 'King Fahd Rd 14', (SELECT City_ID FROM City WHERE City = 'Istanbul' AND Country = 'Turkey' AND ROWNUM = 1), 'Female');
+-- --------------------------------------------------------
+-- 3. VISITOR  (City_ID via Zipcode + Country – guaranteed unique)
+-- --------------------------------------------------------
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Lena', 'Maes', TO_DATE('15-03-1995','DD-MM-YYYY'), 'lena.maes@gmail.com',
+        'Meir', '42',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Female');
 
--- ═══════════════════════════════════════
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Jonas', 'De Wolf', TO_DATE('22-07-1990','DD-MM-YYYY'), 'jonas.dewolf@hotmail.com',
+        'Nationalestraat', '17',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Male');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Sophie', 'Janssen', TO_DATE('08-11-1998','DD-MM-YYYY'), 'sophie.janssen@outlook.com',
+        'Groenplaats', '5',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Female');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Pieter', 'Claes', TO_DATE('30-04-1985','DD-MM-YYYY'), 'pieter.claes@yahoo.com',
+        'Kammenstraat', '88',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Male');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Nathalie', 'Hermans', TO_DATE('12-02-2000','DD-MM-YYYY'), 'nathalie.hermans@gmail.com',
+        'Lange Nieuwstraat', '33',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Female');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Adrien', 'Dupont', TO_DATE('19-09-1993','DD-MM-YYYY'), 'adrien.dupont@gmail.com',
+        'Rue Royale', '12',
+        (SELECT City_ID FROM City WHERE Zipcode = '1000' AND Country = 'Belgium'),
+        'Male');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Zara', 'Ahmed', TO_DATE('03-01-1997','DD-MM-YYYY'), 'zara.ahmed@gmail.com',
+        'Leopoldstraat', '7',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Female');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Markus', 'Bauer', TO_DATE('27-08-1988','DD-MM-YYYY'), 'markus.bauer@web.de',
+        'Hauptstrasse', '55',
+        (SELECT City_ID FROM City WHERE Zipcode = '10115' AND Country = 'Germany'),
+        'Male');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Elena', 'Kovacs', TO_DATE('14-12-2001','DD-MM-YYYY'), 'elena.kovacs@gmail.com',
+        'Váci utca', '23',
+        (SELECT City_ID FROM City WHERE Zipcode = '1117BP' AND Country = 'Hungary'),
+        'Female');
+
+INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
+                     Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
+VALUES ('Chloe', 'Martin', TO_DATE('05-06-1996','DD-MM-YYYY'), 'chloe.martin@gmail.com',
+        'Brederodestraat', '9',
+        (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
+        'Female');
+
+-- --------------------------------------------------------
 -- 4. TICKETPLATFORM
--- ═══════════════════════════════════════
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticketmaster', 'https://www.ticketmaster.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Eventbrite', 'https://www.eventbrite.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('See Tickets', 'https://www.seetickets.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Dice.fm', 'https://dice.fm');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Resident Advisor', 'https://ra.co');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Paylogic', 'https://www.paylogic.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('StubHub', 'https://www.stubhub.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Festicket', 'https://www.festicket.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Tomorrowland Shop', 'https://shop.tomorrowland.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Fever', 'https://feverup.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('AXS', 'https://www.axs.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticketswap', 'https://www.ticketswap.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Front Gate Tickets', 'https://www.frontgatetickets.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Eventim', 'https://www.eventim.de');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('CTS Eventim', 'https://www.eventim.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Billetweb', 'https://www.billetweb.fr');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Weezevent', 'https://www.weezevent.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Skiddle', 'https://www.skiddle.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('TicketCo', 'https://ticketco.events');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Tixr', 'https://www.tixr.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Webtickets', 'https://www.webtickets.co.za');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Sympla', 'https://www.sympla.com.br');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticket Tailor', 'https://www.tickettailor.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Billetto', 'https://billetto.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('SISTIC', 'https://www.sistic.com.sg');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('BookMyShow', 'https://www.bookmyshow.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticket2Me', 'https://www.ticket2me.net');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Taquilla', 'https://www.taquilla.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Vendini', 'https://www.vendini.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('ShowClix', 'https://www.showclix.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Pretix', 'https://pretix.eu');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Universe', 'https://www.universe.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Yapsody', 'https://www.yapsody.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('RegFox', 'https://www.regfox.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Hopin', 'https://hopin.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Bizzabo', 'https://www.bizzabo.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Splash', 'https://splashthat.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Bandsintown', 'https://www.bandsintown.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('GetYourGuide', 'https://www.getyourguide.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Fatsoma', 'https://www.fatsoma.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Lyyti', 'https://www.lyyti.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Zoho Backstage', 'https://www.zoho.com/backstage');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('XING Events', 'https://www.xing-events.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Konfio Tickets', 'https://konfio.mx/tickets');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ingresso', 'https://www.ingresso.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Lineup Ninja', 'https://lineupninja.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('eTix', 'https://www.etix.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('PVR Cinemas', 'https://www.pvrcinemas.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Tickeri', 'https://www.tickeri.com');
-INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('SW4 Tickets', 'https://www.sw4.co.uk/tickets');
+-- --------------------------------------------------------
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Ticketmaster Belgium', 'https://www.ticketmaster.be');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('See Tickets',          'https://www.seetickets.com');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Paylogic',             'https://www.paylogic.com');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Eventbrite',           'https://www.eventbrite.be');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Tele Ticket Service',  'https://www.teleticketservice.com');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Dice FM',              'https://dice.fm');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Fever Up',             'https://feverup.com');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('TicketSwap',           'https://www.ticketswap.com');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('Resident Advisor',     'https://ra.co');
+INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL) VALUES ('StubHub International','https://www.stubhub.com');
 
--- ═══════════════════════════════════════
--- 5. FESTIVAL
--- ═══════════════════════════════════════
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Tomorrowland', (SELECT Company_ID FROM Company WHERE Company_Name = 'Tomorrowland NV' AND ROWNUM = 1), TO_DATE('2023-07-21', 'YYYY-MM-DD'), TO_DATE('2023-07-30', 'YYYY-MM-DD'), 'Schorre Site', (SELECT City_ID FROM City WHERE City = 'Dessel' AND Country = 'Belgium' AND ROWNUM = 1), TO_DATE('2023-07-21 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-07-22 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), 400000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Rock Werchter', (SELECT Company_ID FROM Company WHERE Company_Name = 'Rock Werchter Productions' AND ROWNUM = 1), TO_DATE('2023-06-29', 'YYYY-MM-DD'), TO_DATE('2023-07-02', 'YYYY-MM-DD'), 'Festivalpark', (SELECT City_ID FROM City WHERE City = 'Werchter' AND Country = 'Belgium' AND ROWNUM = 1), TO_DATE('2023-06-29 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-06-29 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 85000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Pukkelpop', (SELECT Company_ID FROM Company WHERE Company_Name = 'Pukkelpop VZW' AND ROWNUM = 1), TO_DATE('2023-08-17', 'YYYY-MM-DD'), TO_DATE('2023-08-20', 'YYYY-MM-DD'), 'Hasselt Kiewit', (SELECT City_ID FROM City WHERE City = 'Hasselt' AND Country = 'Belgium' AND ROWNUM = 1), TO_DATE('2023-08-17 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-08-17 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 60000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Coachella 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Coachella Goldenvoice' AND ROWNUM = 1), TO_DATE('2024-04-12', 'YYYY-MM-DD'), TO_DATE('2024-04-21', 'YYYY-MM-DD'), 'Empire Polo Club', (SELECT City_ID FROM City WHERE City = 'Los Angeles' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2024-04-12 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-04-12 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 125000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Glastonbury 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Glastonbury Festivals Ltd' AND ROWNUM = 1), TO_DATE('2024-06-26', 'YYYY-MM-DD'), TO_DATE('2024-06-30', 'YYYY-MM-DD'), 'Worthy Farm', (SELECT City_ID FROM City WHERE City = 'Bristol' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2024-06-26 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-26 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 210000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Hurricane Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'FKP Scorpio' AND ROWNUM = 1), TO_DATE('2024-06-21', 'YYYY-MM-DD'), TO_DATE('2024-06-23', 'YYYY-MM-DD'), 'Eichenring', (SELECT City_ID FROM City WHERE City = 'Hamburg' AND Country = 'Germany' AND ROWNUM = 1), TO_DATE('2024-06-21 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-21 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 75000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Sziget Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Sziget Cultural Management' AND ROWNUM = 1), TO_DATE('2024-08-07', 'YYYY-MM-DD'), TO_DATE('2024-08-12', 'YYYY-MM-DD'), 'Obudai Island', (SELECT City_ID FROM City WHERE City = 'Budapest' AND Country = 'Hungary' AND ROWNUM = 1), TO_DATE('2024-08-07 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-08-07 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 90000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Primavera Sound 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Primavera Sound SL' AND ROWNUM = 1), TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-06-09', 'YYYY-MM-DD'), 'Parc del Forum', (SELECT City_ID FROM City WHERE City = 'Barcelona' AND Country = 'Spain' AND ROWNUM = 1), TO_DATE('2024-06-05 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-05 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 70000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Ultra Music Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Ultra Music Festival LLC' AND ROWNUM = 1), TO_DATE('2024-03-22', 'YYYY-MM-DD'), TO_DATE('2024-03-24', 'YYYY-MM-DD'), 'Bayfront Park', (SELECT City_ID FROM City WHERE City = 'Miami' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2024-03-22 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-03-22 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 55000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Dour Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Dour Festival ASBL' AND ROWNUM = 1), TO_DATE('2024-07-10', 'YYYY-MM-DD'), TO_DATE('2024-07-14', 'YYYY-MM-DD'), 'La Plaine de La Machine', (SELECT City_ID FROM City WHERE City = 'Dour' AND Country = 'Belgium' AND ROWNUM = 1), TO_DATE('2024-07-10 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-10 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 30000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Graspop Metal Meeting 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Graspop Metal Meeting VZW' AND ROWNUM = 1), TO_DATE('2024-06-19', 'YYYY-MM-DD'), TO_DATE('2024-06-23', 'YYYY-MM-DD'), 'Dessel Airfield', (SELECT City_ID FROM City WHERE City = 'Dessel' AND Country = 'Belgium' AND ROWNUM = 1), TO_DATE('2024-06-19 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-19 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 60000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Lowlands 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Lowlands Festival BV' AND ROWNUM = 1), TO_DATE('2024-08-15', 'YYYY-MM-DD'), TO_DATE('2024-08-17', 'YYYY-MM-DD'), 'Walibi Holland', (SELECT City_ID FROM City WHERE City = 'Amsterdam' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2024-08-15 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-08-15 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 55000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Fuji Rock 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Fuji Rock Festival Inc' AND ROWNUM = 1), TO_DATE('2024-07-26', 'YYYY-MM-DD'), TO_DATE('2024-07-28', 'YYYY-MM-DD'), 'Naeba Ski Resort', (SELECT City_ID FROM City WHERE City = 'Tokyo' AND Country = 'Japan' AND ROWNUM = 1), TO_DATE('2024-07-26 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-26 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 50000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Lollapalooza Chicago 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Lollapalooza LLC' AND ROWNUM = 1), TO_DATE('2024-08-01', 'YYYY-MM-DD'), TO_DATE('2024-08-04', 'YYYY-MM-DD'), 'Grant Park', (SELECT City_ID FROM City WHERE City = 'Chicago' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2024-08-01 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-08-01 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 100000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Download Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Download Festival Ltd' AND ROWNUM = 1), TO_DATE('2024-06-13', 'YYYY-MM-DD'), TO_DATE('2024-06-15', 'YYYY-MM-DD'), 'Donington Park', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2024-06-13 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-13 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 80000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Roskilde Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Roskilde Festival' AND ROWNUM = 1), TO_DATE('2024-06-29', 'YYYY-MM-DD'), TO_DATE('2024-07-06', 'YYYY-MM-DD'), 'Roskilde Grounds', (SELECT City_ID FROM City WHERE City = 'Roskilde' AND Country = 'Denmark' AND ROWNUM = 1), TO_DATE('2024-06-29 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-29 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 130000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('EXIT Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Exit Festival DOO' AND ROWNUM = 1), TO_DATE('2024-07-10', 'YYYY-MM-DD'), TO_DATE('2024-07-14', 'YYYY-MM-DD'), 'Petrovaradin Fortress', (SELECT City_ID FROM City WHERE City = 'Belgrade' AND Country = 'Serbia' AND ROWNUM = 1), TO_DATE('2024-07-10 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-10 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 25000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Sonar 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Sonar SL' AND ROWNUM = 1), TO_DATE('2024-06-12', 'YYYY-MM-DD'), TO_DATE('2024-06-14', 'YYYY-MM-DD'), 'Fira de Barcelona', (SELECT City_ID FROM City WHERE City = 'Barcelona' AND Country = 'Spain' AND ROWNUM = 1), TO_DATE('2024-06-12 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-12 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 20000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Secret Solstice 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Secret Solstice ehf' AND ROWNUM = 1), TO_DATE('2024-06-20', 'YYYY-MM-DD'), TO_DATE('2024-06-23', 'YYYY-MM-DD'), 'Reykjavik Grounds', (SELECT City_ID FROM City WHERE City = 'Reykjavik' AND Country = 'Iceland' AND ROWNUM = 1), TO_DATE('2024-06-20 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-20 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 10000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Boom Festival 2024', (SELECT Company_ID FROM Company WHERE Company_Name = 'Boom Festival Lda' AND ROWNUM = 1), TO_DATE('2024-07-24', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'), 'Idanha-a-Nova', (SELECT City_ID FROM City WHERE City = 'Lisbon' AND Country = 'Portugal' AND ROWNUM = 1), TO_DATE('2024-07-24 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-24 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 40000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Flow Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Flow Festival Oy' AND ROWNUM = 1), TO_DATE('2025-08-07', 'YYYY-MM-DD'), TO_DATE('2025-08-09', 'YYYY-MM-DD'), 'Suvilahti', (SELECT City_ID FROM City WHERE City = 'Helsinki' AND Country = 'Finland' AND ROWNUM = 1), TO_DATE('2025-08-07 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-07 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 25000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Afropunk Brooklyn 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Afropunk LLC' AND ROWNUM = 1), TO_DATE('2025-08-23', 'YYYY-MM-DD'), TO_DATE('2025-08-24', 'YYYY-MM-DD'), 'Commodore Barry Park', (SELECT City_ID FROM City WHERE City = 'New York' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2025-08-23 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-23 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 35000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Tomorrowland Winter 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Tomorrowland NV' AND ROWNUM = 1), TO_DATE('2025-03-15', 'YYYY-MM-DD'), TO_DATE('2025-03-22', 'YYYY-MM-DD'), 'Alpe dHuez', (SELECT City_ID FROM City WHERE City = 'Lyon' AND Country = 'France' AND ROWNUM = 1), TO_DATE('2025-03-15 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-03-15 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 30000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('UNTOLD Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Untold Events SRL' AND ROWNUM = 1), TO_DATE('2025-07-31', 'YYYY-MM-DD'), TO_DATE('2025-08-03', 'YYYY-MM-DD'), 'Cluj Arena', (SELECT City_ID FROM City WHERE City = 'Vienna' AND Country = 'Austria' AND ROWNUM = 1), TO_DATE('2025-07-31 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-07-31 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 50000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('EDC Las Vegas 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Electric Daisy Carnival LLC' AND ROWNUM = 1), TO_DATE('2025-05-16', 'YYYY-MM-DD'), TO_DATE('2025-05-18', 'YYYY-MM-DD'), 'Las Vegas Motor Speedway', (SELECT City_ID FROM City WHERE City = 'Los Angeles' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2025-05-16 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-05-16 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 160000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Defqon.1 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Defqon.1 Events BV' AND ROWNUM = 1), TO_DATE('2025-06-27', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'), 'Almere Grounds', (SELECT City_ID FROM City WHERE City = 'Amsterdam' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2025-06-27 13:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-27 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 55000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Awakenings Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Awakenings Foundation' AND ROWNUM = 1), TO_DATE('2025-06-28', 'YYYY-MM-DD'), TO_DATE('2025-06-29', 'YYYY-MM-DD'), 'Spaarnwoude', (SELECT City_ID FROM City WHERE City = 'Amsterdam' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2025-06-28 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-28 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 30000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Creamfields 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Creamfields Ltd' AND ROWNUM = 1), TO_DATE('2025-08-21', 'YYYY-MM-DD'), TO_DATE('2025-08-24', 'YYYY-MM-DD'), 'Daresbury Estate', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2025-08-21 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-21 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 70000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Lollapalooza Berlin 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Live Nation Entertainment' AND ROWNUM = 1), TO_DATE('2025-09-06', 'YYYY-MM-DD'), TO_DATE('2025-09-07', 'YYYY-MM-DD'), 'Olympiagelande', (SELECT City_ID FROM City WHERE City = 'Berlin' AND Country = 'Germany' AND ROWNUM = 1), TO_DATE('2025-09-06 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-09-06 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 85000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Sunburn Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Sunburn Events Pvt Ltd' AND ROWNUM = 1), TO_DATE('2025-12-27', 'YYYY-MM-DD'), TO_DATE('2025-12-29', 'YYYY-MM-DD'), 'Goa Beach Grounds', (SELECT City_ID FROM City WHERE City = 'New Delhi' AND Country = 'India' AND ROWNUM = 1), TO_DATE('2025-12-27 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-12-27 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 80000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Coachella 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'AEG Presents' AND ROWNUM = 1), TO_DATE('2025-04-11', 'YYYY-MM-DD'), TO_DATE('2025-04-20', 'YYYY-MM-DD'), 'Empire Polo Club', (SELECT City_ID FROM City WHERE City = 'Los Angeles' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2025-04-11 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-04-11 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 130000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Austin City Limits 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'C3 Presents LLC' AND ROWNUM = 1), TO_DATE('2025-10-03', 'YYYY-MM-DD'), TO_DATE('2025-10-05', 'YYYY-MM-DD'), 'Zilker Park', (SELECT City_ID FROM City WHERE City = 'Austin' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2025-10-03 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-10-03 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 75000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Reading Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Festival Republic Ltd' AND ROWNUM = 1), TO_DATE('2025-08-22', 'YYYY-MM-DD'), TO_DATE('2025-08-24', 'YYYY-MM-DD'), 'Little Johns Farm', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2025-08-22 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-22 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 90000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Melt Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Melt Festival GmbH' AND ROWNUM = 1), TO_DATE('2025-07-18', 'YYYY-MM-DD'), TO_DATE('2025-07-20', 'YYYY-MM-DD'), 'Ferropolis', (SELECT City_ID FROM City WHERE City = 'Berlin' AND Country = 'Germany' AND ROWNUM = 1), TO_DATE('2025-07-18 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-07-18 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 25000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Weather Festival 2025', (SELECT Company_ID FROM Company WHERE Company_Name = 'Weather Festival SAS' AND ROWNUM = 1), TO_DATE('2025-05-24', 'YYYY-MM-DD'), TO_DATE('2025-05-26', 'YYYY-MM-DD'), 'Aerotrain Site', (SELECT City_ID FROM City WHERE City = 'Paris' AND Country = 'France' AND ROWNUM = 1), TO_DATE('2025-05-24 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-05-24 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 15000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Junction 2 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Junction 2 Ltd' AND ROWNUM = 1), TO_DATE('2026-06-06', 'YYYY-MM-DD'), TO_DATE('2026-06-07', 'YYYY-MM-DD'), 'Tobacco Dock', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2026-06-06 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-06-06 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 12000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Dimensions Festival 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Dimensions Festival Ltd' AND ROWNUM = 1), TO_DATE('2026-08-27', 'YYYY-MM-DD'), TO_DATE('2026-08-31', 'YYYY-MM-DD'), 'Fort Punta Christo', (SELECT City_ID FROM City WHERE City = 'Venice' AND Country = 'Italy' AND ROWNUM = 1), TO_DATE('2026-08-27 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-08-27 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 15000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Outlook Festival 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Outlook Festival Ltd' AND ROWNUM = 1), TO_DATE('2026-09-03', 'YYYY-MM-DD'), TO_DATE('2026-09-07', 'YYYY-MM-DD'), 'Fort Punta Christo', (SELECT City_ID FROM City WHERE City = 'Venice' AND Country = 'Italy' AND ROWNUM = 1), TO_DATE('2026-09-03 18:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-09-03 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 15000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Hideout Festival 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Hideout Festival Ltd' AND ROWNUM = 1), TO_DATE('2026-07-01', 'YYYY-MM-DD'), TO_DATE('2026-07-05', 'YYYY-MM-DD'), 'Zrce Beach', (SELECT City_ID FROM City WHERE City = 'Venice' AND Country = 'Italy' AND ROWNUM = 1), TO_DATE('2026-07-01 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-07-01 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 20000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('SW4 Festival 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'SW4 Events Ltd' AND ROWNUM = 1), TO_DATE('2026-08-29', 'YYYY-MM-DD'), TO_DATE('2026-08-30', 'YYYY-MM-DD'), 'Clapham Common', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2026-08-29 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-08-29 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 20000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Sensation 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Sensation BV' AND ROWNUM = 1), TO_DATE('2026-01-10', 'YYYY-MM-DD'), TO_DATE('2026-01-11', 'YYYY-MM-DD'), 'Amsterdam Arena', (SELECT City_ID FROM City WHERE City = 'Amsterdam' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2026-01-10 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-01-10 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 40000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Extrema Outdoor 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Extrema Outdoor BV' AND ROWNUM = 1), TO_DATE('2026-05-22', 'YYYY-MM-DD'), TO_DATE('2026-05-24', 'YYYY-MM-DD'), 'Aquabest Park', (SELECT City_ID FROM City WHERE City = 'Eindhoven' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2026-05-22 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-05-22 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 30000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Decibel Outdoor 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Decibel Outdoor BV' AND ROWNUM = 1), TO_DATE('2026-08-28', 'YYYY-MM-DD'), TO_DATE('2026-08-30', 'YYYY-MM-DD'), 'Het Rutbeek', (SELECT City_ID FROM City WHERE City = 'Eindhoven' AND Country = 'Netherlands' AND ROWNUM = 1), TO_DATE('2026-08-28 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-08-28 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 30000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Global Gathering 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Global Gathering Ltd' AND ROWNUM = 1), TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2026-07-25', 'YYYY-MM-DD'), 'Long Marston Airfield', (SELECT City_ID FROM City WHERE City = 'London' AND Country = 'United Kingdom' AND ROWNUM = 1), TO_DATE('2026-07-24 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-07-24 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 50000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Dreamstate SoCal 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Dreamstate LLC' AND ROWNUM = 1), TO_DATE('2026-11-27', 'YYYY-MM-DD'), TO_DATE('2026-11-28', 'YYYY-MM-DD'), 'NOS Events Center', (SELECT City_ID FROM City WHERE City = 'Los Angeles' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2026-11-27 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-11-27 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 20000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('We The Fest 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'We The Fest PT' AND ROWNUM = 1), TO_DATE('2026-07-17', 'YYYY-MM-DD'), TO_DATE('2026-07-19', 'YYYY-MM-DD'), 'GBK Sports Complex', (SELECT City_ID FROM City WHERE City = 'Jakarta' AND Country = 'Indonesia' AND ROWNUM = 1), TO_DATE('2026-07-17 14:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-07-17 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 40000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Lollapalooza Sao Paulo 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Lollapalooza LLC' AND ROWNUM = 1), TO_DATE('2026-03-27', 'YYYY-MM-DD'), TO_DATE('2026-03-29', 'YYYY-MM-DD'), 'Autodromo Interlagos', (SELECT City_ID FROM City WHERE City = 'Sao Paulo' AND Country = 'Brazil' AND ROWNUM = 1), TO_DATE('2026-03-27 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-03-27 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), 100000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Burning Man 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Burning Man Project' AND ROWNUM = 1), TO_DATE('2026-08-30', 'YYYY-MM-DD'), TO_DATE('2026-09-07', 'YYYY-MM-DD'), 'Black Rock Desert', (SELECT City_ID FROM City WHERE City = 'New York' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2026-08-30 00:01:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-08-30 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 80000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Moogfest 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Moogfest Inc' AND ROWNUM = 1), TO_DATE('2026-05-21', 'YYYY-MM-DD'), TO_DATE('2026-05-24', 'YYYY-MM-DD'), 'American Tobacco Campus', (SELECT City_ID FROM City WHERE City = 'New York' AND Country = 'USA' AND ROWNUM = 1), TO_DATE('2026-05-21 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-05-21 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 10000);
-INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate, Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity) VALUES ('Timegate 2026', (SELECT Company_ID FROM Company WHERE Company_Name = 'Timegate Events Oy' AND ROWNUM = 1), TO_DATE('2026-04-17', 'YYYY-MM-DD'), TO_DATE('2026-04-19', 'YYYY-MM-DD'), 'Tampere Convention', (SELECT City_ID FROM City WHERE City = 'Helsinki' AND Country = 'Finland' AND ROWNUM = 1), TO_DATE('2026-04-17 10:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-04-17 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5000);
+-- --------------------------------------------------------
+-- 5. FESTIVAL  (Company_ID via Company_Name; City_ID via Zipcode+Country)
+-- --------------------------------------------------------
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Tomorrowland Summer 2024',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Tomorrowland NV'),
+        TO_DATE('19-07-2024','DD-MM-YYYY'), TO_DATE('21-07-2024','DD-MM-YYYY'),
+        'De Schorre',
+        (SELECT City_ID FROM City WHERE Zipcode = '2850' AND Country = 'Belgium'),
+        TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '17' HOUR,
+        200000);
 
--- ═══════════════════════════════════════
--- 6. PERMIT
--- ═══════════════════════════════════════
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Authorisation for amplified sound above 85dB in Dessel area', TO_DATE('2023-01-15', 'YYYY-MM-DD'), TO_DATE('2023-03-01', 'YYYY-MM-DD'), TO_DATE('2023-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Liquor License', 'Permit for sale and distribution of alcoholic beverages on site', TO_DATE('2023-02-01', 'YYYY-MM-DD'), TO_DATE('2023-04-15', 'YYYY-MM-DD'), TO_DATE('2023-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Sound amplification permit for multi-stage outdoor event', TO_DATE('2023-01-10', 'YYYY-MM-DD'), TO_DATE('2023-02-20', 'YYYY-MM-DD'), TO_DATE('2023-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Fire Safety Permit', 'Pyrotechnics and emergency evacuation compliance certificate', TO_DATE('2023-02-05', 'YYYY-MM-DD'), TO_DATE('2023-03-10', 'YYYY-MM-DD'), TO_DATE('2023-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Sound level permit for Kiewit festival grounds', TO_DATE('2023-04-01', 'YYYY-MM-DD'), TO_DATE('2023-05-15', 'YYYY-MM-DD'), TO_DATE('2023-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Permit', 'Riverside County mass gathering permit for 125000 attendees', TO_DATE('2023-11-01', 'YYYY-MM-DD'), TO_DATE('2024-01-15', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Coachella 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Licence', 'Somerset Council entertainment licence for 210000 cap outdoor event', TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Environmental Permit', 'Environment Agency permit for waste management and water drainage', TO_DATE('2024-01-20', 'YYYY-MM-DD'), TO_DATE('2024-03-10', 'YYYY-MM-DD'), TO_DATE('2024-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Niedersachsen state sound permit for three-day outdoor rock festival', TO_DATE('2024-01-05', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Hurricane Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Budapest City Permit', 'Municipality permit for island-based mass gathering event', TO_DATE('2024-02-01', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Barcelona municipal noise permit for beachside festival', TO_DATE('2024-01-15', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Permit', 'City of Miami mass gathering and noise permit for waterfront event', TO_DATE('2023-10-01', 'YYYY-MM-DD'), TO_DATE('2023-12-01', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Ultra Music Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Walloon Region noise permit for five-day outdoor festival', TO_DATE('2024-02-10', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dour Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Special noise dispensation for heavy metal outdoor festival', TO_DATE('2024-01-20', 'YYYY-MM-DD'), TO_DATE('2024-03-15', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Liquor License', 'Permit for alcohol sales across all festival catering zones', TO_DATE('2024-02-01', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Environmental Permit', 'Gelderland province environmental compliance permit', TO_DATE('2024-01-05', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lowlands 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Land Use Permit', 'Niigata Prefecture permission for use of Naeba ski resort', TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-03-15', 'YYYY-MM-DD'), TO_DATE('2024-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Fuji Rock 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Park Use Permit', 'City of Chicago Grant Park special events permit', TO_DATE('2023-12-01', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'), TO_DATE('2024-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Chicago 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'North West Leicestershire District Council noise permit', TO_DATE('2024-01-15', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Download Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Licence', 'Roskilde Municipality license for week-long camping festival', TO_DATE('2024-01-05', 'YYYY-MM-DD'), TO_DATE('2024-02-20', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Fortress Permit', 'Serbian government heritage site use permit for fortress venue', TO_DATE('2024-02-01', 'YYYY-MM-DD'), TO_DATE('2024-04-15', 'YYYY-MM-DD'), TO_DATE('2024-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EXIT Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Indoor Venue Permit', 'Barcelona venue occupation permit for combined indoor-outdoor event', TO_DATE('2024-01-20', 'YYYY-MM-DD'), TO_DATE('2024-03-10', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sonar 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Permit', 'Reykjavik City Council permit for 24-hour daylight festival', TO_DATE('2024-01-10', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), TO_DATE('2024-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Secret Solstice 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Environmental Permit', 'Portuguese Environment Agency permit for lakeside festival', TO_DATE('2024-02-15', 'YYYY-MM-DD'), TO_DATE('2024-05-01', 'YYYY-MM-DD'), TO_DATE('2024-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('City Permit', 'Helsinki city permit for Suvilahti industrial area festival use', TO_DATE('2025-01-10', 'YYYY-MM-DD'), TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2025-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Flow Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Parks Permit', 'NYC Parks Department permit for Commodore Barry Park event', TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2025-05-15', 'YYYY-MM-DD'), TO_DATE('2025-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Afropunk Brooklyn 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Mountain Permit', 'Alpe dHuez resort winter festival operational permit', TO_DATE('2024-10-01', 'YYYY-MM-DD'), TO_DATE('2024-12-01', 'YYYY-MM-DD'), TO_DATE('2025-04-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Cluj-Napoca city noise and gathering permit', TO_DATE('2025-01-15', 'YYYY-MM-DD'), TO_DATE('2025-03-15', 'YYYY-MM-DD'), TO_DATE('2025-09-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'UNTOLD Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Special Events Permit', 'Nevada DMV Las Vegas Motor Speedway special events permit', TO_DATE('2024-11-01', 'YYYY-MM-DD'), TO_DATE('2025-02-01', 'YYYY-MM-DD'), TO_DATE('2025-06-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Almere municipality noise permit for two-day hardstyle festival', TO_DATE('2025-01-20', 'YYYY-MM-DD'), TO_DATE('2025-03-10', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Defqon.1 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Nature Permit', 'Noord-Holland province permit for Spaarnwoude recreation area', TO_DATE('2025-02-01', 'YYYY-MM-DD'), TO_DATE('2025-04-01', 'YYYY-MM-DD'), TO_DATE('2025-07-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Licence', 'Halton Borough Council entertainment license for camping festival', TO_DATE('2025-02-15', 'YYYY-MM-DD'), TO_DATE('2025-04-15', 'YYYY-MM-DD'), TO_DATE('2025-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Creamfields 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('City Permit', 'Berlin Senate Department permit for Olympiagelande festival use', TO_DATE('2025-03-01', 'YYYY-MM-DD'), TO_DATE('2025-05-01', 'YYYY-MM-DD'), TO_DATE('2025-10-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('State Permit', 'Goa State government permit for beach festival event', TO_DATE('2025-07-01', 'YYYY-MM-DD'), TO_DATE('2025-09-01', 'YYYY-MM-DD'), TO_DATE('2026-01-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sunburn Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Permit', 'Coachella Valley repeat annual event permit renewal', TO_DATE('2024-10-01', 'YYYY-MM-DD'), TO_DATE('2025-01-15', 'YYYY-MM-DD'), TO_DATE('2025-05-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Coachella 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Park Permit', 'City of Austin Zilker Park special events annual permit', TO_DATE('2025-04-01', 'YYYY-MM-DD'), TO_DATE('2025-06-15', 'YYYY-MM-DD'), TO_DATE('2025-11-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Austin City Limits 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Licence', 'West Berkshire Council event licence for Reading Festival site', TO_DATE('2025-02-20', 'YYYY-MM-DD'), TO_DATE('2025-04-20', 'YYYY-MM-DD'), TO_DATE('2025-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Reading Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Heritage Site Permit', 'Ferropolis industrial monument outdoor event permit', TO_DATE('2025-03-15', 'YYYY-MM-DD'), TO_DATE('2025-05-01', 'YYYY-MM-DD'), TO_DATE('2025-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Ile-de-France prefecture noise permit for outdoor techno festival', TO_DATE('2025-02-01', 'YYYY-MM-DD'), TO_DATE('2025-04-01', 'YYYY-MM-DD'), TO_DATE('2025-06-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Weather Festival 2025' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Venue Permit', 'London Borough of Tower Hamlets Tobacco Dock event permit', TO_DATE('2026-01-10', 'YYYY-MM-DD'), TO_DATE('2026-03-01', 'YYYY-MM-DD'), TO_DATE('2026-07-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Junction 2 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Heritage Permit', 'Croatian Ministry of Culture permit for Fort Punta Christo use', TO_DATE('2026-02-01', 'YYYY-MM-DD'), TO_DATE('2026-04-15', 'YYYY-MM-DD'), TO_DATE('2026-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dimensions Festival 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Heritage Permit', 'Croatian Ministry of Culture permit for Fort Punta Christo music event', TO_DATE('2026-02-15', 'YYYY-MM-DD'), TO_DATE('2026-04-20', 'YYYY-MM-DD'), TO_DATE('2026-10-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Outlook Festival 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Beach Permit', 'Novalja municipality beach and water area festival permit', TO_DATE('2026-01-20', 'YYYY-MM-DD'), TO_DATE('2026-03-15', 'YYYY-MM-DD'), TO_DATE('2026-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Hideout Festival 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Parks Permit', 'Lambeth Council Clapham Common special events permit', TO_DATE('2026-02-10', 'YYYY-MM-DD'), TO_DATE('2026-04-10', 'YYYY-MM-DD'), TO_DATE('2026-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'SW4 Festival 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Venue Permit', 'Johan Cruijff ArenA event permit for all-white indoor festival', TO_DATE('2025-09-01', 'YYYY-MM-DD'), TO_DATE('2025-11-01', 'YYYY-MM-DD'), TO_DATE('2026-02-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sensation 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Nature Permit', 'North Brabant province permit for Aquabest recreational park use', TO_DATE('2026-01-15', 'YYYY-MM-DD'), TO_DATE('2026-03-15', 'YYYY-MM-DD'), TO_DATE('2026-06-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Extrema Outdoor 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Noise Permit', 'Enschede municipality noise dispensation for hardstyle festival', TO_DATE('2026-02-01', 'YYYY-MM-DD'), TO_DATE('2026-04-01', 'YYYY-MM-DD'), TO_DATE('2026-09-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Decibel Outdoor 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('City Permit', 'Durham City Council special events permit for multi-venue festival', TO_DATE('2026-01-10', 'YYYY-MM-DD'), TO_DATE('2026-03-01', 'YYYY-MM-DD'), TO_DATE('2026-06-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Moogfest 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Federal Land Permit', 'Bureau of Land Management permit for Black Rock Desert event', TO_DATE('2026-01-20', 'YYYY-MM-DD'), TO_DATE('2026-04-01', 'YYYY-MM-DD'), TO_DATE('2026-10-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Burning Man 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('Event Licence', 'Stratford-upon-Avon District Council event licence', TO_DATE('2026-01-05', 'YYYY-MM-DD'), TO_DATE('2026-03-01', 'YYYY-MM-DD'), TO_DATE('2026-08-15', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Global Gathering 2026' AND ROWNUM = 1));
-INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID) VALUES ('City Permit', 'Jakarta provincial government permit for GBK sports complex event', TO_DATE('2025-12-01', 'YYYY-MM-DD'), TO_DATE('2026-02-01', 'YYYY-MM-DD'), TO_DATE('2026-08-01', 'YYYY-MM-DD'), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'We The Fest 2026' AND ROWNUM = 1));
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Rock Werchter 2024',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Rock Werchter Productions'),
+        TO_DATE('04-07-2024','DD-MM-YYYY'), TO_DATE('07-07-2024','DD-MM-YYYY'),
+        'Festivalpark Werchter',
+        (SELECT City_ID FROM City WHERE Zipcode = '3500' AND Country = 'Belgium'),
+        TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '15' HOUR,
+        90000);
 
--- ═══════════════════════════════════════
--- 7. TICKET
--- ═══════════════════════════════════════
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (350.0, 'EUR', TO_DATE('2023-07-21', 'YYYY-MM-DD'), TO_DATE('2023-02-15', 'YYYY-MM-DD'), 'Full Weekend Pass Tomorrowland 2023', 'TML23001234', 'Weekend', 'Used', 'https://qr.tomorrowland.com/TML23001234', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Tomorrowland Shop' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lena.vermeersch@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (165.0, 'EUR', TO_DATE('2023-06-29', 'YYYY-MM-DD'), TO_DATE('2023-01-20', 'YYYY-MM-DD'), 'Rock Werchter 2023 Full Pass', 'RW230056789', 'Weekend', 'Used', 'https://qr.rockwerchter.be/RW230056789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'niels.desmedt@hotmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (225.0, 'EUR', TO_DATE('2024-08-15', 'YYYY-MM-DD'), TO_DATE('2024-02-10', 'YYYY-MM-DD'), 'Lowlands Festival 3-Day Pass 2024', 'LW240078912', 'Weekend', 'Used', 'https://qr.lowlands.nl/LW240078912', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'sophie.jacobs@outlook.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lowlands 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (199.0, 'EUR', TO_DATE('2024-06-21', 'YYYY-MM-DD'), TO_DATE('2024-01-25', 'YYYY-MM-DD'), 'Hurricane Festival Weekend Ticket', 'HU240012345', 'Weekend', 'Used', 'https://qr.hurricane.de/HU240012345', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventim' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'thomas.mueller@web.de' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Hurricane Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (480.0, 'EUR', TO_DATE('2025-03-15', 'YYYY-MM-DD'), TO_DATE('2024-11-01', 'YYYY-MM-DD'), 'Tomorrowland Winter 2025 Ski+Festival Pack', 'TMLW25001111', 'Weekend', 'Valid', 'https://qr.tomorrowland.com/TMLW25001111', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Tomorrowland Shop' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'emma.dubois@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (189.0, 'EUR', TO_DATE('2025-08-07', 'YYYY-MM-DD'), TO_DATE('2025-01-15', 'YYYY-MM-DD'), 'Flow Festival 2025 3-Day Pass', 'FF250034567', 'Weekend', 'Valid', 'https://qr.flowfestival.com/FF250034567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lars.eriksson@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Flow Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (499.0, 'USD', TO_DATE('2024-04-12', 'YYYY-MM-DD'), TO_DATE('2023-12-01', 'YYYY-MM-DD'), 'Coachella 2024 Weekend 1 General Admission', 'COA24089123', 'Weekend', 'Used', 'https://qr.coachella.com/COA24089123', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'AXS' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'ava.johnson@yahoo.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Coachella 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (285.0, 'EUR', TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-01-20', 'YYYY-MM-DD'), 'Primavera Sound 2024 Full Pass', 'PS240045678', 'Weekend', 'Used', 'https://qr.primaverasound.com/PS240045678', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'carlos.garcia@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (38000.0, 'JPY', TO_DATE('2024-07-26', 'YYYY-MM-DD'), TO_DATE('2024-02-10', 'YYYY-MM-DD'), 'Fuji Rock Festival 2024 3-Day Pass', 'FR240056789', 'Weekend', 'Used', 'https://qr.fujirockfestival.com/FR240056789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'yuki.tanaka@yahoo.co.jp' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Fuji Rock 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (45.0, 'USD', TO_DATE('2025-08-23', 'YYYY-MM-DD'), TO_DATE('2025-03-01', 'YYYY-MM-DD'), 'Afropunk Brooklyn 2025 Day Pass', 'AFP25012345', 'Day', 'Valid', 'https://qr.afropunk.com/AFP25012345', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'amara.diallo@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Afropunk Brooklyn 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (179.0, 'EUR', TO_DATE('2023-08-17', 'YYYY-MM-DD'), TO_DATE('2023-03-10', 'YYYY-MM-DD'), 'Pukkelpop 2023 Full Festival Pass', 'PKP23023456', 'Weekend', 'Used', 'https://qr.pukkelpop.be/PKP23023456', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'pieter.claes@telenet.be' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (335.0, 'GBP', TO_DATE('2024-06-26', 'YYYY-MM-DD'), TO_DATE('2023-10-01', 'YYYY-MM-DD'), 'Glastonbury 2024 Full Weekend Ticket', 'GLS24034567', 'Weekend', 'Used', 'https://qr.glastonbury.co.uk/GLS24034567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'olivia.brown@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (165.0, 'EUR', TO_DATE('2024-06-12', 'YYYY-MM-DD'), TO_DATE('2024-02-01', 'YYYY-MM-DD'), 'Sonar 2024 3-Day Advance Ticket', 'SNR24045678', 'Weekend', 'Used', 'https://qr.sonar.es/SNR24045678', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'marco.rossi@libero.it' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sonar 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (8500.0, 'INR', TO_DATE('2025-12-27', 'YYYY-MM-DD'), TO_DATE('2025-09-15', 'YYYY-MM-DD'), 'Sunburn Festival 2025 3-Day Pass', 'SBF25056789', 'Weekend', 'Valid', 'https://qr.sunburn.in/SBF25056789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'BookMyShow' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'ravi.sharma@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sunburn Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (380.0, 'USD', TO_DATE('2024-08-01', 'YYYY-MM-DD'), TO_DATE('2024-02-20', 'YYYY-MM-DD'), 'Lollapalooza 2024 4-Day Combo Pass', 'LLAC24067890', 'Weekend', 'Used', 'https://qr.lollapalooza.com/LLAC24067890', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'jake.williams@outlook.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Chicago 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (1800.0, 'DKK', TO_DATE('2024-06-29', 'YYYY-MM-DD'), TO_DATE('2024-01-10', 'YYYY-MM-DD'), 'Roskilde Festival 2024 Full Pass', 'RSK24078901', 'Weekend', 'Used', 'https://qr.roskilde.dk/RSK24078901', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'ingrid.holm@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (95.0, 'EUR', TO_DATE('2024-07-10', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 'EXIT Festival 2024 4-Day Pass', 'EXF24089012', 'Weekend', 'Used', 'https://qr.exitfest.org/EXF24089012', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'kwame.asante@yahoo.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EXIT Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (225.0, 'EUR', TO_DATE('2024-06-19', 'YYYY-MM-DD'), TO_DATE('2024-01-05', 'YYYY-MM-DD'), 'Graspop 2024 Full Metal Weekend Pass', 'GMP24090123', 'Weekend', 'Used', 'https://qr.graspop.be/GMP24090123', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'bart.willems@proximus.be' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (149.0, 'EUR', TO_DATE('2024-07-10', 'YYYY-MM-DD'), TO_DATE('2024-02-15', 'YYYY-MM-DD'), 'Dour Festival 2024 5-Day Ticket', 'DOUR24101234', 'Weekend', 'Used', 'https://qr.dourfestival.eu/DOUR24101234', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'chloe.martin@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dour Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (399.0, 'EUR', TO_DATE('2024-08-07', 'YYYY-MM-DD'), TO_DATE('2024-02-10', 'YYYY-MM-DD'), 'Sziget 2024 6-Day Full Festival Pass', 'SZT24112345', 'Weekend', 'Used', 'https://qr.szigetfestival.com/SZT24112345', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'arjun.patel@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (85.0, 'EUR', TO_DATE('2025-05-24', 'YYYY-MM-DD'), TO_DATE('2025-01-20', 'YYYY-MM-DD'), 'Weather Festival 2025 Weekend Pass', 'WTF25123456', 'Weekend', 'Valid', 'https://qr.weatherfestival.fr/WTF25123456', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Billetweb' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'leila.moreau@orange.fr' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Weather Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (249.0, 'GBP', TO_DATE('2024-06-13', 'YYYY-MM-DD'), TO_DATE('2024-01-15', 'YYYY-MM-DD'), 'Download Festival 2024 Weekend Pass', 'DL24134567', 'Weekend', 'Used', 'https://qr.downloadfestival.co.uk/DL24134567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'finn.obrien@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Download Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (199.0, 'EUR', TO_DATE('2025-07-31', 'YYYY-MM-DD'), TO_DATE('2025-02-01', 'YYYY-MM-DD'), 'UNTOLD Festival 2025 4-Day Pass', 'UNTL25145678', 'Weekend', 'Valid', 'https://qr.untoldfestival.com/UNTL25145678', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'nadia.kowalski@wp.pl' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'UNTOLD Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (399.0, 'BRL', TO_DATE('2026-03-27', 'YYYY-MM-DD'), TO_DATE('2025-12-01', 'YYYY-MM-DD'), 'Lollapalooza Sao Paulo 2026 3-Day Pass', 'LLSP26156789', 'Weekend', 'Valid', 'https://qr.lollapalooza.com.br/LLSP26156789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Sympla' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'diego.hernandez@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Sao Paulo 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (295.0, 'EUR', TO_DATE('2024-06-20', 'YYYY-MM-DD'), TO_DATE('2024-02-01', 'YYYY-MM-DD'), 'Secret Solstice 2024 4-Day Pass', 'SS240167890', 'Weekend', 'Used', 'https://qr.secretsolstice.is/SS240167890', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'aiko.yamamoto@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Secret Solstice 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (449.0, 'USD', TO_DATE('2025-05-16', 'YYYY-MM-DD'), TO_DATE('2025-01-10', 'YYYY-MM-DD'), 'EDC Las Vegas 2025 3-Day GA Pass', 'EDCLV2517890', 'Weekend', 'Valid', 'https://qr.edclasvegas.com/EDCLV2517890', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Front Gate Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'marcus.thompson@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (189.0, 'EUR', TO_DATE('2025-09-06', 'YYYY-MM-DD'), TO_DATE('2025-04-01', 'YYYY-MM-DD'), 'Lollapalooza Berlin 2025 2-Day Pass', 'LLAB25189012', 'Weekend', 'Valid', 'https://qr.lollapalooza.de/LLAB25189012', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'eva.schneider@gmx.de' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (275.0, 'GBP', TO_DATE('2025-08-21', 'YYYY-MM-DD'), TO_DATE('2025-02-10', 'YYYY-MM-DD'), 'Creamfields 2025 4-Day Silver Camp Ticket', 'CRF25190123', 'Weekend', 'Valid', 'https://qr.creamfields.com/CRF25190123', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'jonas.bergstrom@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Creamfields 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (245.0, 'EUR', TO_DATE('2024-07-24', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 'Boom Festival 2024 8-Day Full Pass', 'BM24201234', 'Weekend', 'Used', 'https://qr.boomfestival.org/BM24201234', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'priya.nair@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (380.0, 'EUR', TO_DATE('2023-07-21', 'YYYY-MM-DD'), TO_DATE('2023-03-20', 'YYYY-MM-DD'), 'Tomorrowland 2023 1-Day Friday Ticket', 'TML23002345', 'Day', 'Used', 'https://qr.tomorrowland.com/TML23002345', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Tomorrowland Shop' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'louis.fontaine@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (189.0, 'EUR', TO_DATE('2026-07-01', 'YYYY-MM-DD'), TO_DATE('2026-01-15', 'YYYY-MM-DD'), 'Hideout Festival 2026 5-Day Pass', 'HO26212345X', 'Weekend', 'Valid', 'https://qr.hideoutfestival.com/HO26212345X', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'selin.yilmaz@hotmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Hideout Festival 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (420.0, 'EUR', TO_DATE('2023-07-21', 'YYYY-MM-DD'), TO_DATE('2023-02-28', 'YYYY-MM-DD'), 'Tomorrowland 2023 Full Weekend Comfort Pass', 'TML23003456', 'Weekend', 'Used', 'https://qr.tomorrowland.com/TML23003456', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'nico.adriaens@skynet.be' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (169.0, 'EUR', TO_DATE('2025-06-27', 'YYYY-MM-DD'), TO_DATE('2025-01-20', 'YYYY-MM-DD'), 'Defqon.1 2025 2-Day Festival Pass', 'DQ125223456', 'Weekend', 'Valid', 'https://qr.defqon1.com/DQ125223456', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'mia.larsson@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Defqon.1 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (129.0, 'EUR', TO_DATE('2026-01-10', 'YYYY-MM-DD'), TO_DATE('2025-10-01', 'YYYY-MM-DD'), 'Sensation White 2026 Amsterdam 1-Night Pass', 'SEN26234567', 'Day', 'Valid', 'https://qr.sensation.com/SEN26234567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventim' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'bilal.choudhry@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sensation 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (215.0, 'EUR', TO_DATE('2026-08-27', 'YYYY-MM-DD'), TO_DATE('2026-02-10', 'YYYY-MM-DD'), 'Dimensions 2026 5-Day Full Festival Pass', 'DIM26245678', 'Weekend', 'Valid', 'https://qr.dimensionsfestival.com/DIM26245678', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Resident Advisor' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'chiara.ferretti@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dimensions Festival 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (155.0, 'EUR', TO_DATE('2023-06-29', 'YYYY-MM-DD'), TO_DATE('2022-12-15', 'YYYY-MM-DD'), 'Rock Werchter 2023 1-Day Saturday Ticket', 'RW230067890', 'Day', 'Used', 'https://qr.rockwerchter.be/RW230067890', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'tom.baert@telenet.be' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (130.0, 'EUR', TO_DATE('2024-06-05', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 'Primavera Sound 2024 1-Day Ticket', 'PS240056789', 'Day', 'Used', 'https://qr.primaverasound.com/PS240056789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'alicia.vega@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (155.0, 'EUR', TO_DATE('2025-07-18', 'YYYY-MM-DD'), TO_DATE('2025-02-01', 'YYYY-MM-DD'), 'Melt Festival 2025 3-Day Pass', 'MELT25256789', 'Weekend', 'Valid', 'https://qr.meltfestival.de/MELT25256789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventim' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'stefan.hoffmann@web.de' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (199.0, 'EUR', TO_DATE('2026-09-03', 'YYYY-MM-DD'), TO_DATE('2026-03-01', 'YYYY-MM-DD'), 'Outlook Festival 2026 5-Day Pass', 'OTL26267890', 'Weekend', 'Valid', 'https://qr.outlookfestival.com/OTL26267890', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Dice.fm' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'aisha.mohamed@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Outlook Festival 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (199.0, 'EUR', TO_DATE('2023-08-17', 'YYYY-MM-DD'), TO_DATE('2023-04-01', 'YYYY-MM-DD'), 'Pukkelpop 2023 1-Day Saturday Ticket', 'PKP23034567', 'Day', 'Used', 'https://qr.pukkelpop.be/PKP23034567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lucas.peeters@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (89.0, 'EUR', TO_DATE('2024-06-12', 'YYYY-MM-DD'), TO_DATE('2024-03-01', 'YYYY-MM-DD'), 'Sonar 2024 1-Day Daytime Pass', 'SNR24056789', 'Day', 'Used', 'https://qr.sonar.es/SNR24056789', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'giulia.bianchi@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sonar 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (950.0, 'DKK', TO_DATE('2024-06-29', 'YYYY-MM-DD'), TO_DATE('2024-02-01', 'YYYY-MM-DD'), 'Roskilde 2024 Day Ticket Saturday', 'RSK24089012', 'Day', 'Used', 'https://qr.roskilde.dk/RSK24089012', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'henrik.dahl@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (129.0, 'EUR', TO_DATE('2025-06-28', 'YYYY-MM-DD'), TO_DATE('2025-02-20', 'YYYY-MM-DD'), 'Awakenings Festival 2025 1-Day Ticket', 'AWK25278901', 'Day', 'Valid', 'https://qr.awakenings.com/AWK25278901', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Resident Advisor' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'nour.khalil@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (159.0, 'GBP', TO_DATE('2026-07-24', 'YYYY-MM-DD'), TO_DATE('2026-01-15', 'YYYY-MM-DD'), 'Global Gathering 2026 Weekend Pass', 'GG26289012X', 'Weekend', 'Valid', 'https://qr.globalgathering.com/GG26289012X', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'jack.murphy@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Global Gathering 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (195.0, 'EUR', TO_DATE('2024-07-24', 'YYYY-MM-DD'), TO_DATE('2024-04-01', 'YYYY-MM-DD'), 'Boom Festival 2024 4-Day Pass', 'BM24302345X', 'Weekend', 'Used', 'https://qr.boomfestival.org/BM24302345X', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Festicket' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'yasmin.osei@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (179.0, 'EUR', TO_DATE('2024-06-19', 'YYYY-MM-DD'), TO_DATE('2024-02-01', 'YYYY-MM-DD'), 'Graspop 2024 1-Day Metal Ticket', 'GMP24101234', 'Day', 'Used', 'https://qr.graspop.be/GMP24101234', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'ruben.smeets@hotmail.be' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (199.0, 'BRL', TO_DATE('2026-03-27', 'YYYY-MM-DD'), TO_DATE('2026-01-10', 'YYYY-MM-DD'), 'Lollapalooza Sao Paulo 2026 1-Day Ticket', 'LLSP26312345', 'Day', 'Valid', 'https://qr.lollapalooza.com.br/LLSP26312345', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Sympla' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'clara.santos@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Sao Paulo 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (139.0, 'EUR', TO_DATE('2026-05-22', 'YYYY-MM-DD'), TO_DATE('2026-01-20', 'YYYY-MM-DD'), 'Extrema Outdoor 2026 3-Day Pass', 'EXT26323456', 'Weekend', 'Valid', 'https://qr.extremaoutdoor.com/EXT26323456', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'zoe.papadopoulos@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Extrema Outdoor 2026' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (299.0, 'EUR', TO_DATE('2024-08-07', 'YYYY-MM-DD'), TO_DATE('2024-03-10', 'YYYY-MM-DD'), 'Sziget 2024 3-Day Advance Ticket', 'SZT24334567', 'Weekend', 'Used', 'https://qr.szigetfestival.com/SZT24334567', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'hana.novak@seznam.cz' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024' AND ROWNUM = 1));
-INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID) VALUES (155.0, 'USD', TO_DATE('2026-07-17', 'YYYY-MM-DD'), TO_DATE('2026-02-01', 'YYYY-MM-DD'), 'We The Fest 2026 3-Day International Pass', 'WTF26345678', 'Weekend', 'Valid', 'https://qr.wethefest.com/WTF26345678', (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticket2Me' AND ROWNUM = 1), (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'fatima.alhassan@gmail.com' AND ROWNUM = 1), (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'We The Fest 2026' AND ROWNUM = 1));
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Pukkelpop 2024',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Pukkelpop VZW'),
+        TO_DATE('15-08-2024','DD-MM-YYYY'), TO_DATE('18-08-2024','DD-MM-YYYY'),
+        'Hasselt Kiewit',
+        (SELECT City_ID FROM City WHERE Zipcode = '3500' AND Country = 'Belgium'),
+        TO_DATE('12:00','HH24:MI'), TO_DATE('12:00','HH24:MI') + INTERVAL '13' HOUR,
+        65000);
 
--- ═══════════════════════════════════════
--- 8. GENRE
--- ═══════════════════════════════════════
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Techno', 1988, 'Detroit USA', 140);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('House', 1983, 'Chicago USA', 128);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Trance', 1990, 'Frankfurt Germany', 138);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Drum and Bass', 1992, 'London UK', 174);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Hardstyle', 1999, 'Netherlands', 150);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Dubstep', 2000, 'London UK', 140);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Ambient', 1975, 'Berlin Germany', 70);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Psytrance', 1990, 'Goa India', 148);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Progressive House', 1992, 'Chicago USA', 124);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Deep House', 1986, 'Chicago USA', 122);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Indie Rock', 1980, 'New York USA', 120);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Alternative Rock', 1980, 'Los Angeles USA', 130);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Heavy Metal', 1969, 'Birmingham UK', 160);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Death Metal', 1983, 'Tampa USA', 200);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Black Metal', 1984, 'Bergen Norway', 220);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Post-Rock', 1991, 'Chicago USA', 100);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Folk', 1960, 'New York USA', 80);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Hip-Hop', 1973, 'New York USA', 95);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Afrobeat', 1970, 'Lagos Nigeria', 100);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Reggae', 1963, 'Kingston Jamaica', 80);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Jazz', 1900, 'New Orleans USA', 90);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Soul', 1950, 'Detroit USA', 95);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('R&B', 1940, 'New York USA', 100);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Pop', 1950, 'New York USA', 120);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Electronic', 1970, 'Dusseldorf Germany', 130);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Funk', 1960, 'New York USA', 105);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Dancehall', 1970, 'Kingston Jamaica', 100);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Cumbia', 1940, 'Cartagena Colombia', 90);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Flamenco', 1850, 'Andalusia Spain', 80);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Classical', 1600, 'Vienna Austria', 60);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('K-Pop', 1992, 'Seoul South Korea', 130);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('J-Pop', 1990, 'Tokyo Japan', 125);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Trap', 2000, 'Atlanta USA', 140);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Lo-Fi', 2010, 'New York USA', 75);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Synthwave', 1978, 'Paris France', 115);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Hardcore', 1983, 'New York USA', 170);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Gabber', 1992, 'Rotterdam Netherlands', 200);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Breakbeat', 1987, 'London UK', 135);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('UK Garage', 1996, 'London UK', 130);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Jungle', 1992, 'London UK', 160);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Noise', 1975, 'New York USA', 180);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Industrial', 1976, 'London UK', 150);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('EBM', 1980, 'Brussels Belgium', 140);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Gothic', 1979, 'Leeds UK', 110);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Shoegaze', 1988, 'London UK', 100);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Grunge', 1985, 'Seattle USA', 130);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Punk Rock', 1974, 'New York USA', 200);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('New Wave', 1977, 'London UK', 120);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Disco', 1970, 'New York USA', 120);
-INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Bluegrass', 1940, 'Appalachia USA', 90);
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Sziget Festival 2024',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Sziget Cultural Management'),
+        TO_DATE('07-08-2024','DD-MM-YYYY'), TO_DATE('12-08-2024','DD-MM-YYYY'),
+        'Óbudai-sziget',
+        (SELECT City_ID FROM City WHERE Zipcode = '1117BP' AND Country = 'Hungary'),
+        TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '18' HOUR,
+        100000);
 
--- ═══════════════════════════════════════
--- 9. ARTIST
--- ═══════════════════════════════════════
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Aphex Twin', TO_DATE('1971-08-18', 'YYYY-MM-DD'), 150000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Charlotte de Witte', TO_DATE('1992-05-23', 'YYYY-MM-DD'), 80000.0, 'EUR', 'Belgium');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('David Guetta', TO_DATE('1967-11-07', 'YYYY-MM-DD'), 500000.0, 'EUR', 'France');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Bicep', TO_DATE('1987-03-15', 'YYYY-MM-DD'), 60000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Amelie Lens', TO_DATE('1989-12-10', 'YYYY-MM-DD'), 70000.0, 'EUR', 'Belgium');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Kendrick Lamar', TO_DATE('1987-06-17', 'YYYY-MM-DD'), 800000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Dua Lipa', TO_DATE('1995-08-22', 'YYYY-MM-DD'), 400000.0, 'GBP', 'Albania');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Radiohead', TO_DATE('1985-06-01', 'YYYY-MM-DD'), 350000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Metallica', TO_DATE('1981-10-28', 'YYYY-MM-DD'), 700000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Tiesto', TO_DATE('1969-01-17', 'YYYY-MM-DD'), 300000.0, 'EUR', 'Netherlands');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Solomun', TO_DATE('1975-11-07', 'YYYY-MM-DD'), 90000.0, 'EUR', 'Bosnia and Herzegovina');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Nina Kraviz', TO_DATE('1983-01-05', 'YYYY-MM-DD'), 75000.0, 'EUR', 'Russia');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Four Tet', TO_DATE('1978-09-01', 'YYYY-MM-DD'), 55000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Jamie xx', TO_DATE('1988-09-28', 'YYYY-MM-DD'), 65000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Peggy Gou', TO_DATE('1991-08-26', 'YYYY-MM-DD'), 85000.0, 'EUR', 'South Korea');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Bjork', TO_DATE('1965-11-21', 'YYYY-MM-DD'), 200000.0, 'EUR', 'Iceland');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('The Chemical Brothers', TO_DATE('1989-03-01', 'YYYY-MM-DD'), 250000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Moderat', TO_DATE('2002-05-01', 'YYYY-MM-DD'), 70000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Richie Hawtin', TO_DATE('1970-06-04', 'YYYY-MM-DD'), 120000.0, 'USD', 'Canada');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Tale Of Us', TO_DATE('1985-01-01', 'YYYY-MM-DD'), 90000.0, 'EUR', 'Italy');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Marcel Dettmann', TO_DATE('1978-01-01', 'YYYY-MM-DD'), 60000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Ben Klock', TO_DATE('1976-01-01', 'YYYY-MM-DD'), 65000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Surgeon', TO_DATE('1971-07-12', 'YYYY-MM-DD'), 45000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Objekt', TO_DATE('1985-01-01', 'YYYY-MM-DD'), 40000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Royksopp', TO_DATE('1998-01-01', 'YYYY-MM-DD'), 80000.0, 'NOK', 'Norway');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Jon Hopkins', TO_DATE('1979-08-15', 'YYYY-MM-DD'), 55000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Floating Points', TO_DATE('1986-01-01', 'YYYY-MM-DD'), 60000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Modeselektor', TO_DATE('2002-01-01', 'YYYY-MM-DD'), 50000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Actress', TO_DATE('1978-10-24', 'YYYY-MM-DD'), 35000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Dixon', TO_DATE('1975-01-01', 'YYYY-MM-DD'), 85000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Ame', TO_DATE('2003-01-01', 'YYYY-MM-DD'), 75000.0, 'EUR', 'Germany');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('The Blaze', TO_DATE('2016-01-01', 'YYYY-MM-DD'), 70000.0, 'EUR', 'France');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Bonobo', TO_DATE('1976-03-30', 'YYYY-MM-DD'), 90000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Nicolas Jaar', TO_DATE('1990-10-10', 'YYYY-MM-DD'), 100000.0, 'USD', 'Chile');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Mall Grab', TO_DATE('1996-01-01', 'YYYY-MM-DD'), 30000.0, 'AUD', 'Australia');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Palms Trax', TO_DATE('1990-01-01', 'YYYY-MM-DD'), 25000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('DJ Nobu', TO_DATE('1976-01-01', 'YYYY-MM-DD'), 40000.0, 'JPY', 'Japan');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Paula Temple', TO_DATE('1980-01-01', 'YYYY-MM-DD'), 35000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Blawan', TO_DATE('1990-01-01', 'YYYY-MM-DD'), 40000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Joy Orbison', TO_DATE('1987-01-01', 'YYYY-MM-DD'), 45000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Daniel Avery', TO_DATE('1985-01-01', 'YYYY-MM-DD'), 40000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Larry Heard', TO_DATE('1959-01-01', 'YYYY-MM-DD'), 60000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Derrick May', TO_DATE('1963-04-06', 'YYYY-MM-DD'), 70000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Kevin Saunderson', TO_DATE('1964-05-09', 'YYYY-MM-DD'), 65000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Juan Atkins', TO_DATE('1962-09-12', 'YYYY-MM-DD'), 60000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Jeff Mills', TO_DATE('1963-08-18', 'YYYY-MM-DD'), 100000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Underground Resistance', TO_DATE('1989-01-01', 'YYYY-MM-DD'), 80000.0, 'USD', 'United States');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Objekt Live', TO_DATE('1985-01-01', 'YYYY-MM-DD'), 50000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Bicep Live', TO_DATE('1987-03-15', 'YYYY-MM-DD'), 80000.0, 'GBP', 'United Kingdom');
-INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth) VALUES ('Peggy Gou Live', TO_DATE('1991-08-26', 'YYYY-MM-DD'), 95000.0, 'EUR', 'South Korea');
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Roskilde Festival 2024',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Roskilde Festival Society'),
+        TO_DATE('29-06-2024','DD-MM-YYYY'), TO_DATE('06-07-2024','DD-MM-YYYY'),
+        'Roskilde Dyrskueplads',
+        (SELECT City_ID FROM City WHERE Zipcode = '4000' AND Country = 'Denmark'),
+        TO_DATE('09:00','HH24:MI'), TO_DATE('09:00','HH24:MI') + INTERVAL '18' HOUR,
+        130000);
 
--- ═══════════════════════════════════════
--- 10. STAGE
--- ═══════════════════════════════════════
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1), 'Massive ornate fantasy structure with LED backdrop and laser rigs', 75000, 200, 'Flagship main stage with full pyrotechnics capability', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Freedom Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1), 'Open-air circular stage in forest setting with 360 degree LED ring', 40000, 120, 'Second largest stage dedicated to techno and house', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Core Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland' AND ROWNUM = 1), 'Circular domed tent with immersive LED ceiling and sound system', 15000, 60, 'Intimate indoor venue for underground electronic acts', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1), 'Large open stage with steel truss and giant LED wall', 80000, 300, 'Central main stage for headliner performances', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('The Barn', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter' AND ROWNUM = 1), 'Iconic barn-shaped indoor venue with grunge aesthetics', 10000, 80, 'Covered stage for alternative and indie artists', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop' AND ROWNUM = 1), 'Open air main stage with large canopy roof', 55000, 180, 'Main headliner stage at Kiewit', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Club Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop' AND ROWNUM = 1), 'Indoor club-style dark venue with intense lighting rig', 5000, 40, 'Electronic and dance music in intimate setting', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Coachella Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Coachella 2024' AND ROWNUM = 1), 'Iconic open-air desert stage with massive LED backdrop', 90000, 350, 'Flagship Coachella headliner stage in desert setting', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Sahara Tent', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Coachella 2024' AND ROWNUM = 1), 'Large white geodesic tent with electronic music focus', 30000, 120, 'Sahara tent for electronic and EDM performances', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Pyramid Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1), 'Iconic silver pyramid frame with massive LED screen', 100000, 450, 'The legendary Glastonbury Pyramid Stage', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Other Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1), 'Large open-air stage in sunken valley bowl', 50000, 200, 'Second biggest stage at Glastonbury', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Hurricane Festival 2024' AND ROWNUM = 1), 'Large steel-frame open stage with LED screen and PA wings', 60000, 250, 'Central main stage for rock and alternative headliners', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024' AND ROWNUM = 1), 'Grand open stage on the island with full production', 70000, 280, 'Main headliner stage on Obudai Island', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Primavera Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1), 'Waterfront open stage with Barcelona skyline backdrop', 55000, 200, 'Main stage with iconic Mediterranean backdrop', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Ray-Ban Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1), 'Smaller alternative stage with indie and post-rock focus', 15000, 80, 'Alternative stage for indie and underground acts', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Ultra Music Festival 2024' AND ROWNUM = 1), 'Massive LED-covered structure beside Biscayne Bay', 40000, 150, 'Flagship stage for global EDM headliners', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Resistance Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Ultra Music Festival 2024' AND ROWNUM = 1), 'Underground-focused stage in large indoor tent', 12000, 60, 'Resistance underground stage for techno and house', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Green Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Fuji Rock 2024' AND ROWNUM = 1), 'Open mountain stage surrounded by forest', 50000, 180, 'Main outdoor stage at Naeba resort', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('White Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Fuji Rock 2024' AND ROWNUM = 1), 'Second stage in forest clearing with natural atmosphere', 20000, 80, 'Electronic and alternative stage in forest clearing', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Chicago 2024' AND ROWNUM = 1), 'Large lakefront stage with Chicago skyline view', 80000, 300, 'Main Grant Park stage with lake backdrop', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Download Festival 2024' AND ROWNUM = 1), 'Big metal stage structure with full production for rock', 70000, 260, 'Download headline metal and rock stage', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Orange Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024' AND ROWNUM = 1), 'Iconic orange canopy structure with long history', 100000, 400, 'The legendary Roskilde Orange Stage', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EXIT Festival 2024' AND ROWNUM = 1), 'Stage built into 18th century fortress walls', 20000, 80, 'Unique fortress stage with medieval architecture backdrop', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('SonarClub', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sonar 2024' AND ROWNUM = 1), 'Large industrial hall converted to club venue', 8000, 40, 'Indoor club venue for night-time electronic performances', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Midnight Sun Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Secret Solstice 2024' AND ROWNUM = 1), 'Outdoor stage under 24-hour daylight sky', 8000, 40, 'Festival main stage under Reykjavik midnight sun', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Dance Temple', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1), 'Iconic hexagonal dance floor structure with bamboo design', 10000, 60, 'Main dance floor open 24 hours with immersive decor', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Flow Festival 2025' AND ROWNUM = 1), 'Industrial power plant backdrop stage', 20000, 80, 'Main stage in the Suvilahti industrial complex', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Hangar Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1), 'Aircraft hangar converted to massive techno venue', 20000, 80, 'Industrial hangar stage for headlining techno acts', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Defqon.1 2025' AND ROWNUM = 1), 'Epic spectacle stage with fireworks and full production hardstyle', 50000, 180, 'Main hardstyle stage with legendary endshow', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Mainstage Indoor', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Defqon.1 2025' AND ROWNUM = 1), 'Large indoor arena stage for indoor hardstyle', 15000, 60, 'Indoor arena stage for covered hardstyle performances', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Arc Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Creamfields 2025' AND ROWNUM = 1), 'Futuristic arch structure with LED wrapping', 50000, 180, 'Main Creamfields stage with signature arc design', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025' AND ROWNUM = 1), 'Open stadium stage with Olympiagelande backdrop', 70000, 250, 'Main stage at historic Olympic grounds', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Kinetic Field', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1), 'Giant LED robot owl structure stage', 130000, 500, 'Iconic EDC stage with owl theme and full production', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Circuit Grounds', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1), 'Large covered tent with 360 LED rig', 40000, 150, 'Circuit Grounds for techno and house acts', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1), 'Large open metal stage with skull and bone decorations', 55000, 200, 'Main metal stage with heavy theme', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Metal Dome', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Graspop Metal Meeting 2024' AND ROWNUM = 1), 'Circular indoor stage with high roof for indoor metal shows', 10000, 50, 'Indoor covered stage for metal bands', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('La Petite Maison Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dour Festival 2024' AND ROWNUM = 1), 'Small intimate stage for punk and garage rock', 3000, 20, 'Smallest most intimate stage at Dour', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Sao Paulo 2026' AND ROWNUM = 1), 'Large open-air stage at racetrack venue', 80000, 300, 'Main Lollapalooza stage in Sao Paulo', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('ArenA Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sensation 2026' AND ROWNUM = 1), '360 degree stage setup in full white arena', 40000, 150, 'All-white immersive arena stage experience', 1);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage Mountain', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025' AND ROWNUM = 1), 'Mountain-side stage with ski slope backdrop', 20000, 80, 'Alpine main stage with snow-covered mountain backdrop', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Center Camp Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Burning Man 2026' AND ROWNUM = 1), 'Open desert playa stage in the deep playa area', 50000, 200, 'Open playa stage in the Black Rock Desert', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Sleepless Floor', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt Festival 2025' AND ROWNUM = 1), 'Industrial coal excavator backdrop open stage', 20000, 80, 'Iconic Ferropolis outdoor techno stage', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'We The Fest 2026' AND ROWNUM = 1), 'Modern open stage with tropical festival vibe', 30000, 120, 'Main stage at GBK Sports Complex Jakarta', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'UNTOLD Festival 2025' AND ROWNUM = 1), 'Stadium-style stage with full production spectacle', 45000, 160, 'Main UNTOLD stage inside Cluj Arena', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Honda Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Austin City Limits 2025' AND ROWNUM = 1), 'Open park stage with city skyline backdrop', 60000, 220, 'Main ACL stage in Zilker Park', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Reading Festival 2025' AND ROWNUM = 1), 'Classic UK festival main stage structure', 80000, 320, 'Reading Festival main headliner stage', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sunburn Festival 2025' AND ROWNUM = 1), 'Beach-side stage with ocean backdrop', 60000, 200, 'Main Sunburn stage on Goa beachfront', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Arena', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Global Gathering 2026' AND ROWNUM = 1), 'Large open air arena stage at airfield', 40000, 160, 'Main Global Gathering outdoor arena', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Main Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Extrema Outdoor 2026' AND ROWNUM = 1), 'Open stage by the water park', 25000, 100, 'Main stage at Aquabest with water feature backdrop', 0);
-INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status) VALUES ('Garden Stage', (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Dimensions Festival 2026' AND ROWNUM = 1), 'Open air stage within fort walls with stone arch framing', 8000, 40, 'Historic fort garden stage at Punta Christo', 0);
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Glastonbury 2025',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Glastonbury Festivals Ltd'),
+        TO_DATE('25-06-2025','DD-MM-YYYY'), TO_DATE('29-06-2025','DD-MM-YYYY'),
+        'Worthy Farm Pilton',
+        (SELECT City_ID FROM City WHERE Zipcode = 'BA44AF' AND Country = 'United Kingdom'),
+        TO_DATE('08:00','HH24:MI'), TO_DATE('08:00','HH24:MI') + INTERVAL '21' HOUR,
+        210000);
 
--- ═══════════════════════════════════════
--- 11. PERFORMANCE
--- ═══════════════════════════════════════
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-07-22 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-07-22 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Headlining techno set in forest setting', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Freedom Stage' AND f.Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-07-23 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-07-23 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 'Explosive main stage closing set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-07-24 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-07-24 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Intimate techno set in Core', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Amelie Lens' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Core Stage' AND f.Festival_Name = 'Tomorrowland' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-06-30 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-06-30 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Headline Thom Yorke-led performance', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Radiohead' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Alternative Rock' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-07-01 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-07-01 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Full production Master of Puppets anniversary set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Metallica' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Heavy Metal' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Rock Werchter' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-08-18 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-08-18 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Audiovisual live electronic performance', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'The Chemical Brothers' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Pukkelpop' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2023-08-19 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2023-08-19 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Late night deep house DJ set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Club Stage' AND f.Festival_Name = 'Pukkelpop' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-04-12 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-04-12 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Coachella headline pop performance', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Dua Lipa' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Coachella Stage' AND f.Festival_Name = 'Coachella 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-04-13 21:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-04-13 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Critically acclaimed rap headline show', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kendrick Lamar' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Coachella Stage' AND f.Festival_Name = 'Coachella 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-04-12 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-04-13 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Late night electronic tent set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Four Tet' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Sahara Tent' AND f.Festival_Name = 'Coachella 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-28 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-28 21:45:00', 'YYYY-MM-DD HH24:MI:SS'), 'Orchestral electronic live performance', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bjork' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Other Stage' AND f.Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-29 21:45:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-29 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Iconic pyramid stage headlining', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Radiohead' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Alternative Rock' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Pyramid Stage' AND f.Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-12 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-12 05:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Marathon deep house fortress set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Solomun' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Deep House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'EXIT Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-11 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-11 05:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'High energy techno set in fortress', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Nina Kraviz' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'EXIT Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-07 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-08 01:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Cinematic melodic techno closing set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Tale Of Us' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Melodic Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Primavera Stage' AND f.Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-06 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-07 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Funky house DJ set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Peggy Gou' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Ray-Ban Stage' AND f.Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-03-22 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-03-22 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Main stage closing set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Tiesto' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Progressive House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Ultra Music Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-03-22 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-03-22 04:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Underground techno Resistance tent', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Richie Hawtin' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Resistance Stage' AND f.Festival_Name = 'Ultra Music Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-13 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-13 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Masterclass Detroit techno set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Jeff Mills' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'SonarClub' AND f.Festival_Name = 'Sonar 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-08-08 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-08 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 'Immersive ambient live show', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Jon Hopkins' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Ambient' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Flow Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-08-09 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-09 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Late night electronic live set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Floating Points' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Flow Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-04 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-04 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Norwegian electronic duo headline', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Royksopp' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Orange Stage' AND f.Festival_Name = 'Roskilde Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-14 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-14 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Electronic rock crossover headline', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'The Chemical Brothers' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Download Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-13 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-13 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Full production Download headliner', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Metallica' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Heavy Metal' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Download Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-14 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-14 04:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Detroit Techno Origin set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Juan Atkins' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'SonarClub' AND f.Festival_Name = 'Sonar 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-08-10 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-08-10 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Classic Detroit techno set on island', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Derrick May' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Sziget Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-27 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-27 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Dawn house set at Dance Temple', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kevin Saunderson' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Dance Temple' AND f.Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-28 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-28 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Legendary Mr Fingers deep house set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Larry Heard' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Deep House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Dance Temple' AND f.Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-06-28 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-28 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Berghain resident techno set in hangar', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Marcel Dettmann' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Hangar Stage' AND f.Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-06-29 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-29 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Dark industrial techno closing', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Ben Klock' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Hangar Stage' AND f.Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-07-19 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-07-19 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Rare live performance at Ferropolis', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Aphex Twin' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Sleepless Floor' AND f.Festival_Name = 'Melt Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-05-25 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-05-26 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Experimental electronic live set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Nicolas Jaar' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Weather Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2026-06-06 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-06-06 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Warehouse techno headliner', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Objekt' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Junction 2 2026' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2026-06-06 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-06-07 02:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Birmingham techno legend closing set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Surgeon' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Junction 2 2026' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2026-08-29 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-08-30 01:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Cinematic set in fort gardens', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Tale Of Us' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Ambient' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Garden Stage' AND f.Festival_Name = 'Dimensions Festival 2026' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-09-06 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-09-06 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Berlin electronic duo hometown show', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Modeselektor' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Lollapalooza Berlin 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-09-07 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-09-07 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Innervisions deep house closing', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Dixon' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Deep House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Lollapalooza Berlin 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-27 22:30:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Glittering electronic set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Jamie xx' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Other Stage' AND f.Festival_Name = 'Glastonbury 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-10-04 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-10-04 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Live band electronic show', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bonobo' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Honda Stage' AND f.Festival_Name = 'Austin City Limits 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-06-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-28 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Belgian techno queen in hangar', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Hangar Stage' AND f.Festival_Name = 'Awakenings Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-05-16 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-05-17 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'EDC main stage headliner', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Tiesto' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Progressive House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Kinetic Field' AND f.Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-05-17 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-05-17 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Mainstage DJ set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Kinetic Field' AND f.Festival_Name = 'EDC Las Vegas 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-06-28 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-06-28 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Crossover techno set in hardstyle fest', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Nina Kraviz' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Mainstage Indoor' AND f.Festival_Name = 'Defqon.1 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2026-01-10 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-01-10 23:59:00', 'YYYY-MM-DD HH24:MI:SS'), 'Techno set in all-white arena', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Jeff Mills' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'ArenA Stage' AND f.Festival_Name = 'Sensation 2026' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-07-29 03:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-07-29 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Detroit collective dawn set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Underground Resistance' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Dance Temple' AND f.Festival_Name = 'Boom Festival 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-08-21 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-22 01:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Hard industrial techno opening', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Blawan' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Arc Stage' AND f.Festival_Name = 'Creamfields 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-08-22 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-08-22 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'UK garage crossover set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Joy Orbison' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'UK Garage' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Arc Stage' AND f.Festival_Name = 'Creamfields 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2024-06-05 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2024-06-06 00:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'French duo emotional electronic show', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'The Blaze' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Primavera Stage' AND f.Festival_Name = 'Primavera Sound 2024' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-07-18 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-07-19 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Innervisions deep house sunrise set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Ame' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Deep House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Sleepless Floor' AND f.Festival_Name = 'Melt Festival 2025' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2026-09-04 23:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2026-09-05 01:30:00', 'YYYY-MM-DD HH24:MI:SS'), 'Industrial noise techno fortress set', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Paula Temple' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Industrial' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Garden Stage' AND f.Festival_Name = 'Outlook Festival 2026' AND ROWNUM = 1));
-INSERT INTO Performance (Performance_Start_Time, Performance_End_Time, Performance_Description, Artist_ID, Genre_ID, Stage_ID) VALUES (TO_DATE('2025-12-27 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_DATE('2025-12-28 00:00:00', 'YYYY-MM-DD HH24:MI:SS'), 'Sunrise set on Goa beach', (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Peggy Gou Live' AND ROWNUM = 1), (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House' AND ROWNUM = 1), (SELECT s.Stage_ID FROM Stage s JOIN Festival f ON s.Festival_ID = f.Festival_ID WHERE s.Stage_Name = 'Main Stage' AND f.Festival_Name = 'Sunburn Festival 2025' AND ROWNUM = 1));
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Primavera Sound 2025',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Primavera Sound SL'),
+        TO_DATE('29-05-2025','DD-MM-YYYY'), TO_DATE('01-06-2025','DD-MM-YYYY'),
+        'Parc del Fòrum',
+        (SELECT City_ID FROM City WHERE Zipcode = '08003' AND Country = 'Spain'),
+        TO_DATE('14:00','HH24:MI'), TO_DATE('14:00','HH24:MI') + INTERVAL '14' HOUR,
+        75000);
+
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Melt! Festival 2025',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Melt! Festival GmbH'),
+        TO_DATE('18-07-2025','DD-MM-YYYY'), TO_DATE('20-07-2025','DD-MM-YYYY'),
+        'Ferropolis Industriepark',
+        (SELECT City_ID FROM City WHERE Zipcode = '06773' AND Country = 'Germany'),
+        TO_DATE('13:00','HH24:MI'), TO_DATE('13:00','HH24:MI') + INTERVAL '16' HOUR,
+        25000);
+
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Tomorrowland Winter 2025',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'Tomorrowland NV'),
+        TO_DATE('08-03-2025','DD-MM-YYYY'), TO_DATE('15-03-2025','DD-MM-YYYY'),
+        'Alpe d''Huez',
+        (SELECT City_ID FROM City WHERE Zipcode = '1000' AND Country = 'Belgium'),
+        TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '16' HOUR,
+        30000);
+
+INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
+                      Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
+VALUES ('Lollapalooza Berlin 2025',
+        (SELECT Company_ID FROM Company WHERE Company_Name = 'AEG Presents Europe'),
+        TO_DATE('07-09-2025','DD-MM-YYYY'), TO_DATE('08-09-2025','DD-MM-YYYY'),
+        'Olympiastadion Berlin',
+        (SELECT City_ID FROM City WHERE Zipcode = '10115' AND Country = 'Germany'),
+        TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '12' HOUR,
+        85000);
+
+-- --------------------------------------------------------
+-- 6. PERMIT  (Festival_ID via Festival_Name – unique)
+-- --------------------------------------------------------
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Noise', 'Noise exemption permit for outdoor amplified music',
+        TO_DATE('01-01-2024','DD-MM-YYYY'), TO_DATE('15-02-2024','DD-MM-YYYY'), TO_DATE('22-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Alcohol', 'Beer and spirits vendor license Tomorrowland',
+        TO_DATE('05-02-2024','DD-MM-YYYY'), TO_DATE('20-03-2024','DD-MM-YYYY'), TO_DATE('22-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Traffic', 'Road closure permit A12 motorway approach',
+        TO_DATE('10-03-2024','DD-MM-YYYY'), TO_DATE('01-05-2024','DD-MM-YYYY'), TO_DATE('22-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Environmental', 'Environmental impact clearance for large outdoor event',
+        TO_DATE('10-01-2024','DD-MM-YYYY'), TO_DATE('20-02-2024','DD-MM-YYYY'), TO_DATE('08-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Public Safety', 'Emergency services coordination permit Rock Werchter',
+        TO_DATE('01-02-2024','DD-MM-YYYY'), TO_DATE('15-03-2024','DD-MM-YYYY'), TO_DATE('08-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Noise', 'Extended late-night noise exemption Rock Werchter',
+        TO_DATE('15-02-2024','DD-MM-YYYY'), TO_DATE('01-04-2024','DD-MM-YYYY'), TO_DATE('08-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Public Safety', 'Crowd management and emergency exit permit',
+        TO_DATE('05-02-2024','DD-MM-YYYY'), TO_DATE('01-03-2024','DD-MM-YYYY'), TO_DATE('19-08-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Alcohol', 'Alcohol sales license Pukkelpop',
+        TO_DATE('10-03-2024','DD-MM-YYYY'), TO_DATE('20-04-2024','DD-MM-YYYY'), TO_DATE('19-08-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Alcohol', 'License for on-site alcohol sales and distribution',
+        TO_DATE('01-03-2024','DD-MM-YYYY'), TO_DATE('15-04-2024','DD-MM-YYYY'), TO_DATE('15-08-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Health', 'First aid and medical tent permit Sziget',
+        TO_DATE('01-04-2024','DD-MM-YYYY'), TO_DATE('01-05-2024','DD-MM-YYYY'), TO_DATE('13-08-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Fire Safety', 'Pyrotechnics and open flame usage permit',
+        TO_DATE('10-02-2024','DD-MM-YYYY'), TO_DATE('05-03-2024','DD-MM-YYYY'), TO_DATE('10-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Construction', 'Temporary structure permit Roskilde camping',
+        TO_DATE('01-01-2024','DD-MM-YYYY'), TO_DATE('01-02-2024','DD-MM-YYYY'), TO_DATE('07-07-2024','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Construction', 'Temporary stage and infrastructure construction permit',
+        TO_DATE('01-11-2024','DD-MM-YYYY'), TO_DATE('15-12-2024','DD-MM-YYYY'), TO_DATE('03-07-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Noise', 'Glastonbury 2025 late-night noise exemption',
+        TO_DATE('15-12-2024','DD-MM-YYYY'), TO_DATE('01-02-2025','DD-MM-YYYY'), TO_DATE('30-06-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Health', 'Medical services and first aid station permit',
+        TO_DATE('01-12-2024','DD-MM-YYYY'), TO_DATE('20-01-2025','DD-MM-YYYY'), TO_DATE('05-06-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Noise', 'Late-night amplified music permit Primavera',
+        TO_DATE('15-12-2024','DD-MM-YYYY'), TO_DATE('01-02-2025','DD-MM-YYYY'), TO_DATE('02-06-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Traffic', 'Road closure and traffic management permit',
+        TO_DATE('15-01-2025','DD-MM-YYYY'), TO_DATE('01-03-2025','DD-MM-YYYY'), TO_DATE('25-07-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Traffic', 'Melt Festival site access road permit',
+        TO_DATE('01-03-2025','DD-MM-YYYY'), TO_DATE('15-04-2025','DD-MM-YYYY'), TO_DATE('21-07-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Noise', 'Night noise exemption permit for alpine event',
+        TO_DATE('01-10-2024','DD-MM-YYYY'), TO_DATE('01-11-2024','DD-MM-YYYY'), TO_DATE('16-03-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Public Safety', 'Mountain rescue coordination permit',
+        TO_DATE('15-10-2024','DD-MM-YYYY'), TO_DATE('15-11-2024','DD-MM-YYYY'), TO_DATE('16-03-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Security', 'Private security and perimeter control permit',
+        TO_DATE('01-03-2025','DD-MM-YYYY'), TO_DATE('15-04-2025','DD-MM-YYYY'), TO_DATE('10-09-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
+
+INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date, Permit_Expiration_Date, Festival_ID)
+VALUES ('Fire Safety', 'Lollapalooza Berlin pyrotechnics permit',
+        TO_DATE('01-04-2025','DD-MM-YYYY'), TO_DATE('01-06-2025','DD-MM-YYYY'), TO_DATE('09-09-2025','DD-MM-YYYY'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
+
+-- --------------------------------------------------------
+-- 7. GENRE
+-- --------------------------------------------------------
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Electronic',    1970, 'Chicago, USA',          128);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Rock',          1955, 'Memphis, USA',           120);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Pop',           1960, 'New York, USA',           110);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Hip-Hop',       1973, 'Bronx, New York, USA',    90);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Techno',        1985, 'Detroit, USA',            140);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('House',         1983, 'Chicago, USA',            125);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Drum and Bass', 1991, 'London, UK',              170);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Trance',        1990, 'Frankfurt, Germany',      138);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Indie Rock',    1980, 'New York, USA',           115);
+INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM) VALUES ('Reggae',        1960, 'Kingston, Jamaica',       80);
+
+-- --------------------------------------------------------
+-- 8. ARTIST
+-- --------------------------------------------------------
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Martin Garrix',      TO_DATE('14-05-1996','DD-MM-YYYY'), 500000,  'EUR', 'Netherlands');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Kendrick Lamar',     TO_DATE('17-06-1987','DD-MM-YYYY'), 1200000, 'USD', 'United States');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Billie Eilish',      TO_DATE('18-12-2001','DD-MM-YYYY'), 900000,  'USD', 'United States');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Stromae',            TO_DATE('12-03-1985','DD-MM-YYYY'), 400000,  'EUR', 'Belgium');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('David Guetta',       TO_DATE('07-11-1967','DD-MM-YYYY'), 600000,  'EUR', 'France');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Rammstein',          TO_DATE('01-01-1994','DD-MM-YYYY'), 800000,  'EUR', 'Germany');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Arctic Monkeys',     TO_DATE('01-06-2002','DD-MM-YYYY'), 750000,  'GBP', 'United Kingdom');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Bad Bunny',          TO_DATE('10-03-1994','DD-MM-YYYY'), 1500000, 'USD', 'Puerto Rico');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Charlotte de Witte', TO_DATE('15-10-1992','DD-MM-YYYY'), 80000,   'EUR', 'Belgium');
+INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price, Artist_Price_Currency, Artist_Land_Of_Birth)
+VALUES ('Bicep',              TO_DATE('01-01-2009','DD-MM-YYYY'), 120000,  'GBP', 'United Kingdom');
+
+-- --------------------------------------------------------
+-- 9. STAGE  (Festival_ID via Festival_Name)
+-- --------------------------------------------------------
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Mainstage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'),
+        'Grand pyramid structure with full LED canopy', 80000, 200,
+        'The iconic main stage with world-class production', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Freedom Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'),
+        'Underground bunker-style enclosed venue', 15000, 80,
+        'Dark and deep electronic music venue', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Main Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'),
+        'Open air classic rock stage with massive screens', 65000, 180,
+        'The legendary open air rock stage', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Club Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'),
+        'Covered intimate club venue', 8000, 40,
+        'Intimate covered stage for emerging artists', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Chateau Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'),
+        'Open air stage near the castle pond', 40000, 120,
+        'Flagship stage overlooking the castle', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Boiler Room',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'),
+        'Concrete underground club stage', 3000, 20,
+        'Exclusive underground electronic stage', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Main Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'),
+        'Grand island stage with LED towers', 70000, 250,
+        'The heart of Sziget on the island', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('A38 Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'),
+        'Covered secondary stage named after the famous ship bar', 12000, 60,
+        'Popular covered stage for alternative acts', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Orange Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'),
+        'Iconic orange tent main stage', 75000, 200,
+        'The legendary main stage of Roskilde', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Arena Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'),
+        'Covered arena for mid-size acts', 15000, 70,
+        'Covered arena stage at Roskilde', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Pyramid Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'),
+        'The world-famous pyramid-shaped headline stage', 100000, 300,
+        'The most iconic festival stage in the world', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Other Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'),
+        'Second largest stage at Glastonbury', 50000, 150,
+        'Alternative headline stage at Glastonbury', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('ATP Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'),
+        'Covered indoor arena stage', 12000, 60,
+        'Air-conditioned indoor arena stage', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Heineken Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'),
+        'Large open air stage overlooking the sea', 40000, 110,
+        'Main outdoor stage with sea views', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Ferropolis Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'),
+        'Open air stage surrounded by industrial cranes', 20000, 80,
+        'Unique stage set among giant mining excavators', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Sleepless Floor',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'),
+        'Open air techno floor running all night', 8000, 30,
+        'The legendary all-night Melt techno floor', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Alpe Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'),
+        'Alpine outdoor stage with mountain backdrop', 25000, 90,
+        'Main stage set against the French Alps', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Ice Club',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'),
+        'Indoor heated club stage in a ski chalet', 4000, 20,
+        'Intimate indoor club stage for the winter edition', 1);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Main Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'),
+        'Grand open air stage in the Olympic stadium grounds', 60000, 200,
+        'The main headline stage of Lollapalooza Berlin', 0);
+
+INSERT INTO Stage (Stage_Name, Festival_ID, Stage_Style_Description, Stage_Standing_Capacity, Stage_Toilet_Count, Stage_Description, Stage_Roofed_Status)
+VALUES ('Perry Stage',
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'),
+        'Second stage named after Lolla founder Perry Farrell', 25000, 80,
+        'Second headline stage at Lollapalooza Berlin', 0);
+
+-- --------------------------------------------------------
+-- 10. TICKET  (Visitor_ID via email; Festival_ID via name; TicketPlatform_ID via name)
+-- --------------------------------------------------------
+
+-- Lena: Tomorrowland + Pukkelpop + Lollapalooza
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (320.00, 'EUR', TO_DATE('19-07-2024','DD-MM-YYYY'), TO_DATE('10-01-2024','DD-MM-YYYY'),
+        'Full weekend pass Tomorrowland', 'TML20240001AA', 'Weekend', 'Used', 'https://qr.tomorrowland.com/TML20240001AA',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster Belgium'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lena.maes@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (195.00, 'EUR', TO_DATE('15-08-2024','DD-MM-YYYY'), TO_DATE('03-05-2024','DD-MM-YYYY'),
+        'Pukkelpop combi – Lena', 'PKP20240001AA', 'Combi', 'Used', 'https://qr.pukkelpop.be/PKP20240001AA',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lena.maes@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (99.00, 'EUR', TO_DATE('07-09-2025','DD-MM-YYYY'), TO_DATE('25-05-2025','DD-MM-YYYY'),
+        'Lollapalooza Berlin – Lena', 'LLP20250001AA', 'Weekend', 'Valid', 'https://qr.lollaberlin.de/LLP20250001AA',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Ticketmaster Belgium'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'lena.maes@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
+
+-- Jonas: Rock Werchter + Tomorrowland
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (89.50, 'EUR', TO_DATE('04-07-2024','DD-MM-YYYY'), TO_DATE('15-03-2024','DD-MM-YYYY'),
+        'Single day Friday Rock Werchter', 'RWF20240001BB', 'Day', 'Used', 'https://qr.rockwerchter.be/RWF20240001BB',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'jonas.dewolf@hotmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (320.00, 'EUR', TO_DATE('19-07-2024','DD-MM-YYYY'), TO_DATE('20-02-2024','DD-MM-YYYY'),
+        'Tomorrowland weekend – Jonas', 'TML20240001BB', 'Weekend', 'Used', 'https://qr.tomorrowland.com/TML20240001BB',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'jonas.dewolf@hotmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'));
+
+-- Sophie: Pukkelpop + Glastonbury
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (195.00, 'EUR', TO_DATE('15-08-2024','DD-MM-YYYY'), TO_DATE('01-04-2024','DD-MM-YYYY'),
+        '4-day combi ticket Pukkelpop', 'PKP20240001CC', 'Combi', 'Used', 'https://qr.pukkelpop.be/PKP20240001CC',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Paylogic'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'sophie.janssen@outlook.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (375.00, 'GBP', TO_DATE('25-06-2025','DD-MM-YYYY'), TO_DATE('01-11-2024','DD-MM-YYYY'),
+        'Glastonbury full – Sophie', 'GLA20250001CC', 'Full Festival', 'Valid', 'https://qr.glastonbury.co.uk/GLA20250001CC',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Dice FM'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'sophie.janssen@outlook.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'));
+
+-- Pieter: Sziget + Roskilde
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (290.00, 'EUR', TO_DATE('07-08-2024','DD-MM-YYYY'), TO_DATE('20-02-2024','DD-MM-YYYY'),
+        '7-day full island ticket Sziget', 'SZI20240001DD', 'Full Festival', 'Used', 'https://qr.szigetfestival.com/SZI20240001DD',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'pieter.claes@yahoo.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (145.00, 'EUR', TO_DATE('29-06-2024','DD-MM-YYYY'), TO_DATE('10-02-2024','DD-MM-YYYY'),
+        'Roskilde weekend – Pieter', 'RSK20240001DD', 'Weekend', 'Used', 'https://qr.roskilde.dk/RSK20240001DD',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Tele Ticket Service'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'pieter.claes@yahoo.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'));
+
+-- Nathalie: Roskilde + Primavera
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (145.00, 'EUR', TO_DATE('29-06-2024','DD-MM-YYYY'), TO_DATE('05-01-2024','DD-MM-YYYY'),
+        'Weekend ticket Roskilde', 'RSK20240001EE', 'Weekend', 'Used', 'https://qr.roskilde.dk/RSK20240001EE',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Tele Ticket Service'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'nathalie.hermans@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (185.00, 'EUR', TO_DATE('29-05-2025','DD-MM-YYYY'), TO_DATE('05-01-2025','DD-MM-YYYY'),
+        'Primavera Sound – Nathalie', 'PRM20250001EE', 'Combi', 'Valid', 'https://qr.primaverasound.com/PRM20250001EE',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Fever Up'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'nathalie.hermans@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'));
+
+-- Adrien: Glastonbury + Sziget
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (375.00, 'GBP', TO_DATE('25-06-2025','DD-MM-YYYY'), TO_DATE('15-10-2024','DD-MM-YYYY'),
+        'Full Glastonbury ticket', 'GLA20250001FF', 'Full Festival', 'Valid', 'https://qr.glastonbury.co.uk/GLA20250001FF',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Dice FM'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'adrien.dupont@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (290.00, 'EUR', TO_DATE('07-08-2024','DD-MM-YYYY'), TO_DATE('01-03-2024','DD-MM-YYYY'),
+        'Sziget full – Adrien', 'SZI20240001FF', 'Full Festival', 'Used', 'https://qr.szigetfestival.com/SZI20240001FF',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Eventbrite'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'adrien.dupont@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024'));
+
+-- Zara: Primavera + Lollapalooza
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (185.00, 'EUR', TO_DATE('29-05-2025','DD-MM-YYYY'), TO_DATE('01-12-2024','DD-MM-YYYY'),
+        '3-day Primavera Sound pass', 'PRM20250001GG', 'Combi', 'Valid', 'https://qr.primaverasound.com/PRM20250001GG',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Fever Up'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'zara.ahmed@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (99.00, 'EUR', TO_DATE('07-09-2025','DD-MM-YYYY'), TO_DATE('10-05-2025','DD-MM-YYYY'),
+        'Lollapalooza Berlin – Zara', 'LLP20250001GG', 'Weekend', 'Valid', 'https://qr.lollaberlin.de/LLP20250001GG',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'StubHub International'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'zara.ahmed@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
+
+-- Markus: Melt + Tomorrowland Winter
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (98.00, 'EUR', TO_DATE('18-07-2025','DD-MM-YYYY'), TO_DATE('10-02-2025','DD-MM-YYYY'),
+        'Weekend ticket Melt Festival', 'MLT20250001HH', 'Weekend', 'Valid', 'https://qr.meltfestival.de/MLT20250001HH',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'TicketSwap'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'markus.bauer@web.de'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (220.00, 'EUR', TO_DATE('08-03-2025','DD-MM-YYYY'), TO_DATE('15-10-2024','DD-MM-YYYY'),
+        'Tomorrowland Winter – Markus', 'TMW20250001HH', 'Full Festival', 'Used', 'https://qr.tomorrowland.com/TMW20250001HH',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Resident Advisor'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'markus.bauer@web.de'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'));
+
+-- Elena: Tomorrowland Winter + Melt
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (220.00, 'EUR', TO_DATE('08-03-2025','DD-MM-YYYY'), TO_DATE('01-09-2024','DD-MM-YYYY'),
+        'Full week Tomorrowland Winter', 'TMW20250001II', 'Full Festival', 'Used', 'https://qr.tomorrowland.com/TMW20250001II',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'Resident Advisor'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'elena.kovacs@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (98.00, 'EUR', TO_DATE('18-07-2025','DD-MM-YYYY'), TO_DATE('01-03-2025','DD-MM-YYYY'),
+        'Melt Festival – Elena', 'MLT20250001II', 'Weekend', 'Valid', 'https://qr.meltfestival.de/MLT20250001II',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'TicketSwap'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'elena.kovacs@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025'));
+
+-- Chloe: Lollapalooza + Rock Werchter
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (99.00, 'EUR', TO_DATE('07-09-2025','DD-MM-YYYY'), TO_DATE('20-04-2025','DD-MM-YYYY'),
+        '2-day Lollapalooza Berlin pass', 'LLP20250001JJ', 'Weekend', 'Valid', 'https://qr.lollaberlin.de/LLP20250001JJ',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'StubHub International'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'chloe.martin@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
+
+INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date, Ticket_Description, Ticket_Barcode, Ticket_Type, Ticket_Status, Ticket_QR_Code, TicketPlatform_ID, Visitor_ID, Festival_ID)
+VALUES (89.50, 'EUR', TO_DATE('05-07-2024','DD-MM-YYYY'), TO_DATE('20-04-2024','DD-MM-YYYY'),
+        'Rock Werchter day – Chloe', 'RWF20240001JJ', 'Day', 'Used', 'https://qr.rockwerchter.be/RWF20240001JJ',
+        (SELECT TicketPlatform_ID FROM TicketPlatform WHERE TicketPlatform_Name = 'See Tickets'),
+        (SELECT Visitor_ID FROM Visitor WHERE Visitor_Email = 'chloe.martin@gmail.com'),
+        (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024'));
+
+-- --------------------------------------------------------
+-- 11. PERFORMANCE  (Stage_ID via Stage_Name+Festival_Name; Artist_ID via name; Genre_ID via name)
+-- --------------------------------------------------------
+
+-- Tomorrowland Summer 2024 – Mainstage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('19-07-2024 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+        TO_DATE('20-07-2024 00:00','DD-MM-YYYY HH24:MI'),
+        'Martin Garrix closing set Mainstage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Mainstage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('20-07-2024 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta'),
+        TO_DATE('20-07-2024 22:00','DD-MM-YYYY HH24:MI'),
+        'David Guetta pre-closing set Mainstage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Mainstage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024')));
+
+-- Tomorrowland Summer 2024 – Freedom Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('20-07-2024 02:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte'),
+        TO_DATE('20-07-2024 05:00','DD-MM-YYYY HH24:MI'),
+        'Charlotte de Witte deep techno set',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Freedom Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('21-07-2024 00:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep'),
+        TO_DATE('21-07-2024 02:00','DD-MM-YYYY HH24:MI'),
+        'Bicep live AV on Freedom Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Freedom Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024')));
+
+-- Rock Werchter 2024 – Main Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('04-07-2024 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Arctic Monkeys'),
+        TO_DATE('04-07-2024 23:00','DD-MM-YYYY HH24:MI'),
+        'Arctic Monkeys headliner set',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Indie Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('05-07-2024 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kendrick Lamar'),
+        TO_DATE('05-07-2024 22:30','DD-MM-YYYY HH24:MI'),
+        'Kendrick Lamar Saturday headline',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024')));
+
+-- Rock Werchter 2024 – Club Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('05-07-2024 23:30','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta'),
+        TO_DATE('06-07-2024 01:30','DD-MM-YYYY HH24:MI'),
+        'David Guetta electronic crossover set',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Club Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('06-07-2024 02:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte'),
+        TO_DATE('06-07-2024 05:00','DD-MM-YYYY HH24:MI'),
+        'Charlotte de Witte closing Club Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Club Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Rock Werchter 2024')));
+
+-- Pukkelpop 2024 – Chateau Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('15-08-2024 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Stromae'),
+        TO_DATE('15-08-2024 22:00','DD-MM-YYYY HH24:MI'),
+        'Stromae Belgian icon live performance',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Chateau Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('16-08-2024 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Billie Eilish'),
+        TO_DATE('16-08-2024 23:00','DD-MM-YYYY HH24:MI'),
+        'Billie Eilish headline Chateau Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Chateau Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024')));
+
+-- Pukkelpop 2024 – Boiler Room
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('16-08-2024 01:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep'),
+        TO_DATE('16-08-2024 03:00','DD-MM-YYYY HH24:MI'),
+        'Bicep live electronic AV show',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Boiler Room'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('17-08-2024 02:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+        TO_DATE('17-08-2024 04:00','DD-MM-YYYY HH24:MI'),
+        'Martin Garrix secret Boiler Room set',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Boiler Room'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Pukkelpop 2024')));
+
+-- Sziget Festival 2024 – Main Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('09-08-2024 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bad Bunny'),
+        TO_DATE('09-08-2024 23:00','DD-MM-YYYY HH24:MI'),
+        'Bad Bunny Friday headline Sziget',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('10-08-2024 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kendrick Lamar'),
+        TO_DATE('10-08-2024 23:30','DD-MM-YYYY HH24:MI'),
+        'Kendrick Lamar Saturday headline Sziget',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024')));
+
+-- Sziget Festival 2024 – A38 Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('08-08-2024 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte'),
+        TO_DATE('09-08-2024 01:00','DD-MM-YYYY HH24:MI'),
+        'Charlotte de Witte techno night A38',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'A38 Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('11-08-2024 23:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep'),
+        TO_DATE('12-08-2024 01:30','DD-MM-YYYY HH24:MI'),
+        'Bicep closing night A38 Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'A38 Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Sziget Festival 2024')));
+
+-- Roskilde Festival 2024 – Orange Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('30-06-2024 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Billie Eilish'),
+        TO_DATE('30-06-2024 23:00','DD-MM-YYYY HH24:MI'),
+        'Billie Eilish headline Orange Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Orange Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('04-07-2024 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Rammstein'),
+        TO_DATE('04-07-2024 22:30','DD-MM-YYYY HH24:MI'),
+        'Rammstein industrial metal headline',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Orange Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024')));
+
+-- Roskilde Festival 2024 – Arena Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('01-07-2024 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+        TO_DATE('02-07-2024 00:00','DD-MM-YYYY HH24:MI'),
+        'Martin Garrix Arena Stage Roskilde',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Arena Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('03-07-2024 23:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bad Bunny'),
+        TO_DATE('04-07-2024 01:00','DD-MM-YYYY HH24:MI'),
+        'Bad Bunny reggaeton night Arena Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Arena Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Roskilde Festival 2024')));
+
+-- Glastonbury 2025 – Pyramid Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('26-06-2025 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Billie Eilish'),
+        TO_DATE('27-06-2025 00:00','DD-MM-YYYY HH24:MI'),
+        'Billie Eilish Pyramid Stage headline',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Pyramid Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('28-06-2025 21:30','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Arctic Monkeys'),
+        TO_DATE('28-06-2025 23:30','DD-MM-YYYY HH24:MI'),
+        'Arctic Monkeys closing Pyramid Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Indie Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Pyramid Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025')));
+
+-- Glastonbury 2025 – Other Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('27-06-2025 19:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Stromae'),
+        TO_DATE('27-06-2025 21:00','DD-MM-YYYY HH24:MI'),
+        'Stromae Friday evening Other Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Other Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('29-06-2025 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kendrick Lamar'),
+        TO_DATE('29-06-2025 22:30','DD-MM-YYYY HH24:MI'),
+        'Kendrick Lamar closing Other Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Other Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Glastonbury 2025')));
+
+-- Primavera Sound 2025 – ATP Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('30-05-2025 23:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bad Bunny'),
+        TO_DATE('31-05-2025 01:00','DD-MM-YYYY HH24:MI'),
+        'Bad Bunny Latin trap headline Primavera',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'ATP Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('31-05-2025 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Arctic Monkeys'),
+        TO_DATE('31-05-2025 23:00','DD-MM-YYYY HH24:MI'),
+        'Arctic Monkeys Saturday headline Primavera',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Indie Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'ATP Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025')));
+
+-- Primavera Sound 2025 – Heineken Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('29-05-2025 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta'),
+        TO_DATE('30-05-2025 00:00','DD-MM-YYYY HH24:MI'),
+        'David Guetta opening night Heineken Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Heineken Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('01-06-2025 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Stromae'),
+        TO_DATE('01-06-2025 22:00','DD-MM-YYYY HH24:MI'),
+        'Stromae closing night Heineken Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Pop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Heineken Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Primavera Sound 2025')));
+
+-- Melt! Festival 2025 – Ferropolis Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('18-07-2025 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Rammstein'),
+        TO_DATE('19-07-2025 00:30','DD-MM-YYYY HH24:MI'),
+        'Rammstein opening night Ferropolis Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Ferropolis Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('19-07-2025 21:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep'),
+        TO_DATE('19-07-2025 23:00','DD-MM-YYYY HH24:MI'),
+        'Bicep live set Ferropolis Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Ferropolis Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025')));
+
+-- Melt! Festival 2025 – Sleepless Floor
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('19-07-2025 02:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte'),
+        TO_DATE('19-07-2025 06:00','DD-MM-YYYY HH24:MI'),
+        'Charlotte de Witte all-night Sleepless Floor',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Sleepless Floor'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('20-07-2025 01:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+        TO_DATE('20-07-2025 03:00','DD-MM-YYYY HH24:MI'),
+        'Martin Garrix closing Sleepless Floor',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Sleepless Floor'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Melt! Festival 2025')));
+
+-- Tomorrowland Winter 2025 – Alpe Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('08-03-2025 18:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta'),
+        TO_DATE('08-03-2025 20:00','DD-MM-YYYY HH24:MI'),
+        'David Guetta opening Alpe Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Alpe Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('14-03-2025 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+        TO_DATE('14-03-2025 22:00','DD-MM-YYYY HH24:MI'),
+        'Martin Garrix closing Alpe Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Electronic'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Alpe Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025')));
+
+-- Tomorrowland Winter 2025 – Ice Club
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('10-03-2025 23:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Charlotte de Witte'),
+        TO_DATE('11-03-2025 03:00','DD-MM-YYYY HH24:MI'),
+        'Charlotte de Witte intimate Ice Club set',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Techno'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Ice Club'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('13-03-2025 01:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bicep'),
+        TO_DATE('13-03-2025 03:30','DD-MM-YYYY HH24:MI'),
+        'Bicep live AV Ice Club',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Ice Club'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Winter 2025')));
+
+-- Lollapalooza Berlin 2025 – Main Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('07-09-2025 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Rammstein'),
+        TO_DATE('07-09-2025 22:30','DD-MM-YYYY HH24:MI'),
+        'Rammstein Friday headline Lollapalooza',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Rock'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('08-09-2025 20:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Kendrick Lamar'),
+        TO_DATE('08-09-2025 22:30','DD-MM-YYYY HH24:MI'),
+        'Kendrick Lamar Saturday headline Lollapalooza',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Main Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025')));
+
+-- Lollapalooza Berlin 2025 – Perry Stage
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('07-09-2025 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Bad Bunny'),
+        TO_DATE('08-09-2025 00:00','DD-MM-YYYY HH24:MI'),
+        'Bad Bunny Friday night Perry Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'Hip-Hop'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Perry Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025')));
+
+INSERT INTO Performance (Performance_Start_Time, Artist_ID, Performance_End_Time, Performance_Description, Genre_ID, Stage_ID)
+VALUES (TO_DATE('08-09-2025 22:00','DD-MM-YYYY HH24:MI'),
+        (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'David Guetta'),
+        TO_DATE('09-09-2025 00:00','DD-MM-YYYY HH24:MI'),
+        'David Guetta closing Perry Stage',
+        (SELECT Genre_ID FROM Genre WHERE Genre_Name = 'House'),
+        (SELECT Stage_ID FROM Stage WHERE Stage_Name = 'Perry Stage'
+                                      AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025')));
+
 COMMIT;
