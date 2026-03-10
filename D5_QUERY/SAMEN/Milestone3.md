@@ -49,11 +49,6 @@ Queries
     S2 @query 2: ARTIST (W) – PERFORMANCE (Z) – GENRE – STAGE (Y) – FESTIVAL (B/X)
 ![S2_query2_artist_performance_genre.png](screenshots%2FS2_query2_artist_performance_genre.png)
 
-    S2 @query 3: FESTIVAL  – COMPANY – CITY – PERMIT
-![S2_query3_festival_company_city.png](screenshots%2FS2_query3_festival_company_city.png)
-
-    S2 @query 4: FESTIVAL – TICKET – VISITOR – CITY – TICKETPLATFORM
-![S2_query4_festival_ticket_visitor.png](screenshots%2FS2_query4_festival_ticket_visitor.png)
 Bewijs Domeinen - constraints M2
 --- 
 
@@ -135,14 +130,14 @@ SELECT *
 FROM USER_TAB_PRIVS
 WHERE GRANTEE = (SELECT USER FROM dual);
 ```
-![S2_user_tab_privs.png](..%2FS2%2FS2_user_tab_privs.png)
+![S2_user_tab_privs.png](screenshots%2FS2_user_tab_privs.png)
 
 - User Role privs S2
 ```sql
 SELECT *
 FROM USER_ROLE_PRIVS;
 ```
-![S2_user_role_privs.png](..%2FS2%2FS2_user_role_privs.png)
+![S2_user_role_privs.png](screenshots%2FS2_user_role_privs.png)
 
 - Role Tab privs S2
 ```sql
@@ -151,10 +146,10 @@ FROM role_tab_privs
 WHERE role = 'FESTIVAL_S2_ROLE'
 ORDER BY TABLE_NAME;
 ```
-![S2_Role_tab_privs.png](..%2FS2%2FS2_Role_tab_privs.png)
+![S2_Role_tab_privs.png](screenshots%2FS2_Role_tab_privs.png)
 
 - view v_stage_performance
-![S2_view_v_stage_performance.png](..%2FS2%2FS2_view_v_stage_performance.png)
+![S2_view_v_stage_performance.png](screenshots%2FS2_view_v_stage_performance.png)
 
 - INSERT VIEW - key preserved table (Performance)
-![S2_key_preserved_table.png](..%2FS2%2FS2_key_preserved_table.png)
+![S2_key_preserved_table.png](screenshots%2FS2_key_preserved_table.png)
