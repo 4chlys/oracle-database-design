@@ -38,7 +38,6 @@ CREATE TABLE Visitor
     Visitor_Email         VARCHAR2(100 CHAR),
     Visitor_Street_Name   VARCHAR2(50 CHAR),
     Visitor_Street_Number VARCHAR2(10 CHAR),
-    Visitor_City_Name     VARCHAR2(50 CHAR),
     City_ID               NUMBER,
     Visitor_Gender        VARCHAR2(10 CHAR),
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
