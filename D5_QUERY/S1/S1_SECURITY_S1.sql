@@ -131,19 +131,13 @@ ALTER TABLE PROJECT.Visitor
 -- ============================================================
 
 -- User sys privs van s1_visitor
-SELECT *
-FROM DBA_SYS_PRIVS
-WHERE GRANTEE = 'S1_VISITOR';
+SELECT * FROM USER_SYS_PRIVS;
 
 -- User tab privs van s1_visitor
-SELECT *
-FROM DBA_TAB_PRIVS
-WHERE GRANTEE = 'S1_VISITOR';
+SELECT * FROM USER_TAB_PRIVS;
 
 -- User col privs van s1_visitor (enkel Ticket kolommen)
-SELECT *
-FROM DBA_COL_PRIVS
-WHERE GRANTEE = 'S1_VISITOR';
+SELECT * FROM USER_COL_PRIVS;
 
 -- Resultaat van het public synonym (als s1_visitor of andere user)
 SELECT * FROM topvisitors;

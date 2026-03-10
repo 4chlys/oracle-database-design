@@ -28,20 +28,20 @@ Milestone 3: Creatie Databank en Security
 Queries
 --- 
     S1 @query 1: VISITOR (A) - FESTIVAL (B/X) via Ticket (D) + TicketPlatform (C)
-![S1_query1_visitor_festival_ticket_1.png](../S1/SCREENSHOTS/S1_query1_visitor_festival_ticket_1.png)
-![S1_query1_visitor_festival_ticket_2.png](../S1/SCREENSHOTS/S1_query1_visitor_festival_ticket_2.png)
+![S1_query1_visitor_festival_ticket_1.png](screenshots/S1_query1_visitor_festival_ticket_1.png)
+![S1_query1_visitor_festival_ticket_2.png](screenshots/S1_query1_visitor_festival_ticket_2.png)
 
     S1 @query 2: COMPANY - FESTIVAL - PERMIT
-![S1_query2_company_festival_permit_1.png](../S1/SCREENSHOTS/S1_query2_company_festival_permit_1.png)
-![S1_query2_company_festival_permit_2.png](../S1/SCREENSHOTS/S1_query2_company_festival_permit_2.png)
+![S1_query2_company_festival_permit_1.png](screenshots/S1_query2_company_festival_permit_1.png)
+![S1_query2_company_festival_permit_2.png](screenshots/S1_query2_company_festival_permit_2.png)
 
     S1 @query 3: VISITOR (A), TICKET (D), CITY, FESTIVAL (B/X)
-![S1_query3_visitor_ticket_city_festival_1.png](../S1/SCREENSHOTS/S1_query3_visitor_ticket_city_festival_1.png)
-![S1_query3_visitor_ticket_city_festival_2.png](../S1/SCREENSHOTS/S1_query3_visitor_ticket_city_festival_2.png)
+![S1_query3_visitor_ticket_city_festival_1.png](screenshots/S1_query3_visitor_ticket_city_festival_1.png)
+![S1_query3_visitor_ticket_city_festival_2.png](screenshots/S1_query3_visitor_ticket_city_festival_2.png)
 
     S1 @query 4: TICKETPLATFORM (C), TICKET (D), FESTIVAL (B/X), COMPANY (A)
-![S1_query4_ticketplatform_ticket_festival_company_1.png](../S1/SCREENSHOTS/S1_query4_ticketplatform_ticket_festival_company_1.png)
-![S1_query4_ticketplatform_ticket_festival_company_2.png](../S1/SCREENSHOTS/S1_query4_ticketplatform_ticket_festival_company_2.png)
+![S1_query4_ticketplatform_ticket_festival_company_1.png](screenshots/S1_query4_ticketplatform_ticket_festival_company_1.png)
+![S1_query4_ticketplatform_ticket_festival_company_2.png](screenshots/S1_query4_ticketplatform_ticket_festival_company_2.png)
 
     S2 @query 1: FESTIVAL (B/X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (W) – GENRE
 ![S2_query1_festival_stage_performance.png](screenshots%2FS2_query1_festival_stage_performance.png)
@@ -58,25 +58,26 @@ Bewijs Domeinen - constraints M2
 --- 
 
     S1
-- Company: founding year must be between 1800 and 2025
+- Company: founding year must be between 1800 and 2025, Company_Name_UQ  →  UNIQUE (Company_Name)
 
-![S1_bewijs_company_founding_year.png](screenshots%2FS1_bewijs_company_founding_year.png)
+![S1_bewijs_company_constraints.png](screenshots/S1_bewijs_company_constraints.png)
 
-- Visitor: birthdate must be between 1900-01-01 and 2026-03-10
+- Visitor: birthdate must be between 1900-01-01 and 2026-03-10, Visitor_Email_UQ  →  UNIQUE (Visitor_Email)
 
-![S1_bewijs_visitor_birthdate.png](screenshots%2FS1_bewijs_visitor_birthdate.png)
+![S1_bewijs_visitor_constraints.png](screenshots/S1_bewijs_visitor_constraints.png)
 
 - Permit: application_date < reception_date < expiration_date
 
-![S1_bewijs_permit_dates.png](screenshots%2FS1_bewijs_permit_dates.png)
+![S1_bewijs_permit_constraints.png](screenshots/S1_bewijs_permit_constraints.png)
 
-- Ticket: price > 0, barcode length between 8 and 14, purchase_date <= ticket_date
+- Ticket: price > 0, barcode length between 8 and 14, purchase_date <= ticket_date, UNIQUE (Visitor_ID, Festival_ID, Ticket_Date)
 
-![S1_bewijs_ticket_constraints.png](screenshots%2FS1_bewijs_ticket_constraints.png)
+![S1_bewijs_ticket_constraints_1.png](screenshots/S1_bewijs_ticket_constraints_1.png)
+![S1_bewijs_ticket_constraints_2.png](screenshots/S1_bewijs_ticket_constraints_2.png)
 
 - Festival: end_date > start_date, closing_hour > opening_hour, capacity > 0
 
-![S1_bewijs_festival_constraints.png](screenshots%2FS1_bewijs_festival_constraints.png)
+![S1_bewijs_festival_constraints.png](screenshots/S1_bewijs_festival_constraints.png)
 
     S2
 - Genre: BPM >= 0, origin year < 2026
@@ -100,39 +101,30 @@ Security
 ---
 IntelliJ Tree View
 
-![tables_views.png](screenshots%2Ftables_views.png)
+![tables_views.png](screenshots/tables_views.png)
 
     S1: user s1_visitor, role festival_s1_role, view v_visitor_ticket
 
+- User sys privs S1
+```sql
+SELECT * FROM USER_SYS_PRIVS;
+```
+![S1_user_sys_privs.png](screenshots/S1_user_sys_privs.png)
+
 - User tab privs S1
 ```sql
-SELECT *
-FROM USER_TAB_PRIVS
-WHERE GRANTEE = (SELECT USER FROM dual);
+SELECT * FROM USER_TAB_PRIVS;
 ```
-![S1_user_tab_privs.png](..%2FS1%2FS1_user_tab_privs.png)
+![S1_user_tab_privs.png](screenshots/S1_user_tab_privs.png)
 
-- User Role privs S1
+- User col privs S1
 ```sql
-SELECT *
-FROM USER_ROLE_PRIVS;
+SELECT * FROM USER_COL_PRIVS;
 ```
-![S1_user_role_privs.png](..%2FS1%2FS1_user_role_privs.png)
+![S1_user_col_privs.png](screenshots/S1_user_col_privs.png)
 
-- Role Tab privs S1
-```sql
-SELECT *
-FROM role_tab_privs
-WHERE role = 'FESTIVAL_S1_ROLE'
-ORDER BY TABLE_NAME;
-```
-![S1_role_tab_privs.png](..%2FS1%2FS1_role_tab_privs.png)
-
-- view v_visitor_ticket
-![S1_view_v_visitor_ticket.png](..%2FS1%2FS1_view_v_visitor_ticket.png)
-
-- INSERT VIEW - key preserved table (Ticket)
-![S1_key_preserved_table.png](..%2FS1%2FS1_key_preserved_table.png)
+- View Topvisitors
+![S1_view_topvisitors.png](screenshots/S1_view_topvisitors.png)
 
 
     S2: user s2_stage, role festival_s2_role, view v_stage_performance
