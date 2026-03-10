@@ -87,7 +87,7 @@ Security
 ---
 IntelliJ Tree View
 
-![tables_views.png](screenshots/tables_views.png)
+![tables_view.png](screenshots/tables_view.png)
 
     S1: user s1_visitor, role festival_s1_role, view v_visitor_ticket
 
