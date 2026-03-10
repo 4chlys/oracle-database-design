@@ -13,19 +13,7 @@ SELECT 'S2-Y  : Stage',          COUNT(*) FROM Stage
 UNION ALL
 SELECT 'S2-Z  : Performance',    COUNT(*) FROM Performance
 UNION ALL
-SELECT 'S2_X   : Festival',       COUNT(*) FROM Festival
-UNION ALL
-SELECT 'S2_   : Company',        COUNT(*) FROM Company
-UNION ALL
-SELECT 'S2_   : City',           COUNT(*) FROM City
-UNION ALL
-SELECT 'S2_   : Visitor',        COUNT(*) FROM Visitor
-UNION ALL
-SELECT 'S2_   : TicketPlatform', COUNT(*) FROM TicketPlatform
-UNION ALL
-SELECT 'S2_   : Ticket',         COUNT(*) FROM Ticket
-UNION ALL
-SELECT 'S2_   : Permit',         COUNT(*) FROM Permit;
+SELECT 'S2_X   : Festival',       COUNT(*) FROM Festival;
 
 
 -- Query 1 (WXYZ): 2-level deep relationship
