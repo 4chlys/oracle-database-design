@@ -92,14 +92,12 @@ CREATE TABLE Ticket
     Festival_ID          NUMBER,
     CONSTRAINT Ticket_PK PRIMARY KEY (Ticket_ID),
     CONSTRAINT Ticket_Barcode_UQ UNIQUE (Ticket_Barcode),
-    CONSTRAINT Ticket_VisitFestPlatform_UQ UNIQUE (Visitor_ID, Festival_ID, TicketPlatform_ID),
+    CONSTRAINT Ticket_VisitFestPlatform_UQ UNIQUE (Visitor_ID, Festival_ID, Ticket_Date),
     CONSTRAINT Ticket_Visitor_FK FOREIGN KEY (Visitor_ID) REFERENCES Visitor (Visitor_ID),
     CONSTRAINT Ticket_TicketPlatform_FK FOREIGN KEY (TicketPlatform_ID) REFERENCES TicketPlatform (TicketPlatform_ID),
     CONSTRAINT Ticket_Price_chk CHECK (Ticket_Price > 0),
     CONSTRAINT Ticket_Barcode_chk CHECK (LENGTH(Ticket_Barcode) BETWEEN 8 AND 14),
     CONSTRAINT Ticket_Currency_chk CHECK (REGEXP_LIKE(Ticket_Currency, '^[A-Z]{3}$')),
-    CONSTRAINT Ticket_Status_chk CHECK (Ticket_Status IN ('ACTIVE', 'USED', 'CANCELLED', 'REFUNDED')),
-    CONSTRAINT Ticket_Type_chk CHECK (Ticket_Type IN ('GENERAL', 'VIP', 'EARLY_BIRD')),
     CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= SYSDATE),
     CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
 );
