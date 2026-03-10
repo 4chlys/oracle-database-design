@@ -31,7 +31,8 @@ CREATE TABLE Genre (
     Genre_Origin_Location  VARCHAR2(100 CHAR),
     Genre_BPM              NUMBER(3),
     CONSTRAINT Genre_PK PRIMARY KEY (Genre_ID),
-    CONSTRAINT Genre_BPM_chk CHECK (Genre_BPM >= 0)
+    CONSTRAINT Genre_BPM_chk CHECK (Genre_BPM >= 0),
+    CONSTRAINT Genre_Origin_Year_chk CHECK (Genre_Origin_Year < 2026)
 );
 
 CREATE TABLE Artist (
@@ -42,9 +43,10 @@ CREATE TABLE Artist (
     Artist_Price_Currency    CHAR(3),
     Artist_Land_Of_Birth     VARCHAR2(50 CHAR),
     CONSTRAINT Artist_PK PRIMARY KEY (Artist_ID),
-    CONSTRAINT Artist_Price_chk CHECK (Artist_Price >= 0), 
+    CONSTRAINT Artist_Price_chk CHECK (Artist_Price >= 0),
     CONSTRAINT Artist_Land_chk CHECK (LENGTH(TRIM(Artist_Land_Of_Birth)) >= 4),
-    CONSTRAINT Artist_Currency_chk CHECK (REGEXP_LIKE(Artist_Price_Currency, '^[A-Z]{3}$'))
+    CONSTRAINT Artist_Currency_chk CHECK (REGEXP_LIKE(Artist_Price_Currency, '^[A-Z]{3}$')),
+    CONSTRAINT Artist_Birthday_chk CHECK (Artist_Birthday < DATE '2026-03-10')
 );
 
 CREATE TABLE Stage (

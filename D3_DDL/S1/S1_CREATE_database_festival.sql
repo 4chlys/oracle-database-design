@@ -14,7 +14,8 @@ CREATE TABLE Company (
     Company_ID             NUMBER GENERATED ALWAYS AS IDENTITY,
     Company_Name           VARCHAR2(50 CHAR) NOT NULL,
     Company_Founding_Year  NUMBER(4),
-    CONSTRAINT Company_PK PRIMARY KEY (Company_ID)
+    CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
+    CONSTRAINT Company_Founding_Year_chk CHECK (Company_Founding_Year < 2026)
 );
 
 CREATE TABLE City (
@@ -36,6 +37,7 @@ CREATE TABLE Visitor (
     City_ID             NUMBER,
     Visitor_Gender      VARCHAR2(10 CHAR),
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
+    CONSTRAINT Visitor_Birthdate_chk CHECK (Visitor_Birthdate < DATE '2026-03-10'),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID)
 );
 

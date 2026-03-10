@@ -17,7 +17,8 @@ CREATE TABLE Company
     Company_ID            NUMBER GENERATED ALWAYS AS IDENTITY,
     Company_Name          VARCHAR2(50 CHAR) NOT NULL,
     Company_Founding_Year NUMBER(4),
-    CONSTRAINT Company_PK PRIMARY KEY (Company_ID)
+    CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
+    CONSTRAINT Company_Founding_Year_chk CHECK (Company_Founding_Year < 2026)
 );
 
 CREATE TABLE City
@@ -41,6 +42,7 @@ CREATE TABLE Visitor
     City_ID           NUMBER,
     Visitor_Gender    VARCHAR2(10 CHAR),
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
+    CONSTRAINT Visitor_Birthdate_chk CHECK (Visitor_Birthdate < DATE '2026-03-10'),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID)
 );
 
@@ -128,7 +130,8 @@ CREATE TABLE Genre
     Genre_Origin_Location VARCHAR2(100 CHAR),
     Genre_BPM             NUMBER(3),
     CONSTRAINT Genre_PK PRIMARY KEY (Genre_ID),
-    CONSTRAINT Genre_BPM_chk CHECK (Genre_BPM >= 0)
+    CONSTRAINT Genre_BPM_chk CHECK (Genre_BPM >= 0),
+    CONSTRAINT Genre_Origin_Year_chk CHECK (Genre_Origin_Year < 2026)
 );
 
 CREATE TABLE Artist
@@ -142,7 +145,8 @@ CREATE TABLE Artist
     CONSTRAINT Artist_PK PRIMARY KEY (Artist_ID),
     CONSTRAINT Artist_Price_chk CHECK (Artist_Price >= 0),
     CONSTRAINT Artist_Land_chk CHECK (LENGTH(TRIM(Artist_Land_Of_Birth)) >= 4),
-    CONSTRAINT Artist_Currency_chk CHECK (REGEXP_LIKE(Artist_Price_Currency, '^[A-Z]{3}$'))
+    CONSTRAINT Artist_Currency_chk CHECK (REGEXP_LIKE(Artist_Price_Currency, '^[A-Z]{3}$')),
+    CONSTRAINT Artist_Birthday_chk CHECK (Artist_Birthday < DATE '2026-03-10')
 );
 
 CREATE TABLE Stage
