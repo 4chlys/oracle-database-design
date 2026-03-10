@@ -57,6 +57,10 @@ GRANT SELECT ON Artist   TO s2_stage;
 GRANT SELECT ON Genre    TO s2_stage;
 GRANT SELECT ON Festival TO s2_stage;
 
+SELECT *
+FROM USER_TAB_PRIVS
+WHERE GRANTEE = (SELECT USER FROM dual);
+
 -- SCENARIO S2 (run as user s2_stage)
 -- Insert into Performance (key-preserved table) via the view.
 -- No hardcoded IDs: Artist_ID, Genre_ID, Stage_ID are resolved
@@ -76,6 +80,3 @@ VALUES (
                           WHERE Festival_Name = 'Tomorrowland Summer 2024'))
 );
 
-SELECT *
-FROM USER_TAB_PRIVS
-WHERE GRANTEE = (SELECT USER FROM dual);

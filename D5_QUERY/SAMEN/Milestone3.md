@@ -28,12 +28,15 @@ Queries
     S1 @query 2: PLAYER (A) - GAMESERVERS (C)
 ![S1_query3_gameservers.png](screenshots%2FS1_query3_gameservers.png)
 
-    S2 @query 1: COMPUTERGAMES (B/X) - youtubechannels (Y) - youtubevideos (Z) - VIDEOCATEGORIES (W)
+    S2 @query 1: FESTIVAL (X) – STAGE (Y) – PERFORMANCE (Z) – ARTIST (X) – GENRE
 ![S2_query1_game_videos.png](screenshots%2FS2_query1_game_videos.png)
 
-    S2 @query 2: PLAYER (A) - LOCATION - ZIPCODES
+    S2 @query 2: ARTIST (W) – PERFORMANCE (Z) – GENRE (W) – STAGE (Y) – FESTIVAL (X)
 ![S1_query2_player_locations.png](screenshots%2FS1_query2_player_locations.png)
 
+    S2 @query 3: FESTIVAL – COMPANY – CITY – PERMIT
+
+    S2 @query 4: FESTIVAL – TICKET – VISITOR – CITY – TICKETPLATFORM
 Bewijs Domeinen - constraints M2
 --- 
 

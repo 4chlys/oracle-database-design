@@ -1,7 +1,7 @@
 -- S2 QUERIES - Music Festival Database
 -- Student: Jonas Friedhoff
--- S2 tables (WXYZ): Genre (W), Artist (X), Stage (Y), Performance (Z)
--- Shared table: Festival
+-- S2 tables (WXYZ): Genre , Artist (W), Stage (Y), Performance (Z)
+-- Shared table: Festival (X)
 
 -- ============================================================
 -- Count query: row counts for all tables
@@ -36,8 +36,8 @@ SELECT 'S2_   : Permit',         COUNT(*) FROM Permit;
 -- Shows the full lineup per festival: which artist performs
 -- on which stage, in which genre, and at what time.
 -- All user-data columns from S2 tables are included (no IDs).
--- Tables joined: Festival, Stage (Y), Performance (Z),
---                Artist (X), Genre (W)  –  5 tables
+-- Tables joined: Festival (X), Stage (Y), Performance (Z),
+--                Artist (), Genre  –  5 tables
 -- ============================================================
 
 SELECT
