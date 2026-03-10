@@ -6,8 +6,7 @@ Milestone 3: Creatie Databank en Security
 ---
 - Mandatory
     **
-- - A: Vi
-- sitor: Visitor_ID**
+- - A: Visitor: Visitor_ID**
   - B/X: Festival: Festival_ID 
   - C: TicketPlatform: TicketPlatform_ID
   - D: Ticket: Ticket_ID
