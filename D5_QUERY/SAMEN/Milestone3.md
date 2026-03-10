@@ -49,11 +49,6 @@ Queries
     S2 @query 2: ARTIST (W) – PERFORMANCE (Z) – GENRE – STAGE (Y) – FESTIVAL (B/X)
 ![S2_query2_artist_performance_genre.png](screenshots%2FS2_query2_artist_performance_genre.png)
 
-    S2 @query 3: FESTIVAL  – COMPANY – CITY – PERMIT
-![S2_query3_festival_company_city.png](screenshots%2FS2_query3_festival_company_city.png)
-
-    S2 @query 4: FESTIVAL – TICKET – VISITOR – CITY – TICKETPLATFORM
-![S2_query4_festival_ticket_visitor.png](screenshots%2FS2_query4_festival_ticket_visitor.png)
 Bewijs Domeinen - constraints M2
 --- 
 
