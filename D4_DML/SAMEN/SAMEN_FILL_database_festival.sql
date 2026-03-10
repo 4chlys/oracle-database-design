@@ -40,6 +40,7 @@ INSERT INTO Company (Company_Name, Company_Founding_Year) VALUES ('Melt! Festiva
 -- --------------------------------------------------------
 INSERT INTO City (Zipcode, City, Country) VALUES ('2000',   'Antwerp',     'Belgium');
 INSERT INTO City (Zipcode, City, Country) VALUES ('2850',   'Boom',        'Belgium');
+INSERT INTO City (Zipcode, City, Country) VALUES ('3118',   'Werchter',    'Belgium');
 INSERT INTO City (Zipcode, City, Country) VALUES ('3500',   'Hasselt',     'Belgium');
 INSERT INTO City (Zipcode, City, Country) VALUES ('1000',   'Brussels',    'Belgium');
 INSERT INTO City (Zipcode, City, Country) VALUES ('1117BP', 'Budapest',    'Hungary');
