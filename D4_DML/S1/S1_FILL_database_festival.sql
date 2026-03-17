@@ -15,9 +15,7 @@ FROM Company;
 
 COMMIT;
 
--- --------------------------------------------------------
 -- 1. COMPANY
--- --------------------------------------------------------
 INSERT INTO Company (Company_Name, Company_Founding_Year)
 VALUES ('Tomorrowland NV', 2005);
 INSERT INTO Company (Company_Name, Company_Founding_Year)
@@ -39,9 +37,7 @@ VALUES ('Primavera Sound SL', 2001);
 INSERT INTO Company (Company_Name, Company_Founding_Year)
 VALUES ('Melt! Festival GmbH', 1997);
 
--- --------------------------------------------------------
 -- 2. CITY
--- --------------------------------------------------------
 INSERT INTO City (Zipcode, City, Country)
 VALUES ('2000', 'Antwerp', 'Belgium');
 INSERT INTO City (Zipcode, City, Country)
@@ -67,9 +63,7 @@ VALUES ('10115', 'Berlin', 'Germany');
 INSERT INTO City (Zipcode, City, Country)
 VALUES ('73150', 'Alpe d''Huez', 'France');
 
--- --------------------------------------------------------
 -- 3. VISITOR
--- --------------------------------------------------------
 INSERT INTO Visitor (Visitor_Firstname, Visitor_Lastname, Visitor_Birthdate, Visitor_Email,
                      Visitor_Street_Name, Visitor_Street_Number, City_ID, Visitor_Gender)
 VALUES ('Lena', 'Maes', TO_DATE('15-03-1995', 'DD-MM-YYYY'), 'lena.maes@gmail.com',
@@ -140,9 +134,7 @@ VALUES ('Chloe', 'Martin', TO_DATE('05-06-1996', 'DD-MM-YYYY'), 'chloe.martin@gm
         (SELECT City_ID FROM City WHERE Zipcode = '2000' AND Country = 'Belgium'),
         'Female');
 
--- --------------------------------------------------------
 -- 4. TICKETPLATFORM
--- --------------------------------------------------------
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL)
 VALUES ('Ticketmaster Belgium', 'https://www.ticketmaster.be');
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL)
@@ -164,10 +156,8 @@ VALUES ('Resident Advisor', 'https://ra.co');
 INSERT INTO TicketPlatform (TicketPlatform_Name, TicketPlatform_URL)
 VALUES ('StubHub International', 'https://www.stubhub.com');
 
--- --------------------------------------------------------
 -- 5. FESTIVAL  (shared table – S1 is responsible)
 --    Company_ID via Company_Name; City_ID via Zipcode+Country
--- --------------------------------------------------------
 INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
                       Festival_Location, City_ID, Festival_Opening_Hour, Festival_Closing_Hour, Festival_Capacity)
 VALUES ('Tomorrowland Summer 2024',
@@ -268,9 +258,7 @@ VALUES ('Lollapalooza Berlin 2025',
         TO_DATE('11:00', 'HH24:MI'), TO_DATE('11:00', 'HH24:MI') + INTERVAL '14' HOUR,
         85000);
 
--- --------------------------------------------------------
 -- 6. PERMIT  (Festival_ID via Festival_Name)
--- --------------------------------------------------------
 
 -- Tomorrowland Summer 2024
 INSERT INTO Permit (Permit_Category, Permit_Description, Permit_Application_Date, Permit_Reception_Date,
@@ -414,12 +402,10 @@ VALUES ('Fire Safety', 'Lollapalooza Berlin pyrotechnics permit',
         TO_DATE('01-04-2025', 'DD-MM-YYYY'), TO_DATE('01-06-2025', 'DD-MM-YYYY'), TO_DATE('09-09-2025', 'DD-MM-YYYY'),
         (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Lollapalooza Berlin 2025'));
 
--- --------------------------------------------------------
 -- 7. TICKET
 --    Visitor_ID via email; Festival_ID via name; TicketPlatform_ID via name
 --    Unique constraint: (Visitor_ID, Festival_ID, Ticket_Date)
 --    → one ticket per visitor per festival day
--- --------------------------------------------------------
 
 -- Lena: Tomorrowland + Pukkelpop + Lollapalooza
 INSERT INTO Ticket (Ticket_Price, Ticket_Currency, Ticket_Date, Ticket_Purchase_Date,

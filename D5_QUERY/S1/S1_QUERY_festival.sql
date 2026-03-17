@@ -5,7 +5,6 @@
 -- Shared table: Festival
 
 
--- ============================================================
 -- STAP 3 – COUNT QUERY (alle S1 tabellen)
 -- Prefixes:
 --   S1-A   : Visitor
@@ -15,7 +14,6 @@
 --   S1_    : Company
 --   S1_    : City
 --   S1_    : Permit
--- ============================================================
 
 SELECT 'S1-A   : Visitor' AS table_name, COUNT(*) AS table_count
 FROM Visitor
@@ -40,12 +38,10 @@ FROM Permit
 ;
 
 
--- ============================================================
 -- S1 – Query 1: Veel-op-veel relatie
 --   Visitor (A) <--> Festival (B/X) via Ticket (D) + TicketPlatform (C)
 --   Toont: welke bezoekers een ticket hebben voor welk festival,
 --          via welk platform gekocht, met prijs en status.
--- ============================================================
 
 -- S1 Query 1 (A, B/X, C, D): Bezoekers en hun tickets per festival (veel-op-veel via Ticket)
 SELECT v.Visitor_Firstname    AS Voornaam,
@@ -70,13 +66,11 @@ FROM Visitor v
 ORDER BY v.Visitor_Lastname, v.Visitor_Firstname, f.Festival_StartDate;
 
 
--- ============================================================
 -- S1 – Query 2: 2 niveaus diep (Company -> Festival -> Permit)
 --   + City gekoppeld aan Festival
 --   Toont: welke vergunningen elk festival heeft, inclusief
 --          het organisatiebedrijf en de locatiestad.
 --   Company en City zijn de niet eerder getoonde tabellen.
--- ============================================================
 
 -- S1 Query 2 (Company, City, Festival B/X, Permit): Bedrijven, festivals en hun vergunningen (2 niveaus diep: Company -> Festival -> Permit)
 SELECT c.Company_Name            AS Bedrijf,
