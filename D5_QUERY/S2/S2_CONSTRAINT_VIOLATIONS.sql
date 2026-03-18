@@ -113,3 +113,12 @@ VALUES (
        AND Festival_ID = (SELECT Festival_ID FROM Festival WHERE Festival_Name = 'Tomorrowland Summer 2024'))
 );
 -- Expected error: ORA-02290: check constraint (Performance_Times_chk) violated
+INSERT INTO Performance (Performance_Start_Time, Performance_End_Time,
+                         Performance_Description, Artist_ID, Genre_ID, Stage_ID)
+VALUES (
+           TO_DATE('20-07-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+           TO_DATE('20-07-2024 23:00', 'DD-MM-YYYY HH24:MI'),   -- end BEFORE start
+           'Invalid performance',
+           (SELECT Artist_ID FROM Artist WHERE Artist_Name = 'Martin Garrix'),
+           (SELECT Genre_ID  FROM Genre  WHERE Genre_Name  = 'Electronic'),
+           NULL);
