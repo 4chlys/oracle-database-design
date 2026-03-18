@@ -1,0 +1,45 @@
+ALTER TABLE TYPE_HUIZEN
+    DROP CONSTRAINT APERS_chk;
+
+ALTER TABLE TYPE_HUIZEN
+    ADD CONSTRAINT APERS_chk CHECK (APERS BETWEEN 4 AND 24) ENABLE NOVALIDATE;
+
+UPDATE TYPE_HUIZEN
+SET APERS = 4
+WHERE APERS < 4;
+COMMIT;
+UPDATE TYPE_HUIZEN
+SET APERS = 24
+WHERE APERS > 24;
+COMMIT;
+
+ALTER TABLE type_huizen
+    ENABLE VALIDATE CONSTRAINT APERS_chk;
+
+SELECT *
+FROM user_constraints
+WHERE table_name = 'TYPE_HUIZEN';
+
+SELECT constraint_name, status, validated
+FROM user_constraints
+WHERE table_name = 'TYPE_HUIZEN';
+
+SELECT owner, constraint_name, status
+FROM all_constraints
+WHERE table_name = 'TYPE_HUIZEN';
+
+ALTER TABLE TYPE_HUIZEN
+    ADD CONSTRAINT APERS_chk CHECK (APERS BETWEEN 4 AND 24) DEFERRABLE INITIALLY DEFERRED;
+
+UPDATE type_huizen
+SET apers= 3
+WHERE parkcode = 'WB'
+  AND typenr = 'BJ';
+COMMIT;
+
+ALTER TABLE KLANTEN
+ADD EMAIL VARCHAR2(30);
+
+SELECT table_name,pct_free,pct_used
+FROM user_tables;
+

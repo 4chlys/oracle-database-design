@@ -40,11 +40,17 @@ GRANT UPDATE (Ticket_Price, Ticket_Status) ON PROJECT.Ticket TO s1_visitor;
 --   met gegevens uit alle 4 tabellen: Visitor (A), Festival (B/X),
 --   TicketPlatform (C), Ticket (D)
 
-GRANT CREATE VIEW TO s1_visitor;
+GRANT CREATE ANY VIEW TO s1_visitor;
+-- REVOKE CREATE ANY VIEW FROM s1_visitor;
+
+GRANT SELECT ON PROJECT.Ticket TO s1_visitor;
+GRANT SELECT ON PROJECT.TicketPlatform TO s1_visitor;
+GRANT SELECT ON PROJECT.Festival TO s1_visitor;
 
 -- Voer dit uit als s1_visitor:
+DROP VIEW PROJECT.TOP3_VISITORS;
 
-CREATE OR REPLACE VIEW PROJECT.TOP3_VISITORS AS
+CREATE OR REPLACE VIEW TOP3_VISITORS AS
 SELECT v.Visitor_Firstname    AS Voornaam,
        v.Visitor_Lastname     AS Achternaam,
        v.Visitor_Email        AS Email,
@@ -59,8 +65,7 @@ SELECT v.Visitor_Firstname    AS Voornaam,
        tp.TicketPlatform_Name AS Platform,
        tv.Ticket_Count        AS Aantal_Tickets
 FROM PROJECT.Visitor v
-         JOIN (SELECT Visitor_ID,
-                      COUNT(*) AS Ticket_Count
+         JOIN (SELECT Visitor_ID, COUNT(*) AS Ticket_Count
                FROM PROJECT.Ticket
                GROUP BY Visitor_ID
                ORDER BY Ticket_Count DESC
@@ -71,8 +76,7 @@ FROM PROJECT.Visitor v
 ORDER BY tv.Ticket_Count DESC, v.Visitor_Lastname, v.Visitor_Firstname;
 
 -- Geef s1_visitor leesrecht op de view
-GRANT SELECT ON PROJECT.TOP3_VISITORS TO s1_visitor;
-
+-- GRANT SELECT ON PROJECT.TOP3_VISITORS TO s1_visitor;
 
 -- DEEL 5: PUBLIC SYNONYM AANMAKEN  (als s1_visitor)
 
@@ -81,6 +85,7 @@ GRANT CREATE PUBLIC SYNONYM TO s1_visitor;
 GRANT DROP PUBLIC SYNONYM TO s1_visitor;
 
 -- Voer het volgende uit als s1_visitor:
+DROP PUBLIC SYNONYM topvisitors;
 CREATE PUBLIC SYNONYM topvisitors FOR PROJECT.TOP3_VISITORS;
 
 -- Test (werkt voor elke gebruiker dankzij het public synonym):
@@ -113,7 +118,8 @@ VALUES ('Thomas', 'Peeters', TO_DATE('11-07-1994', 'DD-MM-YYYY'),
         'Male');
 
 -- Verwijder Thomas Peeters als s1_visitor indien deze reeds bestaat
-DELETE FROM PROJECT.Visitor
+DELETE
+FROM PROJECT.Visitor
 WHERE Visitor_Email = 'thomas.peeters@gmail.com';
 
 -- ---- 6c: DDL voorbeeld – voeg een nieuw attribuut toe aan Visitor ----
@@ -125,13 +131,17 @@ ALTER TABLE PROJECT.Visitor
 -- VERIFICATIE (als ADMIN): dictionary views voor screenshots
 
 -- User sys privs van s1_visitor
-SELECT * FROM USER_SYS_PRIVS;
+SELECT *
+FROM USER_SYS_PRIVS;
 
 -- User tab privs van s1_visitor
-SELECT * FROM USER_TAB_PRIVS;
+SELECT *
+FROM USER_TAB_PRIVS;
 
 -- User col privs van s1_visitor (enkel Ticket kolommen)
-SELECT * FROM USER_COL_PRIVS;
+SELECT *
+FROM USER_COL_PRIVS;
 
 -- Resultaat van het public synonym (als s1_visitor of andere user)
-SELECT * FROM topvisitors;
+SELECT *
+FROM topvisitors;
