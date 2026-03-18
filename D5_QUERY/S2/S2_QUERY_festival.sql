@@ -9,11 +9,11 @@ SELECT 'S2_  : Genre'          AS "Table", COUNT(*) AS "Count" FROM Genre
 UNION ALL
 SELECT 'S2-W  : Artist',         COUNT(*) FROM Artist
 UNION ALL
+SELECT 'S2_X   : Festival',       COUNT(*) FROM Festival
+UNION ALL
 SELECT 'S2-Y  : Stage',          COUNT(*) FROM Stage
 UNION ALL
-SELECT 'S2-Z  : Performance',    COUNT(*) FROM Performance
-UNION ALL
-SELECT 'S2_X   : Festival',       COUNT(*) FROM Festival;
+SELECT 'S2-Z  : Performance',    COUNT(*) FROM Performance;
 
 
 -- Query 1 (WXYZ): 2-level deep relationship
