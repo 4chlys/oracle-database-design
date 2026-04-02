@@ -51,29 +51,42 @@ GRANT SELECT ON PROJECT.Festival TO s1_visitor;
 DROP VIEW PROJECT.TOP3_VISITORS;
 
 CREATE OR REPLACE VIEW TOP3_VISITORS AS
-SELECT v.Visitor_Firstname    AS Voornaam,
-       v.Visitor_Lastname     AS Achternaam,
-       v.Visitor_Email        AS Email,
-       v.Visitor_Gender       AS Geslacht,
-       f.Festival_Name        AS Festival,
-       f.Festival_Location    AS Locatie,
-       f.Festival_StartDate   AS Festival_Startdatum,
-       t.Ticket_Type          AS Ticket_Type,
-       t.Ticket_Price         AS Ticket_Prijs,
-       t.Ticket_Currency      AS Munt,
-       t.Ticket_Status        AS Status,
-       tp.TicketPlatform_Name AS Platform,
-       tv.Ticket_Count        AS Aantal_Tickets
+-- SELECT v.Visitor_Firstname    AS Voornaam,
+--        v.Visitor_Lastname     AS Achternaam,
+--        v.Visitor_Email        AS Email,
+--        v.Visitor_Gender       AS Geslacht,
+--        f.Festival_Name        AS Festival,
+--        f.Festival_Location    AS Locatie,
+--        f.Festival_StartDate   AS Festival_Startdatum,
+--        t.Ticket_Type          AS Ticket_Type,
+--        t.Ticket_Price         AS Ticket_Prijs,
+--        t.Ticket_Currency      AS Munt,
+--        t.Ticket_Status        AS Status,
+--        tp.TicketPlatform_Name AS Platform,
+--        tv.Ticket_Count        AS Aantal_Tickets
+-- FROM PROJECT.Visitor v
+--          JOIN (SELECT Visitor_ID, COUNT(*) AS Ticket_Count
+--                FROM PROJECT.Ticket
+--                GROUP BY Visitor_ID
+--                ORDER BY Ticket_Count DESC
+--                    FETCH FIRST 3 ROWS ONLY) tv ON tv.Visitor_ID = v.Visitor_ID
+--          JOIN PROJECT.Ticket t ON t.Visitor_ID = v.Visitor_ID
+--          JOIN PROJECT.Festival f ON f.Festival_ID = t.Festival_ID
+--          JOIN PROJECT.TicketPlatform tp ON tp.TicketPlatform_ID = t.TicketPlatform_ID
+-- ORDER BY tv.Ticket_Count DESC, v.Visitor_Lastname, v.Visitor_Firstname;
+
+SELECT v.Visitor_Firstname AS "First Name",
+       v.Visitor_Lastname  AS "Last Name",
+       tv.Ticket_Count     AS "Amount of Tickets"
 FROM PROJECT.Visitor v
-         JOIN (SELECT Visitor_ID, COUNT(*) AS Ticket_Count
-               FROM PROJECT.Ticket
-               GROUP BY Visitor_ID
-               ORDER BY Ticket_Count DESC
-                   FETCH FIRST 3 ROWS ONLY) tv ON tv.Visitor_ID = v.Visitor_ID
-         JOIN PROJECT.Ticket t ON t.Visitor_ID = v.Visitor_ID
-         JOIN PROJECT.Festival f ON f.Festival_ID = t.Festival_ID
-         JOIN PROJECT.TicketPlatform tp ON tp.TicketPlatform_ID = t.TicketPlatform_ID
-ORDER BY tv.Ticket_Count DESC, v.Visitor_Lastname, v.Visitor_Firstname;
+JOIN (
+    SELECT Visitor_ID, COUNT(*) AS Ticket_Count
+    FROM PROJECT.Ticket
+    GROUP BY Visitor_ID
+    ORDER BY Ticket_Count DESC
+    FETCH FIRST 3 ROWS ONLY
+) tv ON v.Visitor_ID = tv.Visitor_ID
+ORDER BY tv.Ticket_Count DESC;
 
 -- Geef s1_visitor leesrecht op de view
 -- GRANT SELECT ON PROJECT.TOP3_VISITORS TO s1_visitor;
