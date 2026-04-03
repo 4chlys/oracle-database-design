@@ -1,4 +1,4 @@
-CREATE OR REPLACE PACKAGE PKG_S2_festival AS
+CREATE OR REPLACE PACKAGE PKG_S2_festivals AS
 
 
     -- PUBLIC: Empty all S2 tables
@@ -10,7 +10,7 @@ CREATE OR REPLACE PACKAGE PKG_S2_festival AS
     PROCEDURE bewijs_M4_S2;
 
     -- PUBLIC lookup:
-    FUNCTION lookup_festival_id(p_festival_name IN VARCHAR2) RETURN NUMBER;
+    FUNCTION lookup_festival_id(p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN FESTIVAL.FESTIVAL_ID%type;
 
-END PKG_S2_festival;
+END PKG_S2_festivals;
 /

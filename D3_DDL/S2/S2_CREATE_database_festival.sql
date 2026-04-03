@@ -42,7 +42,7 @@ CREATE TABLE Artist (
     Artist_Price_Currency    CHAR(3),
     Artist_Land_Of_Birth     VARCHAR2(100 CHAR),
     CONSTRAINT Artist_PK PRIMARY KEY (Artist_ID),
-    CONSTRAINT Artist_Price_chk CHECK (Artist_Price >= 0), 
+    CONSTRAINT Artist_Price_chk CHECK (Artist_Price >= 0),
     CONSTRAINT Artist_Land_chk CHECK (LENGTH(TRIM(Artist_Land_Of_Birth)) >= 4),
     CONSTRAINT Artist_Currency_chk CHECK (REGEXP_LIKE(Artist_Price_Currency, '^[A-Z]{3}$'))
 );

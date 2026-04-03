@@ -1,8 +1,8 @@
-CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
+CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- PUBLIC LOOKUP (also used internally by this package)
-    FUNCTION lookup_festival_id(p_festival_name IN VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_festival_id(p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN FESTIVAL.FESTIVAL_ID%type IS
+        v_id FESTIVAL.FESTIVAL_ID%type;
     BEGIN
         SELECT Festival_ID
         INTO v_id
@@ -12,8 +12,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
     END lookup_festival_id;
 
     -- PRIVATE LOOKUP FUNCTIONS
-    FUNCTION lookup_company_id(p_company_name IN VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
+        v_id COMPANY.COMPANY_ID%type;
     BEGIN
         SELECT Company_ID
         INTO v_id
@@ -24,8 +24,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION lookup_city_id(p_zipcode IN VARCHAR2, p_country IN VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_city_id(p_zipcode IN CITY.ZIPCODE%type, p_country IN CITY.COUNTRY%type) RETURN CITY.CITY_ID%type IS
+        v_id CITY.CITY_ID%type;
     BEGIN
         SELECT City_ID
         INTO v_id
@@ -37,8 +37,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION lookup_genre_id(p_genre_name IN VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_genre_id(p_genre_name IN GENRE.GENRE_NAME%type) RETURN GENRE.GENRE_ID%type IS
+        v_id GENRE.GENRE_ID%type;
     BEGIN
         SELECT Genre_ID
         INTO v_id
@@ -49,8 +49,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION lookup_artist_id(p_artist_name IN VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_artist_id(p_artist_name IN ARTIST.ARTIST_NAME%type) RETURN ARTIST.ARTIST_ID%type IS
+        v_id ARTIST.ARTIST_ID%type;
     BEGIN
         SELECT Artist_ID
         INTO v_id
@@ -61,10 +61,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION lookup_stage_id(p_stage_name    IN VARCHAR2,
-                             p_festival_name IN VARCHAR2) RETURN NUMBER IS
-        v_id          NUMBER;
-        v_festival_id NUMBER;
+    FUNCTION lookup_stage_id(p_stage_name    IN STAGE.STAGE_NAME%type,
+                             p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN STAGE.STAGE_ID%type IS
+        v_id          STAGE.STAGE_ID%type;
+        v_festival_id FESTIVAL.FESTIVAL_ID%type;
     BEGIN
         v_festival_id := lookup_festival_id(p_festival_name);
         SELECT Stage_ID
@@ -78,18 +78,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 -- ---------------------------------------------------------------------------------------------------------------------
     -- PRIVATE ADD PROCEDURES
 
-    PROCEDURE add_festival(p_name          IN VARCHAR2,
-                           p_company_name  IN VARCHAR2,
-                           p_start_date    IN DATE,
-                           p_end_date      IN DATE,
-                           p_location      IN VARCHAR2,
-                           p_zipcode       IN VARCHAR2,
-                           p_country       IN VARCHAR2,
-                           p_opening_hour  IN DATE,
-                           p_closing_hour  IN DATE,
-                           p_capacity      IN NUMBER) IS
-        v_company_id NUMBER;
-        v_city_id    NUMBER;
+    PROCEDURE add_festival(p_name          IN FESTIVAL.FESTIVAL_NAME%type,
+                           p_company_name  IN COMPANY.COMPANY_NAME%type,
+                           p_start_date    IN FESTIVAL.FESTIVAL_STARTDATE%type,
+                           p_end_date      IN FESTIVAL.FESTIVAL_ENDDATE%type,
+                           p_location      IN FESTIVAL.FESTIVAL_LOCATION%type,
+                           p_zipcode       IN CITY.ZIPCODE%type,
+                           p_country       IN CITY.COUNTRY%type,
+                           p_opening_hour  IN FESTIVAL.FESTIVAL_OPENING_HOUR%type,
+                           p_closing_hour  IN FESTIVAL.FESTIVAL_CLOSING_HOUR%type,
+                           p_capacity      IN FESTIVAL.FESTIVAL_CAPACITY%type) IS
+        v_company_id FESTIVAL.COMPANY_ID%type;
+        v_city_id    FESTIVAL.CITY_ID%type;
     BEGIN
         -- Pre-fetch IDs into variables (PL/SQL functions cannot be called
         -- directly inside a SQL VALUES clause within the same package)
@@ -112,23 +112,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_genre(p_name            IN VARCHAR2,
-                        p_origin_year     IN NUMBER,
-                        p_origin_location IN VARCHAR2,
-                        p_bpm             IN NUMBER) IS
+    PROCEDURE add_genre(p_name            IN GENRE.GENRE_NAME%type,
+                        p_origin_year     IN GENRE.GENRE_ORIGIN_YEAR%type,
+                        p_origin_location IN GENRE.GENRE_ORIGIN_LOCATION%type,
+                        p_bpm             IN GENRE.GENRE_BPM%type) IS
     BEGIN
+        IF p_origin_year >= EXTRACT(YEAR FROM SYSDATE) THEN
+            RAISE_APPLICATION_ERROR(-20003, 'Genre origin year must be in the past.');
+        END IF;
         INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
         VALUES (p_name, p_origin_year, p_origin_location, p_bpm);
     END add_genre;
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_artist(p_name          IN VARCHAR2,
-                         p_birthday      IN DATE,
-                         p_price         IN NUMBER,
-                         p_currency      IN CHAR,
-                         p_land_of_birth IN VARCHAR2) IS
+    PROCEDURE add_artist(p_name          IN ARTIST.ARTIST_NAME%type,
+                         p_birthday      IN ARTIST.ARTIST_BIRTHDAY%type,
+                         p_price         IN ARTIST.ARTIST_PRICE%type,
+                         p_currency      IN ARTIST.ARTIST_PRICE_CURRENCY%type,
+                         p_land_of_birth IN ARTIST.ARTIST_LAND_OF_BIRTH%type) IS
     BEGIN
+        IF p_birthday >= SYSDATE THEN
+            RAISE_APPLICATION_ERROR(-20002, 'Artist birthday must be in the past.');
+        END IF;
         INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
                             Artist_Price_Currency, Artist_Land_Of_Birth)
         VALUES (p_name, p_birthday, p_price, p_currency, p_land_of_birth);
@@ -136,14 +142,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_stage(p_stage_name    IN VARCHAR2,
-                        p_festival_name IN VARCHAR2,
-                        p_style_desc    IN VARCHAR2,
-                        p_capacity      IN NUMBER,
-                        p_toilet_count  IN NUMBER,
-                        p_description   IN VARCHAR2,
-                        p_roofed        IN NUMBER) IS
-        v_festival_id NUMBER;
+    PROCEDURE add_stage(p_stage_name    IN STAGE.STAGE_NAME%type,
+                        p_festival_name IN FESTIVAL.FESTIVAL_NAME%type,
+                        p_style_desc    IN STAGE.STAGE_STYLE_DESCRIPTION%type,
+                        p_capacity      IN STAGE.STAGE_STANDING_CAPACITY%type,
+                        p_toilet_count  IN STAGE.STAGE_TOILET_COUNT%type,
+                        p_description   IN STAGE.STAGE_STYLE_DESCRIPTION%type,
+                        p_roofed        IN STAGE.STAGE_ROOFED_STATUS%type) IS
+        v_festival_id STAGE.FESTIVAL_ID%type;
     BEGIN
         v_festival_id := lookup_festival_id(p_festival_name);
 
@@ -161,20 +167,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_performance(p_start_time    IN DATE,
-                              p_end_time      IN DATE,
-                              p_artist_name   IN VARCHAR2,
-                              p_genre_name    IN VARCHAR2,
-                              p_stage_name    IN VARCHAR2,
-                              p_festival_name IN VARCHAR2,
-                              p_description   IN VARCHAR2) IS
-        v_festival_start DATE;
-        v_festival_end   DATE;
-        v_artist_id      NUMBER;
-        v_genre_id       NUMBER;
-        v_stage_id       NUMBER;
+    PROCEDURE add_performance(p_start_time    IN PERFORMANCE.PERFORMANCE_START_TIME%type,
+                              p_end_time      IN PERFORMANCE.PERFORMANCE_END_TIME%type,
+                              p_artist_name   IN ARTIST.ARTIST_NAME%type,
+                              p_genre_name    IN GENRE.GENRE_NAME%type,
+                              p_stage_name    IN STAGE.STAGE_NAME%type,
+                              p_festival_name IN FESTIVAL.FESTIVAL_NAME%type,
+                              p_description   IN PERFORMANCE.PERFORMANCE_DESCRIPTION%type) IS
+        v_festival_start FESTIVAL.FESTIVAL_STARTDATE%type;
+        v_festival_end   FESTIVAL.FESTIVAL_ENDDATE%type;
+        v_artist_id      PERFORMANCE.ARTIST_ID%type;
+        v_genre_id       PERFORMANCE.GENRE_ID%type;
+        v_stage_id       PERFORMANCE.STAGE_ID%type;
     BEGIN
-        -- S2 date rule: performance start must fall within the parent Festival's dates
         v_artist_id := lookup_artist_id(p_artist_name);
         v_genre_id  := lookup_genre_id(p_genre_name);
         v_stage_id  := lookup_stage_id(p_stage_name, p_festival_name);
@@ -183,6 +188,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
         INTO v_festival_start, v_festival_end
         FROM Festival
         WHERE Festival_Name = p_festival_name;
+
+        -- M4 S2 rule: performance start date must fall within the festival's date range
+        IF TRUNC(p_start_time) < v_festival_start OR TRUNC(p_start_time) > v_festival_end THEN
+            RAISE_APPLICATION_ERROR(-20001,
+                'Performance start date ' || TO_CHAR(p_start_time, 'DD-MM-YYYY') ||
+                ' must fall within festival dates (' ||
+                TO_CHAR(v_festival_start, 'DD-MM-YYYY') || ' - ' ||
+                TO_CHAR(v_festival_end, 'DD-MM-YYYY') || ').');
+        END IF;
 
         INSERT INTO Performance (Performance_Start_Time, Performance_End_Time,
                                  Artist_ID, Genre_ID, Stage_ID,
@@ -446,5 +460,5 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festival AS
 
     END bewijs_M4_S2;
 
-END PKG_S2_festival;
+END PKG_S2_festivals;
 /
