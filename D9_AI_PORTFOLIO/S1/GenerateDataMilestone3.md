@@ -433,10 +433,15 @@ Data variety: mix of past (2024) and future (2025) events, 8 countries, 3 curren
 - [TicketPlatform.csv](TicketPlatform.csv)
 - [Visitor.csv](Visitor.csv)
 
-## Prompt
+# Input
 
 ```
-Why can't I create the View when s1_visitor has SELECT rights on all tables relevant:CREATE OR REPLACE VIEW PROJECT.TOP3_VISITORS AS
+Why can't I create the View when s1_visitor has SELECT rights on all tables relevant:
+```
+
+## Attached
+```SQL
+CREATE OR REPLACE VIEW PROJECT.TOP3_VISITORS AS
 SELECT v.Visitor_Firstname    AS Voornaam,
 v.Visitor_Lastname     AS Achternaam,
 v.Visitor_Email        AS Email,
@@ -485,9 +490,9 @@ GRANT SELECT ON PROJECT.Festival       TO s1_visitor;
 GRANT SELECT ON PROJECT.TicketPlatform TO s1_visitor;
 ```
 
-## Output
+# Output
 
-````
+```
 The problem is that s1_visitor is trying to create the view in the PROJECT schema (PROJECT.TOP3_VISITORS), but it's not their own schema.
 To create an object in another user's schema, you need the CREATE ANY VIEW privilege — CREATE VIEW only allows creating views in your own schema.
 
