@@ -1,22 +1,21 @@
 CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- PUBLIC LOOKUP (also used internally by this package)
-    FUNCTION lookup_company_id(p_company_name in VARCHAR2) RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
+        v_id COMPANY.COMPANY_ID%type;
     BEGIN
         SELECT COMPANY_ID
         INTO v_id
         FROM COMPANY
         WHERE COMPANY_NAME = p_company_name;
         RETURN v_id;
-    END;
+    END lookup_company_id;
 
     -- ---------------------------------------------------------
 
-    FUNCTION
-        lookup_city_id(p_zipcode IN VARCHAR2, p_country IN VARCHAR2)
-        RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_city_id(p_zipcode IN CITY.ZIPCODE%type,
+                            p_country IN CITY.COUNTRY%type) RETURN CITY.CITY_ID%type IS
+        v_id CITY.CITY_ID%type;
     BEGIN
         SELECT City_ID
         INTO v_id
@@ -27,9 +26,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     END lookup_city_id;
 
     -- PRIVATE LOOKUP FUNCTIONS
-    FUNCTION lookup_visitor_id(p_visitor_firstname IN VARCHAR2, p_visitor_lastname IN VARCHAR2)
-        RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_visitor_id(p_visitor_firstname IN VISITOR.VISITOR_FIRSTNAME%type,
+                               p_visitor_lastname  IN VISITOR.VISITOR_LASTNAME%type)
+        RETURN VISITOR.VISITOR_ID%type IS
+        v_id VISITOR.VISITOR_ID%type;
     BEGIN
         SELECT VISITOR_ID
         INTO v_id
@@ -41,10 +41,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION
-        lookup_ticket_id(p_ticketplatform_id IN NUMBER, p_visitor_id in NUMBER, p_festival_id in NUMBER)
-        RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_ticket_id(p_ticketplatform_id IN TICKET.TICKETPLATFORM_ID%type,
+                              p_visitor_id        IN TICKET.VISITOR_ID%type,
+                              p_festival_id       IN TICKET.FESTIVAL_ID%type)
+        RETURN TICKET.TICKET_ID%type IS
+        v_id TICKET.TICKET_ID%type;
     BEGIN
         SELECT TICKET_ID
         INTO v_id
@@ -57,10 +58,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION
-        lookup_ticketplatform_id(p_ticketplatform_name IN VARCHAR2)
-        RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_ticketplatform_id(p_ticketplatform_name IN TICKETPLATFORM.TICKETPLATFORM_NAME%type)
+        RETURN TICKETPLATFORM.TICKETPLATFORM_ID%type IS
+        v_id TICKETPLATFORM.TICKETPLATFORM_ID%type;
     BEGIN
         SELECT TICKETPLATFORM_ID
         INTO v_id
@@ -71,24 +71,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION
-        lookup_permit_id(p_festival_id IN NUMBER, p_category IN VARCHAR2,
-                         p_application_date IN PERMIT.PERMIT_APPLICATION_DATE%type)
-        RETURN NUMBER IS
-        v_id NUMBER;
+    FUNCTION lookup_permit_id(p_festival_id      IN PERMIT.FESTIVAL_ID%type,
+                              p_category         IN PERMIT.PERMIT_CATEGORY%type,
+                              p_application_date IN PERMIT.PERMIT_APPLICATION_DATE%type)
+        RETURN PERMIT.PERMIT_ID%type IS
+        v_id PERMIT.PERMIT_ID%type;
     BEGIN
         SELECT PERMIT_ID
         INTO v_id
         FROM PERMIT
-        WHERE (FESTIVAL_ID, PERMIT_CATEGORY, PERMIT_APPLICATION_DATE) = (p_festival_id, p_category, p_application_date);
+        WHERE FESTIVAL_ID = p_festival_id
+          AND PERMIT_CATEGORY = p_category
+          AND PERMIT_APPLICATION_DATE = p_application_date;
         RETURN v_id;
     END lookup_permit_id;
 
     -- ---------------------------------------------------------------------------------------------------------------------
     -- PRIVATE ADD PROCEDURES
 
-    PROCEDURE add_company(p_company_name IN VARCHAR2,
-                          p_company_founding_year IN NUMBER) IS
+    PROCEDURE add_company(p_company_name          IN COMPANY.COMPANY_NAME%type,
+                          p_company_founding_year IN COMPANY.COMPANY_FOUNDING_YEAR%type) IS
     BEGIN
         INSERT INTO COMPANY (COMPANY_NAME, COMPANY_FOUNDING_YEAR)
         VALUES (p_company_name, p_company_founding_year);
@@ -96,22 +98,32 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_city(p_zipcode IN VARCHAR2,
-                       p_city IN VARCHAR2,
-                       p_country IN VARCHAR2) IS
+    PROCEDURE add_city(p_zipcode IN CITY.ZIPCODE%type,
+                       p_city    IN CITY.CITY%type,
+                       p_country IN CITY.COUNTRY%type) IS
     BEGIN
         INSERT INTO CITY (ZIPCODE, CITY, COUNTRY)
-        VALUES (p_city, p_zipcode, p_country);
+        VALUES (p_zipcode, p_city, p_country);
     END add_city;
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_visitor(p_firstname IN VARCHAR2, p_lastname IN VARCHAR2,
-                          p_birthdate IN VISITOR.VISITOR_BIRTHDATE%type, p_email IN VARCHAR2, p_street_name IN VARCHAR2,
-                          p_street_number IN VARCHAR2, p_zipcode IN VARCHAR2, p_country IN VARCHAR2,
-                          p_gender IN VARCHAR2) IS
-        v_city_id NUMBER;
+    PROCEDURE add_visitor(p_firstname     IN VISITOR.VISITOR_FIRSTNAME%type,
+                          p_lastname      IN VISITOR.VISITOR_LASTNAME%type,
+                          p_birthdate     IN VISITOR.VISITOR_BIRTHDATE%type,
+                          p_email         IN VISITOR.VISITOR_EMAIL%type,
+                          p_street_name   IN VISITOR.VISITOR_STREET_NAME%type,
+                          p_street_number IN VISITOR.VISITOR_STREET_NUMBER%type,
+                          p_zipcode       IN CITY.ZIPCODE%type,
+                          p_country       IN CITY.COUNTRY%type,
+                          p_gender        IN VISITOR.VISITOR_GENDER%type) IS
+        v_city_id VISITOR.CITY_ID%type;
     BEGIN
+        IF p_birthdate > SYSDATE THEN
+            RAISE_APPLICATION_ERROR(-20010,
+                'Visitor birthdate ' || TO_CHAR(p_birthdate, 'DD-MM-YYYY') ||
+                ' cannot be later than today.');
+        END IF;
         v_city_id := lookup_city_id(p_zipcode, p_country);
         INSERT INTO VISITOR (VISITOR_FIRSTNAME, VISITOR_LASTNAME, VISITOR_BIRTHDATE, VISITOR_EMAIL, VISITOR_STREET_NAME,
                              VISITOR_STREET_NUMBER, CITY_ID, VISITOR_GENDER)
@@ -120,7 +132,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_ticketplatform(p_name IN VARCHAR2, p_url IN VARCHAR2) IS
+    PROCEDURE add_ticketplatform(p_name IN TICKETPLATFORM.TICKETPLATFORM_NAME%type,
+                                 p_url  IN TICKETPLATFORM.TICKETPLATFORM_URL%type) IS
     BEGIN
         INSERT INTO TICKETPLATFORM (TICKETPLATFORM_NAME, TICKETPLATFORM_URL)
         VALUES (p_name, p_url);
@@ -128,15 +141,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_permit(p_category IN VARCHAR2,
-                         p_description IN VARCHAR2,
-                         p_reception_date IN PERMIT.PERMIT_RECEPTION_DATE%type,
-                         p_expiration_date IN PERMIT.PERMIT_EXPIRATION_DATE%type,
+    PROCEDURE add_permit(p_category         IN PERMIT.PERMIT_CATEGORY%type,
+                         p_description      IN PERMIT.PERMIT_DESCRIPTION%type,
+                         p_reception_date   IN PERMIT.PERMIT_RECEPTION_DATE%type,
+                         p_expiration_date  IN PERMIT.PERMIT_EXPIRATION_DATE%type,
                          p_application_date IN PERMIT.PERMIT_APPLICATION_DATE%type,
-                         p_festival_name IN VARCHAR2) IS
-        v_festival_id NUMBER;
+                         p_festival_name    IN FESTIVAL.FESTIVAL_NAME%type) IS
+        v_festival_id PERMIT.FESTIVAL_ID%type;
     BEGIN
-        v_festival_id := lookup_festival_id(p_festival_name);
+        IF p_application_date > SYSDATE THEN
+            RAISE_APPLICATION_ERROR(-20011,
+                'Permit application_date ' || TO_CHAR(p_application_date, 'DD-MM-YYYY') ||
+                ' cannot be later than today.');
+        END IF;
+        v_festival_id := PKG_S2_festivals.lookup_festival_id(p_festival_name);
 
         INSERT INTO PERMIT (PERMIT_CATEGORY, PERMIT_DESCRIPTION, PERMIT_RECEPTION_DATE, PERMIT_EXPIRATION_DATE,
                             PERMIT_APPLICATION_DATE, FESTIVAL_ID)
@@ -145,43 +163,49 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_ticket(p_price IN NUMBER,
-                         p_currency IN NUMBER,
-                         p_date IN TICKET.TICKET_DATE%type,
-                         p_purchase_date IN TICKET.TICKET_PURCHASE_DATE%type,
-                         p_description IN VARCHAR2,
-                         p_barcode IN TICKET.TICKET_BARCODE%type,
-                         p_type IN TICKET.TICKET_TYPE%type,
-                         p_status IN TICKET.TICKET_STATUS%type,
-                         p_qr_code IN TICKET.TICKET_QR_CODE%type,
-                         p_ticketplatform_name IN VARCHAR2,
-                         p_visitor_firstname IN VARCHAR2,
-                         p_visitor_lastname IN VARCHAR2,
-                         p_festival_name IN VARCHAR2) IS
-        v_festival_start    DATE;
-        v_festival_end      DATE;
-        v_ticketplatform_id NUMBER;
-        v_visitor_id        NUMBER;
-        v_festival_id       NUMBER;
+    PROCEDURE add_ticket(p_price               IN TICKET.TICKET_PRICE%type,
+                         p_currency            IN TICKET.TICKET_CURRENCY%type,
+                         p_date                IN TICKET.TICKET_DATE%type,
+                         p_purchase_date       IN TICKET.TICKET_PURCHASE_DATE%type,
+                         p_description         IN TICKET.TICKET_DESCRIPTION%type,
+                         p_barcode             IN TICKET.TICKET_BARCODE%type,
+                         p_type                IN TICKET.TICKET_TYPE%type,
+                         p_status              IN TICKET.TICKET_STATUS%type,
+                         p_qr_code             IN TICKET.TICKET_QR_CODE%type,
+                         p_ticketplatform_name IN TICKETPLATFORM.TICKETPLATFORM_NAME%type,
+                         p_visitor_firstname   IN VISITOR.VISITOR_FIRSTNAME%type,
+                         p_visitor_lastname    IN VISITOR.VISITOR_LASTNAME%type,
+                         p_festival_name       IN FESTIVAL.FESTIVAL_NAME%type) IS
+        v_festival_start    FESTIVAL.FESTIVAL_STARTDATE%type;
+        v_festival_end      FESTIVAL.FESTIVAL_ENDDATE%type;
+        v_ticketplatform_id TICKET.TICKETPLATFORM_ID%type;
+        v_visitor_id        TICKET.VISITOR_ID%type;
+        v_festival_id       TICKET.FESTIVAL_ID%type;
     BEGIN
+        IF p_purchase_date > SYSDATE THEN
+            RAISE_APPLICATION_ERROR(-20012,
+                'Ticket purchase_date ' || TO_CHAR(p_purchase_date, 'DD-MM-YYYY') ||
+                ' cannot be later than today.');
+        END IF;
         -- S2 date rule: performance start must fall within the parent Festival's dates
         v_ticketplatform_id := lookup_ticketplatform_id(p_ticketplatform_name);
         v_visitor_id := lookup_visitor_id(p_visitor_firstname, p_visitor_lastname);
-        v_festival_id := lookup_festival_id(p_festival_name);
+        v_festival_id := PKG_S2_festivals.lookup_festival_id(p_festival_name);
 
         SELECT FESTIVAL_STARTDATE, FESTIVAL_ENDDATE
         INTO v_festival_start, v_festival_end
         FROM FESTIVAL
         WHERE FESTIVAL_ID = v_festival_id;
 
-        IF p_date NOT BETWEEN (v_festival_start AND v_festival_end) AND p_purchase_date > v_festival_end OR
-           p_purchase_date > p_date THEN
+        IF (p_date NOT BETWEEN v_festival_start AND v_festival_end)
+            OR p_purchase_date > v_festival_end
+            OR p_purchase_date > p_date THEN
             RAISE_APPLICATION_ERROR(-20001,
                                     'Ticket date ' || TO_CHAR(p_date, 'DD-MM-YYYY') ||
                                     ' must fall within festival dates (' ||
                                     TO_CHAR(v_festival_start, 'DD-MM-YYYY') || ' - ' ||
                                     TO_CHAR(v_festival_end, 'DD-MM-YYYY') || ') and after the purchase date (' ||
-                                    TO_CHAR(p_purchase_date, 'DD-MM-YYYY') || ').';
+                                    TO_CHAR(p_purchase_date, 'DD-MM-YYYY') || ').');
         END IF;
 
         INSERT INTO TICKET (TICKET_PRICE, TICKET_CURRENCY, TICKET_DATE, TICKET_PURCHASE_DATE, TICKET_DESCRIPTION,
@@ -196,52 +220,50 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
 -- ---------------------------------------------------------------------------------------------------------------------
 
--- PUBLIC: EMPTY TABLES
+-- PUBLIC: EMPTY TABLES (phased)
+-- Cross-schema FK forces interleaving with PKG_S2_festivals.empty_tables_S2:
+--   1) empty_s1_children    -> TICKET, PERMIT      (children of S2.FESTIVAL)
+--   2) empty_tables_S2      -> S2 tables incl. FESTIVAL
+--   3) empty_s1_base        -> TICKETPLATFORM, VISITOR, COMPANY, CITY
 
-    PROCEDURE empty_tables_S1 IS
+    PROCEDURE empty_s1_children IS
     BEGIN
-        -- Delete in FK order: deepest children first
-        -- Ticket references Festival, Ticketplatform, Visitor
-        -- Permit references Festival
-        -- Visitor references City
-        -- Festival is referenced by Stage (S2 tables) but Festival is owned by S2
-        -- In the SAMEN script we call S1 empty first, then S2 empty.
         DELETE FROM TICKET;
         DELETE FROM PERMIT;
+        EXECUTE IMMEDIATE 'ALTER TABLE TICKET MODIFY TICKET_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE PERMIT MODIFY PERMIT_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
+        COMMIT;
+    END empty_s1_children;
+
+    PROCEDURE empty_s1_base IS
+    BEGIN
         DELETE FROM TICKETPLATFORM;
         DELETE FROM VISITOR;
         DELETE FROM COMPANY;
         DELETE FROM CITY;
-
-        -- Reset identity sequences
-        EXECUTE IMMEDIATE 'ALTER TABLE TICKET MODIFY TICKET_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE PERMIT MODIFY PERMIT_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
         EXECUTE IMMEDIATE 'ALTER TABLE TICKETPLATFORM MODIFY TICKETPLATFORM_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE VISITOR MODIFY VISITOR_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE COMPANY MODIFY COMPANY_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
-        EXECUTE IMMEDIATE 'ALTER TABLE CITY MODIFY CITY_ID GENERATED ALWAYS AS IDENTITY (START WITH 1)';
-
+        EXECUTE IMMEDIATE 'ALTER TABLE VISITOR        MODIFY VISITOR_ID        GENERATED ALWAYS AS IDENTITY (START WITH 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE COMPANY        MODIFY COMPANY_ID        GENERATED ALWAYS AS IDENTITY (START WITH 1)';
+        EXECUTE IMMEDIATE 'ALTER TABLE CITY           MODIFY CITY_ID           GENERATED ALWAYS AS IDENTITY (START WITH 1)';
         COMMIT;
+    END empty_s1_base;
+
+    -- Convenience wrapper: only safe when S2 tables (esp. FESTIVAL) are already empty
+    PROCEDURE empty_tables_S1 IS
+    BEGIN
+        empty_s1_children;
+        empty_s1_base;
     END empty_tables_S1;
 
 -- =============================================================
--- bewijs_M4_S1
--- Proof-of-concept procedure for Milestone 4 – Student 1
--- Empties all S1 tables and refills them via 
--- NOTE: FESTIVAL table is owned by S2; this procedure deliberately
---       does NOT touch it.  The tickets below reference festivals
---       that S2 must have inserted before bewijs_M4_S1 is called,
---       or the SAMEN script must call S2 fill first.
+-- fill_s1_base: COMPANY, CITY, VISITOR, TICKETPLATFORM
+--   Must run BEFORE PKG_S2_festivals.bewijs_M4_S2 (FESTIVAL needs COMPANY).
 -- =============================================================
 
-    PROCEDURE bewijs_M4_S1 IS
+    PROCEDURE fill_s1_base IS
     BEGIN
         -- ----------------------------------------------------------------
-        -- 1. EMPTY all S1 tables (resets identity sequences to 1)
-        -- ----------------------------------------------------------------
-        empty_tables_S1();
-        -- ----------------------------------------------------------------
-        -- 2. COMPANY  (10 rows)
+        -- COMPANY  (10 rows)
         -- ----------------------------------------------------------------
         add_company('Tomorrowland NV', 2005);
         add_company('Rock Werchter Productions', 1975);
@@ -357,9 +379,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         add_ticketplatform('Resident Advisor', 'https://ra.co');
         add_ticketplatform('StubHub International', 'https://www.stubhub.com');
 
+        COMMIT;
+    END fill_s1_base;
+
+-- =============================================================
+-- fill_s1_children: PERMIT, TICKET
+--   Must run AFTER PKG_S2_festivals.bewijs_M4_S2 (FESTIVAL must exist).
+-- =============================================================
+
+    PROCEDURE fill_s1_children IS
+    BEGIN
         -- ----------------------------------------------------------------
-        -- 6. PERMIT  (20 rows)
-        --    Festival rows are assumed present (inserted by S2 fill).
+        -- PERMIT  (20 rows) – Festival rows must already exist (S2 fill).
         -- ----------------------------------------------------------------
 
         -- Tomorrowland Summer 2024
@@ -661,6 +692,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
         COMMIT;
 
+    END fill_s1_children;
+
+-- =============================================================
+-- bewijs_M4_S1: thin wrapper. Assumes S1 base+children are empty
+-- and that S2 fill happens between fill_s1_base and fill_s1_children.
+-- The SAMEN script orchestrates the full sequence.
+-- =============================================================
+    PROCEDURE bewijs_M4_S1 IS
+    BEGIN
+        fill_s1_base;
+        fill_s1_children;
     END bewijs_M4_S1;
 
 END PKG_S1_festivals;
