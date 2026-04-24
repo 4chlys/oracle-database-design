@@ -35,6 +35,7 @@ CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
     FUNCTION give_random_last_name       RETURN VARCHAR2;
     FUNCTION give_random_permit_category RETURN VARCHAR2;
     FUNCTION give_random_platform_name   RETURN VARCHAR2;
+    FUNCTION give_random_description     RETURN VARCHAR2;
 
     -- 4) Random combo: domain list item + zero-padded counter
     --    e.g. give_random_combo('BassDrop', 42) --> 'BassDrop_0042'
