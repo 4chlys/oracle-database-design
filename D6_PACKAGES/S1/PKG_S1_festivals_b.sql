@@ -1045,9 +1045,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
             FOR j IN 1..p_per_festival LOOP
                 v_app_date        := PKG_SAMEN_festivals.give_random_date(v_min_app, v_max_app);
                 v_rec_date        := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
-                v_cats(v_idx)     := PKG_SAMEN_festivals.give_random_permit_category;
-                v_descs(v_idx)    := 'RndPermit_' || LPAD(TO_CHAR(fi), 4, '0')
-                                                   || '_' || LPAD(TO_CHAR(j), 4, '0');
+                v_cats(v_idx)  := PKG_SAMEN_festivals.give_random_permit_category;
+                v_descs(v_idx) := v_cats(v_idx) || ' permit for '
+                                  || PKG_SAMEN_festivals.give_random_festival_suffix || ' event';
                 v_app_dates(v_idx):= v_app_date;
                 v_rec_dates(v_idx):= v_rec_date;
                 v_exp_dates(v_idx):= PKG_SAMEN_festivals.give_random_date(v_rec_date + 1, v_rec_date + 180);
