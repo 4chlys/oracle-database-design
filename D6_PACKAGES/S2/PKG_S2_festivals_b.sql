@@ -61,7 +61,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- ---------------------------------------------------------
 
-    FUNCTION lookup_stage_id(p_stage_name    IN STAGE.STAGE_NAME%type,
+    FUNCTION lookup_stage_id(p_stage_name IN STAGE.STAGE_NAME%type,
                              p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN STAGE.STAGE_ID%type IS
         v_id          STAGE.STAGE_ID%type;
         v_festival_id FESTIVAL.FESTIVAL_ID%type;
@@ -70,31 +70,352 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         SELECT Stage_ID
         INTO v_id
         FROM Stage
-        WHERE Stage_Name  = p_stage_name
+        WHERE Stage_Name = p_stage_name
           AND Festival_ID = v_festival_id;
         RETURN v_id;
     END lookup_stage_id;
 
+-- ------------------------------------------------------M5-------------------------------------------------------------
+
+    -- PRIVATE LOGGING HELPER:
+    PROCEDURE log(p_proc IN VARCHAR2, p_param IN VARCHAR2,
+                  p_rows IN NUMBER, p_secs IN NUMBER) IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('[LOG] ' || p_proc
+            || ' | params: ' || p_param
+            || ' | rows added: ' || p_rows
+            || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
+    END log;
+
+
+    PROCEDURE generateRandomArtists(p_amount IN NUMBER) IS
+        v_start     TIMESTAMP := SYSTIMESTAMP;
+        TYPE t_names IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
+        TYPE t_countries IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
+        TYPE t_dates IS TABLE OF DATE INDEX BY PLS_INTEGER;
+        TYPE t_numbers IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+        v_names     t_names;
+        v_countries t_countries;
+        v_bdays     t_dates;
+        v_prices    t_numbers;
+    BEGIN
+        FOR i IN 1 .. p_amount
+            LOOP
+                v_names(i) := PKG_SAMEN_festivals.give_random_combo(
+                        PKG_SAMEN_festivals.give_random_artist_prefix, i);
+                v_countries(i) := PKG_SAMEN_festivals.give_random_country;
+                v_bdays(i) := PKG_SAMEN_festivals.give_random_date(
+                        TO_DATE('01-01-1960', 'DD-MM-YYYY'),
+                        TO_DATE('31-12-2000', 'DD-MM-YYYY'));
+                v_prices(i) := PKG_SAMEN_festivals.give_random_number(10000, 500000);
+            END LOOP;
+
+        FORALL i IN 1 .. p_amount
+            INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
+                                Artist_Price_Currency, Artist_Land_Of_Birth)
+            VALUES (v_names(i), v_bdays(i), v_prices(i), 'EUR', v_countries(i));
+
+        log('generateRandomArtists', 'p_amount=' || p_amount,
+            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomArtists;
+
+    PROCEDURE generateRandomFestivals(p_amount IN NUMBER) IS
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+
+        -- Load existing company IDs into an associative array
+        TYPE t_company_ids IS TABLE OF COMPANY.COMPANY_ID%TYPE INDEX BY PLS_INTEGER;
+        TYPE t_city_ids IS TABLE OF CITY.CITY_ID%TYPE INDEX BY PLS_INTEGER;
+        v_companies  t_company_ids;
+        v_cities     t_city_ids;
+        v_comp_count PLS_INTEGER := 0;
+        v_city_count PLS_INTEGER := 0;
+        v_company_id COMPANY.COMPANY_ID%TYPE;
+        v_city_id    CITY.CITY_ID%TYPE;
+        v_start_date DATE;
+        v_end_date   DATE;
+        v_fest_name  VARCHAR2(200);
+        v_location   VARCHAR2(200);
+        v_open_hour  FESTIVAL.FESTIVAL_OPENING_HOUR%TYPE;
+        v_close_hour FESTIVAL.FESTIVAL_CLOSING_HOUR%TYPE;
+        v_capacity   NUMBER;
+        CURSOR c_companies IS SELECT COMPANY_ID
+                              FROM COMPANY;
+        CURSOR c_cities IS SELECT CITY_ID
+                           FROM CITY;
+    BEGIN
+        -- Fill company collection
+        FOR r IN c_companies
+            LOOP
+                v_comp_count := v_comp_count + 1;
+                v_companies(v_comp_count) := r.COMPANY_ID;
+            END LOOP;
+
+        -- Fill city collection
+        FOR r IN c_cities
+            LOOP
+                v_city_count := v_city_count + 1;
+                v_cities(v_city_count) := r.CITY_ID;
+            END LOOP;
+
+        FOR i IN 1 .. p_amount
+            LOOP
+                v_company_id := v_companies(
+                        PKG_SAMEN_festivals.give_random_number(1, v_comp_count));
+                v_city_id := v_cities(
+                        PKG_SAMEN_festivals.give_random_number(1, v_city_count));
+
+                -- Festival runs 2–5 days, start somewhere in 2024-2026
+                v_start_date := PKG_SAMEN_festivals.give_random_date(
+                        TO_DATE('01-06-2024', 'DD-MM-YYYY'),
+                        TO_DATE('01-09-2026', 'DD-MM-YYYY'));
+                v_end_date := v_start_date
+                    + PKG_SAMEN_festivals.give_random_number(2, 5);
+
+                v_fest_name := PKG_SAMEN_festivals.give_random_combo(
+                        PKG_SAMEN_festivals.give_random_location
+                            || ' '
+                            || PKG_SAMEN_festivals.give_random_festival_suffix,
+                        i);
+                v_location := PKG_SAMEN_festivals.give_random_location;
+
+                -- Opening hour between 09:00 and 14:00
+                v_open_hour := TRUNC(SYSDATE)
+                    + PKG_SAMEN_festivals.give_random_number(9, 14) / 24;
+                -- Closing: 10 to 18 hours after opening
+                v_close_hour := v_open_hour
+                    + PKG_SAMEN_festivals.give_random_number(10, 18) / 24;
+
+                v_capacity := PKG_SAMEN_festivals.give_random_number(10000, 200000);
+
+                INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate,
+                                      Festival_EndDate, Festival_Location, City_ID,
+                                      Festival_Opening_Hour, Festival_Closing_Hour,
+                                      Festival_Capacity)
+                VALUES (v_fest_name, v_company_id, v_start_date,
+                        v_end_date, v_location, v_city_id,
+                        v_open_hour, v_close_hour, v_capacity);
+            END LOOP;
+
+        log('generateRandomFestivals', 'p_amount=' || p_amount,
+            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomFestivals;
+
+    -- ===========================================================
+    -- M5 STAP 3 – generateRandomStages
+    --   Tabel Y: generates p_per_festival Stage rows for EACH
+    --   Festival currently in the DB.
+    --
+    --   Mandatory: uses a NESTED TABLE collection to load Festival IDs.
+    -- ===========================================================
+    PROCEDURE generateRandomStages(p_per_festival IN NUMBER) IS
+        v_start        TIMESTAMP := SYSTIMESTAMP;
+
+        -- NESTED TABLE collection (required by assignment for Tabel Y)
+        TYPE t_festival_tab IS TABLE OF FESTIVAL.FESTIVAL_ID%TYPE;
+        v_festival_ids t_festival_tab;
+        v_total_rows   NUMBER    := 0;
+        v_stage_name   STAGE.STAGE_NAME%TYPE;
+        v_capacity     NUMBER;
+        v_toilets      NUMBER;
+        v_roofed       NUMBER;
+        v_style        STAGE.STAGE_STYLE_DESCRIPTION%TYPE;
+        v_desc         STAGE.STAGE_DESCRIPTION%TYPE;
+    BEGIN
+        -- Bulk collect all festival IDs into the nested table
+        SELECT Festival_ID
+            BULK COLLECT
+        INTO v_festival_ids
+        FROM Festival;
+
+        -- For each festival, insert p_per_festival stages
+        FOR fi IN 1 .. v_festival_ids.COUNT
+            LOOP
+                FOR si IN 1 .. p_per_festival
+                    LOOP
+
+                        v_stage_name := PKG_SAMEN_festivals.give_random_combo(
+                                PKG_SAMEN_festivals.give_random_artist_prefix
+                                    || ' '
+                                    || PKG_SAMEN_festivals.give_random_stage_suffix,
+                                (fi - 1) * p_per_festival + si);
+
+                        v_capacity := PKG_SAMEN_festivals.give_random_number(3000, 80000);
+                        v_toilets := PKG_SAMEN_festivals.give_random_number(20, 300);
+                        v_roofed := PKG_SAMEN_festivals.give_random_number(0, 1);
+                        v_style := CASE v_roofed
+                                       WHEN 1 THEN 'Indoor covered venue with full sound system'
+                                       ELSE 'Open air stage with full LED rig'
+                            END;
+                        v_desc := 'Auto-generated stage for festival id '
+                            || v_festival_ids(fi);
+
+                        INSERT INTO Stage (Stage_Name, Festival_ID,
+                                           Stage_Style_Description,
+                                           Stage_Standing_Capacity,
+                                           Stage_Toilet_Count,
+                                           Stage_Description,
+                                           Stage_Roofed_Status)
+                        VALUES (v_stage_name,
+                                v_festival_ids(fi),
+                                v_style,
+                                v_capacity,
+                                v_toilets,
+                                v_desc,
+                                v_roofed);
+
+                        v_total_rows := v_total_rows + 1;
+                    END LOOP;
+            END LOOP;
+
+        log('generateRandomStages',
+            'p_per_festival=' || p_per_festival
+                || ', festivals_processed=' || v_festival_ids.COUNT,
+            v_total_rows, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomStages;
+
+    -- ===========================================================
+    -- M5 STAP 3 – generateRandomPerformances
+    --   Tabel Z: generates p_per_stage Performance rows for EACH
+    --   Stage currently in the DB.
+    --
+    --   Mandatory: uses an ASSOCIATIVE ARRAY (INDEX BY) to load
+    --   Stage data (id + festival start/end dates).
+    -- ===========================================================
+    PROCEDURE generateRandomPerformances(p_per_stage IN NUMBER) IS
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+
+        -- Record type for stage context
+        TYPE t_stage_rec IS RECORD
+                            (
+                                stage_id       STAGE.STAGE_ID%TYPE,
+                                festival_start FESTIVAL.FESTIVAL_STARTDATE%TYPE,
+                                festival_end   FESTIVAL.FESTIVAL_ENDDATE%TYPE
+                            );
+
+        -- ASSOCIATIVE ARRAY (INDEX BY PLS_INTEGER) – required by assignment
+        TYPE t_stage_map IS TABLE OF t_stage_rec INDEX BY PLS_INTEGER;
+        v_stages     t_stage_map;
+        v_idx        PLS_INTEGER := 0;
+
+        -- Cursor joining Stage to Festival for date bounds
+        CURSOR c_stages IS
+            SELECT s.Stage_ID,
+                   f.Festival_StartDate,
+                   f.Festival_EndDate
+            FROM Stage s
+                     JOIN Festival f ON f.Festival_ID = s.Festival_ID;
+
+        -- Artist / Genre arrays for random lookup
+        TYPE t_id_list IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+        v_artist_ids t_id_list;
+        v_genre_ids  t_id_list;
+        v_art_count  PLS_INTEGER := 0;
+        v_gen_count  PLS_INTEGER := 0;
+        v_total_rows NUMBER      := 0;
+        v_perf_start DATE;
+        v_perf_end   DATE;
+        v_dur_hours  NUMBER;
+        v_artist_id  ARTIST.ARTIST_ID%TYPE;
+        v_genre_id   GENRE.GENRE_ID%TYPE;
+        v_desc       PERFORMANCE.PERFORMANCE_DESCRIPTION%TYPE;
+    BEGIN
+        -- Load stage map
+        FOR r IN c_stages
+            LOOP
+                v_idx := v_idx + 1;
+                v_stages(v_idx).stage_id := r.Stage_ID;
+                v_stages(v_idx).festival_start := r.Festival_StartDate;
+                v_stages(v_idx).festival_end := r.Festival_EndDate;
+            END LOOP;
+
+        -- Load artist IDs into associative array
+        DECLARE
+            CURSOR c_artists IS SELECT Artist_ID FROM Artist;
+        BEGIN
+            FOR r IN c_artists
+                LOOP
+                    v_art_count := v_art_count + 1;
+                    v_artist_ids(v_art_count) := r.Artist_ID;
+                END LOOP;
+        END;
+
+        -- Load genre IDs into associative array
+        DECLARE
+            CURSOR c_genres IS SELECT Genre_ID FROM Genre;
+        BEGIN
+            FOR r IN c_genres
+                LOOP
+                    v_gen_count := v_gen_count + 1;
+                    v_genre_ids(v_gen_count) := r.Genre_ID;
+                END LOOP;
+        END;
+
+        -- For each stage, insert p_per_stage performances
+        FOR si IN 1 .. v_idx
+            LOOP
+                FOR pi IN 1 .. p_per_stage
+                    LOOP
+
+                        -- Performance starts on a random day within the festival
+                        v_perf_start := TRUNC(
+                                                PKG_SAMEN_festivals.give_random_date(
+                                                        v_stages(si).festival_start,
+                                                        v_stages(si).festival_end))
+                            + PKG_SAMEN_festivals.give_random_number(18, 23) / 24;
+                        -- 18:00 – 23:00
+
+                        -- Duration 1–3 hours
+                        v_dur_hours := PKG_SAMEN_festivals.give_random_number(1, 3);
+                        v_perf_end := v_perf_start + v_dur_hours / 24;
+
+                        v_artist_id := v_artist_ids(
+                                PKG_SAMEN_festivals.give_random_number(1, v_art_count));
+                        v_genre_id := v_genre_ids(
+                                PKG_SAMEN_festivals.give_random_number(1, v_gen_count));
+
+                        v_desc := PKG_SAMEN_festivals.give_random_combo(
+                                PKG_SAMEN_festivals.give_random_artist_prefix
+                                    || ' live set', pi);
+
+                        INSERT INTO Performance (Performance_Start_Time,
+                                                 Performance_End_Time,
+                                                 Artist_ID, Genre_ID, Stage_ID,
+                                                 Performance_Description)
+                        VALUES (v_perf_start, v_perf_end,
+                                v_artist_id, v_genre_id,
+                                v_stages(si).stage_id,
+                                v_desc);
+
+                        v_total_rows := v_total_rows + 1;
+                    END LOOP;
+            END LOOP;
+
+        log('generateRandomPerformances',
+            'p_per_stage=' || p_per_stage
+                || ', stages_processed=' || v_idx,
+            v_total_rows, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomPerformances;
+
 -- ---------------------------------------------------------------------------------------------------------------------
     -- PRIVATE ADD PROCEDURES
 
-    PROCEDURE add_festival(p_name          IN FESTIVAL.FESTIVAL_NAME%type,
-                           p_company_name  IN COMPANY.COMPANY_NAME%type,
-                           p_start_date    IN FESTIVAL.FESTIVAL_STARTDATE%type,
-                           p_end_date      IN FESTIVAL.FESTIVAL_ENDDATE%type,
-                           p_location      IN FESTIVAL.FESTIVAL_LOCATION%type,
-                           p_zipcode       IN CITY.ZIPCODE%type,
-                           p_country       IN CITY.COUNTRY%type,
-                           p_opening_hour  IN FESTIVAL.FESTIVAL_OPENING_HOUR%type,
-                           p_closing_hour  IN FESTIVAL.FESTIVAL_CLOSING_HOUR%type,
-                           p_capacity      IN FESTIVAL.FESTIVAL_CAPACITY%type) IS
+    PROCEDURE add_festival(p_name IN FESTIVAL.FESTIVAL_NAME%type,
+                           p_company_name IN COMPANY.COMPANY_NAME%type,
+                           p_start_date IN FESTIVAL.FESTIVAL_STARTDATE%type,
+                           p_end_date IN FESTIVAL.FESTIVAL_ENDDATE%type,
+                           p_location IN FESTIVAL.FESTIVAL_LOCATION%type,
+                           p_zipcode IN CITY.ZIPCODE%type,
+                           p_country IN CITY.COUNTRY%type,
+                           p_opening_hour IN FESTIVAL.FESTIVAL_OPENING_HOUR%type,
+                           p_closing_hour IN FESTIVAL.FESTIVAL_CLOSING_HOUR%type,
+                           p_capacity IN FESTIVAL.FESTIVAL_CAPACITY%type) IS
         v_company_id FESTIVAL.COMPANY_ID%type;
         v_city_id    FESTIVAL.CITY_ID%type;
     BEGIN
         -- Pre-fetch IDs into variables (PL/SQL functions cannot be called
         -- directly inside a SQL VALUES clause within the same package)
         v_company_id := lookup_company_id(p_company_name);
-        v_city_id    := lookup_city_id(p_zipcode, p_country);
+        v_city_id := lookup_city_id(p_zipcode, p_country);
 
         INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate, Festival_EndDate,
                               Festival_Location, City_ID,
@@ -112,10 +433,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_genre(p_name            IN GENRE.GENRE_NAME%type,
-                        p_origin_year     IN GENRE.GENRE_ORIGIN_YEAR%type,
+    PROCEDURE add_genre(p_name IN GENRE.GENRE_NAME%type,
+                        p_origin_year IN GENRE.GENRE_ORIGIN_YEAR%type,
                         p_origin_location IN GENRE.GENRE_ORIGIN_LOCATION%type,
-                        p_bpm             IN GENRE.GENRE_BPM%type) IS
+                        p_bpm IN GENRE.GENRE_BPM%type) IS
     BEGIN
         IF p_origin_year >= EXTRACT(YEAR FROM SYSDATE) THEN
             RAISE_APPLICATION_ERROR(-20003, 'Genre origin year must be in the past.');
@@ -126,10 +447,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_artist(p_name          IN ARTIST.ARTIST_NAME%type,
-                         p_birthday      IN ARTIST.ARTIST_BIRTHDAY%type,
-                         p_price         IN ARTIST.ARTIST_PRICE%type,
-                         p_currency      IN ARTIST.ARTIST_PRICE_CURRENCY%type,
+    PROCEDURE add_artist(p_name IN ARTIST.ARTIST_NAME%type,
+                         p_birthday IN ARTIST.ARTIST_BIRTHDAY%type,
+                         p_price IN ARTIST.ARTIST_PRICE%type,
+                         p_currency IN ARTIST.ARTIST_PRICE_CURRENCY%type,
                          p_land_of_birth IN ARTIST.ARTIST_LAND_OF_BIRTH%type) IS
     BEGIN
         IF p_birthday >= SYSDATE THEN
@@ -142,13 +463,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_stage(p_stage_name    IN STAGE.STAGE_NAME%type,
+    PROCEDURE add_stage(p_stage_name IN STAGE.STAGE_NAME%type,
                         p_festival_name IN FESTIVAL.FESTIVAL_NAME%type,
-                        p_style_desc    IN STAGE.STAGE_STYLE_DESCRIPTION%type,
-                        p_capacity      IN STAGE.STAGE_STANDING_CAPACITY%type,
-                        p_toilet_count  IN STAGE.STAGE_TOILET_COUNT%type,
-                        p_description   IN STAGE.STAGE_STYLE_DESCRIPTION%type,
-                        p_roofed        IN STAGE.STAGE_ROOFED_STATUS%type) IS
+                        p_style_desc IN STAGE.STAGE_STYLE_DESCRIPTION%type,
+                        p_capacity IN STAGE.STAGE_STANDING_CAPACITY%type,
+                        p_toilet_count IN STAGE.STAGE_TOILET_COUNT%type,
+                        p_description IN STAGE.STAGE_STYLE_DESCRIPTION%type,
+                        p_roofed IN STAGE.STAGE_ROOFED_STATUS%type) IS
         v_festival_id STAGE.FESTIVAL_ID%type;
     BEGIN
         v_festival_id := lookup_festival_id(p_festival_name);
@@ -167,13 +488,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
     -- ---------------------------------------------------------
 
-    PROCEDURE add_performance(p_start_time    IN PERFORMANCE.PERFORMANCE_START_TIME%type,
-                              p_end_time      IN PERFORMANCE.PERFORMANCE_END_TIME%type,
-                              p_artist_name   IN ARTIST.ARTIST_NAME%type,
-                              p_genre_name    IN GENRE.GENRE_NAME%type,
-                              p_stage_name    IN STAGE.STAGE_NAME%type,
+    PROCEDURE add_performance(p_start_time IN PERFORMANCE.PERFORMANCE_START_TIME%type,
+                              p_end_time IN PERFORMANCE.PERFORMANCE_END_TIME%type,
+                              p_artist_name IN ARTIST.ARTIST_NAME%type,
+                              p_genre_name IN GENRE.GENRE_NAME%type,
+                              p_stage_name IN STAGE.STAGE_NAME%type,
                               p_festival_name IN FESTIVAL.FESTIVAL_NAME%type,
-                              p_description   IN PERFORMANCE.PERFORMANCE_DESCRIPTION%type) IS
+                              p_description IN PERFORMANCE.PERFORMANCE_DESCRIPTION%type) IS
         v_festival_start FESTIVAL.FESTIVAL_STARTDATE%type;
         v_festival_end   FESTIVAL.FESTIVAL_ENDDATE%type;
         v_artist_id      PERFORMANCE.ARTIST_ID%type;
@@ -181,8 +502,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_stage_id       PERFORMANCE.STAGE_ID%type;
     BEGIN
         v_artist_id := lookup_artist_id(p_artist_name);
-        v_genre_id  := lookup_genre_id(p_genre_name);
-        v_stage_id  := lookup_stage_id(p_stage_name, p_festival_name);
+        v_genre_id := lookup_genre_id(p_genre_name);
+        v_stage_id := lookup_stage_id(p_stage_name, p_festival_name);
 
         SELECT Festival_StartDate, Festival_EndDate
         INTO v_festival_start, v_festival_end
@@ -192,10 +513,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         -- M4 S2 rule: performance start date must fall within the festival's date range
         IF TRUNC(p_start_time) < v_festival_start OR TRUNC(p_start_time) > v_festival_end THEN
             RAISE_APPLICATION_ERROR(-20001,
-                'Performance start date ' || TO_CHAR(p_start_time, 'DD-MM-YYYY') ||
-                ' must fall within festival dates (' ||
-                TO_CHAR(v_festival_start, 'DD-MM-YYYY') || ' - ' ||
-                TO_CHAR(v_festival_end, 'DD-MM-YYYY') || ').');
+                                    'Performance start date ' || TO_CHAR(p_start_time, 'DD-MM-YYYY') ||
+                                    ' must fall within festival dates (' ||
+                                    TO_CHAR(v_festival_start, 'DD-MM-YYYY') || ' - ' ||
+                                    TO_CHAR(v_festival_end, 'DD-MM-YYYY') || ').');
         END IF;
 
         INSERT INTO Performance (Performance_Start_Time, Performance_End_Time,
@@ -242,213 +563,308 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         -- Company and City are S1 tables and must already exist.
         -- -------------------------------------------------------
         add_festival('Tomorrowland Summer 2024', 'Tomorrowland NV',
-                     TO_DATE('19-07-2024','DD-MM-YYYY'), TO_DATE('21-07-2024','DD-MM-YYYY'),
+                     TO_DATE('19-07-2024', 'DD-MM-YYYY'), TO_DATE('21-07-2024', 'DD-MM-YYYY'),
                      'De Schorre', '2850', 'Belgium',
-                     TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '17' HOUR, 200000);
+                     TO_DATE('10:00', 'HH24:MI'), TO_DATE('10:00', 'HH24:MI') + INTERVAL '17' HOUR, 200000);
 
         add_festival('Rock Werchter 2024', 'Rock Werchter Productions',
-                     TO_DATE('04-07-2024','DD-MM-YYYY'), TO_DATE('07-07-2024','DD-MM-YYYY'),
+                     TO_DATE('04-07-2024', 'DD-MM-YYYY'), TO_DATE('07-07-2024', 'DD-MM-YYYY'),
                      'Festivalpark Werchter', '3118', 'Belgium',
-                     TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '15' HOUR, 90000);
+                     TO_DATE('11:00', 'HH24:MI'), TO_DATE('11:00', 'HH24:MI') + INTERVAL '15' HOUR, 90000);
 
         add_festival('Pukkelpop 2024', 'Pukkelpop VZW',
-                     TO_DATE('15-08-2024','DD-MM-YYYY'), TO_DATE('18-08-2024','DD-MM-YYYY'),
+                     TO_DATE('15-08-2024', 'DD-MM-YYYY'), TO_DATE('18-08-2024', 'DD-MM-YYYY'),
                      'Hasselt Kiewit', '3500', 'Belgium',
-                     TO_DATE('12:00','HH24:MI'), TO_DATE('12:00','HH24:MI') + INTERVAL '13' HOUR, 65000);
+                     TO_DATE('12:00', 'HH24:MI'), TO_DATE('12:00', 'HH24:MI') + INTERVAL '13' HOUR, 65000);
 
         add_festival('Sziget Festival 2024', 'Sziget Cultural Management',
-                     TO_DATE('07-08-2024','DD-MM-YYYY'), TO_DATE('12-08-2024','DD-MM-YYYY'),
+                     TO_DATE('07-08-2024', 'DD-MM-YYYY'), TO_DATE('12-08-2024', 'DD-MM-YYYY'),
                      'Óbudai-sziget', '1117BP', 'Hungary',
-                     TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '18' HOUR, 100000);
+                     TO_DATE('10:00', 'HH24:MI'), TO_DATE('10:00', 'HH24:MI') + INTERVAL '18' HOUR, 100000);
 
         add_festival('Roskilde Festival 2024', 'Roskilde Festival Society',
-                     TO_DATE('29-06-2024','DD-MM-YYYY'), TO_DATE('06-07-2024','DD-MM-YYYY'),
+                     TO_DATE('29-06-2024', 'DD-MM-YYYY'), TO_DATE('06-07-2024', 'DD-MM-YYYY'),
                      'Roskilde Dyrskueplads', '4000', 'Denmark',
-                     TO_DATE('09:00','HH24:MI'), TO_DATE('09:00','HH24:MI') + INTERVAL '18' HOUR, 130000);
+                     TO_DATE('09:00', 'HH24:MI'), TO_DATE('09:00', 'HH24:MI') + INTERVAL '18' HOUR, 130000);
 
         add_festival('Glastonbury 2025', 'Glastonbury Festivals Ltd',
-                     TO_DATE('25-06-2025','DD-MM-YYYY'), TO_DATE('29-06-2025','DD-MM-YYYY'),
+                     TO_DATE('25-06-2025', 'DD-MM-YYYY'), TO_DATE('29-06-2025', 'DD-MM-YYYY'),
                      'Worthy Farm Pilton', 'BA44AF', 'United Kingdom',
-                     TO_DATE('08:00','HH24:MI'), TO_DATE('08:00','HH24:MI') + INTERVAL '21' HOUR, 210000);
+                     TO_DATE('08:00', 'HH24:MI'), TO_DATE('08:00', 'HH24:MI') + INTERVAL '21' HOUR, 210000);
 
         add_festival('Primavera Sound 2025', 'Primavera Sound SL',
-                     TO_DATE('29-05-2025','DD-MM-YYYY'), TO_DATE('01-06-2025','DD-MM-YYYY'),
+                     TO_DATE('29-05-2025', 'DD-MM-YYYY'), TO_DATE('01-06-2025', 'DD-MM-YYYY'),
                      'Parc del Fòrum', '08003', 'Spain',
-                     TO_DATE('14:00','HH24:MI'), TO_DATE('14:00','HH24:MI') + INTERVAL '14' HOUR, 75000);
+                     TO_DATE('14:00', 'HH24:MI'), TO_DATE('14:00', 'HH24:MI') + INTERVAL '14' HOUR, 75000);
 
         add_festival('Melt! Festival 2025', 'Melt! Festival GmbH',
-                     TO_DATE('18-07-2025','DD-MM-YYYY'), TO_DATE('20-07-2025','DD-MM-YYYY'),
+                     TO_DATE('18-07-2025', 'DD-MM-YYYY'), TO_DATE('20-07-2025', 'DD-MM-YYYY'),
                      'Ferropolis Industriepark', '06773', 'Germany',
-                     TO_DATE('13:00','HH24:MI'), TO_DATE('13:00','HH24:MI') + INTERVAL '16' HOUR, 25000);
+                     TO_DATE('13:00', 'HH24:MI'), TO_DATE('13:00', 'HH24:MI') + INTERVAL '16' HOUR, 25000);
 
         add_festival('Tomorrowland Winter 2025', 'Tomorrowland NV',
-                     TO_DATE('08-03-2025','DD-MM-YYYY'), TO_DATE('15-03-2025','DD-MM-YYYY'),
+                     TO_DATE('08-03-2025', 'DD-MM-YYYY'), TO_DATE('15-03-2025', 'DD-MM-YYYY'),
                      'Alpe d''Huez', '1000', 'Belgium',
-                     TO_DATE('10:00','HH24:MI'), TO_DATE('10:00','HH24:MI') + INTERVAL '16' HOUR, 30000);
+                     TO_DATE('10:00', 'HH24:MI'), TO_DATE('10:00', 'HH24:MI') + INTERVAL '16' HOUR, 30000);
 
         add_festival('Lollapalooza Berlin 2025', 'AEG Presents Europe',
-                     TO_DATE('07-09-2025','DD-MM-YYYY'), TO_DATE('08-09-2025','DD-MM-YYYY'),
+                     TO_DATE('07-09-2025', 'DD-MM-YYYY'), TO_DATE('08-09-2025', 'DD-MM-YYYY'),
                      'Olympiastadion Berlin', '10115', 'Germany',
-                     TO_DATE('11:00','HH24:MI'), TO_DATE('11:00','HH24:MI') + INTERVAL '12' HOUR, 85000);
+                     TO_DATE('11:00', 'HH24:MI'), TO_DATE('11:00', 'HH24:MI') + INTERVAL '12' HOUR, 85000);
 
         -- 2. GENRE
-        add_genre('Electronic',    1970, 'Chicago, USA',         128);
-        add_genre('Rock',          1955, 'Memphis, USA',         120);
-        add_genre('Pop',           1960, 'New York, USA',        110);
-        add_genre('Hip-Hop',       1973, 'Bronx, New York, USA',  90);
-        add_genre('Techno',        1985, 'Detroit, USA',         140);
-        add_genre('House',         1983, 'Chicago, USA',         125);
-        add_genre('Drum and Bass', 1991, 'London, UK',           170);
-        add_genre('Trance',        1990, 'Frankfurt, Germany',   138);
-        add_genre('Indie Rock',    1980, 'New York, USA',        115);
-        add_genre('Reggae',        1960, 'Kingston, Jamaica',     80);
+        add_genre('Electronic', 1970, 'Chicago, USA', 128);
+        add_genre('Rock', 1955, 'Memphis, USA', 120);
+        add_genre('Pop', 1960, 'New York, USA', 110);
+        add_genre('Hip-Hop', 1973, 'Bronx, New York, USA', 90);
+        add_genre('Techno', 1985, 'Detroit, USA', 140);
+        add_genre('House', 1983, 'Chicago, USA', 125);
+        add_genre('Drum and Bass', 1991, 'London, UK', 170);
+        add_genre('Trance', 1990, 'Frankfurt, Germany', 138);
+        add_genre('Indie Rock', 1980, 'New York, USA', 115);
+        add_genre('Reggae', 1960, 'Kingston, Jamaica', 80);
 
         -- 3. ARTIST
-        add_artist('Martin Garrix',      TO_DATE('14-05-1996','DD-MM-YYYY'), 500000,  'EUR', 'Netherlands');
-        add_artist('Kendrick Lamar',     TO_DATE('17-06-1987','DD-MM-YYYY'), 1200000, 'USD', 'United States');
-        add_artist('Billie Eilish',      TO_DATE('18-12-2001','DD-MM-YYYY'), 900000,  'USD', 'United States');
-        add_artist('Stromae',            TO_DATE('12-03-1985','DD-MM-YYYY'), 400000,  'EUR', 'Belgium');
-        add_artist('David Guetta',       TO_DATE('07-11-1967','DD-MM-YYYY'), 600000,  'EUR', 'France');
-        add_artist('Rammstein',          TO_DATE('01-01-1994','DD-MM-YYYY'), 800000,  'EUR', 'Germany');
-        add_artist('Arctic Monkeys',     TO_DATE('01-06-2002','DD-MM-YYYY'), 750000,  'GBP', 'United Kingdom');
-        add_artist('Bad Bunny',          TO_DATE('10-03-1994','DD-MM-YYYY'), 1500000, 'USD', 'Puerto Rico');
-        add_artist('Charlotte de Witte', TO_DATE('15-10-1992','DD-MM-YYYY'), 80000,   'EUR', 'Belgium');
-        add_artist('Bicep',              TO_DATE('01-01-2009','DD-MM-YYYY'), 120000,  'GBP', 'United Kingdom');
+        add_artist('Martin Garrix', TO_DATE('14-05-1996', 'DD-MM-YYYY'), 500000, 'EUR', 'Netherlands');
+        add_artist('Kendrick Lamar', TO_DATE('17-06-1987', 'DD-MM-YYYY'), 1200000, 'USD', 'United States');
+        add_artist('Billie Eilish', TO_DATE('18-12-2001', 'DD-MM-YYYY'), 900000, 'USD', 'United States');
+        add_artist('Stromae', TO_DATE('12-03-1985', 'DD-MM-YYYY'), 400000, 'EUR', 'Belgium');
+        add_artist('David Guetta', TO_DATE('07-11-1967', 'DD-MM-YYYY'), 600000, 'EUR', 'France');
+        add_artist('Rammstein', TO_DATE('01-01-1994', 'DD-MM-YYYY'), 800000, 'EUR', 'Germany');
+        add_artist('Arctic Monkeys', TO_DATE('01-06-2002', 'DD-MM-YYYY'), 750000, 'GBP', 'United Kingdom');
+        add_artist('Bad Bunny', TO_DATE('10-03-1994', 'DD-MM-YYYY'), 1500000, 'USD', 'Puerto Rico');
+        add_artist('Charlotte de Witte', TO_DATE('15-10-1992', 'DD-MM-YYYY'), 80000, 'EUR', 'Belgium');
+        add_artist('Bicep', TO_DATE('01-01-2009', 'DD-MM-YYYY'), 120000, 'GBP', 'United Kingdom');
 
         -- 4. STAGE
         -- Tomorrowland Summer 2024
-        add_stage('Mainstage',     'Tomorrowland Summer 2024', 'Grand pyramid structure with full LED canopy',              80000, 200, 'The iconic main stage with world-class production',      0);
-        add_stage('Freedom Stage', 'Tomorrowland Summer 2024', 'Underground bunker-style enclosed venue',                  15000,  80, 'Dark and deep electronic music venue',                   1);
+        add_stage('Mainstage', 'Tomorrowland Summer 2024', 'Grand pyramid structure with full LED canopy', 80000, 200,
+                  'The iconic main stage with world-class production', 0);
+        add_stage('Freedom Stage', 'Tomorrowland Summer 2024', 'Underground bunker-style enclosed venue', 15000, 80,
+                  'Dark and deep electronic music venue', 1);
         -- Rock Werchter 2024
-        add_stage('Main Stage',    'Rock Werchter 2024',       'Open air classic rock stage with massive screens',         65000, 180, 'The legendary open air rock stage',                      0);
-        add_stage('Club Stage',    'Rock Werchter 2024',       'Covered intimate club venue',                               8000,  40, 'Intimate covered stage for emerging artists',             1);
+        add_stage('Main Stage', 'Rock Werchter 2024', 'Open air classic rock stage with massive screens', 65000, 180,
+                  'The legendary open air rock stage', 0);
+        add_stage('Club Stage', 'Rock Werchter 2024', 'Covered intimate club venue', 8000, 40,
+                  'Intimate covered stage for emerging artists', 1);
         -- Pukkelpop 2024
-        add_stage('Chateau Stage', 'Pukkelpop 2024',           'Open air stage near the castle pond',                     40000, 120, 'Flagship stage overlooking the castle',                   0);
-        add_stage('Boiler Room',   'Pukkelpop 2024',           'Concrete underground club stage',                          3000,  20, 'Exclusive underground electronic stage',                  1);
+        add_stage('Chateau Stage', 'Pukkelpop 2024', 'Open air stage near the castle pond', 40000, 120,
+                  'Flagship stage overlooking the castle', 0);
+        add_stage('Boiler Room', 'Pukkelpop 2024', 'Concrete underground club stage', 3000, 20,
+                  'Exclusive underground electronic stage', 1);
         -- Sziget Festival 2024
-        add_stage('Main Stage',    'Sziget Festival 2024',     'Grand island stage with LED towers',                      70000, 250, 'The heart of Sziget on the island',                       0);
-        add_stage('A38 Stage',     'Sziget Festival 2024',     'Covered secondary stage named after the famous ship bar', 12000,  60, 'Popular covered stage for alternative acts',              1);
+        add_stage('Main Stage', 'Sziget Festival 2024', 'Grand island stage with LED towers', 70000, 250,
+                  'The heart of Sziget on the island', 0);
+        add_stage('A38 Stage', 'Sziget Festival 2024', 'Covered secondary stage named after the famous ship bar', 12000,
+                  60, 'Popular covered stage for alternative acts', 1);
         -- Roskilde Festival 2024
-        add_stage('Orange Stage',  'Roskilde Festival 2024',   'Iconic orange tent main stage',                           75000, 200, 'The legendary main stage of Roskilde',                    0);
-        add_stage('Arena Stage',   'Roskilde Festival 2024',   'Covered arena for mid-size acts',                         15000,  70, 'Covered arena stage at Roskilde',                         1);
+        add_stage('Orange Stage', 'Roskilde Festival 2024', 'Iconic orange tent main stage', 75000, 200,
+                  'The legendary main stage of Roskilde', 0);
+        add_stage('Arena Stage', 'Roskilde Festival 2024', 'Covered arena for mid-size acts', 15000, 70,
+                  'Covered arena stage at Roskilde', 1);
         -- Glastonbury 2025
-        add_stage('Pyramid Stage', 'Glastonbury 2025',         'The world-famous pyramid-shaped headline stage',         100000, 300, 'The most iconic festival stage in the world',             0);
-        add_stage('Other Stage',   'Glastonbury 2025',         'Second largest stage at Glastonbury',                     50000, 150, 'Alternative headline stage at Glastonbury',                0);
+        add_stage('Pyramid Stage', 'Glastonbury 2025', 'The world-famous pyramid-shaped headline stage', 100000, 300,
+                  'The most iconic festival stage in the world', 0);
+        add_stage('Other Stage', 'Glastonbury 2025', 'Second largest stage at Glastonbury', 50000, 150,
+                  'Alternative headline stage at Glastonbury', 0);
         -- Primavera Sound 2025
-        add_stage('ATP Stage',     'Primavera Sound 2025',     'Covered indoor arena stage',                              12000,  60, 'Air-conditioned indoor arena stage',                      1);
-        add_stage('Heineken Stage','Primavera Sound 2025',     'Large open air stage overlooking the sea',                40000, 110, 'Main outdoor stage with sea views',                       0);
+        add_stage('ATP Stage', 'Primavera Sound 2025', 'Covered indoor arena stage', 12000, 60,
+                  'Air-conditioned indoor arena stage', 1);
+        add_stage('Heineken Stage', 'Primavera Sound 2025', 'Large open air stage overlooking the sea', 40000, 110,
+                  'Main outdoor stage with sea views', 0);
         -- Melt! Festival 2025
-        add_stage('Ferropolis Stage', 'Melt! Festival 2025',   'Open air stage surrounded by industrial cranes',          20000,  80, 'Unique stage set among giant mining excavators',          0);
-        add_stage('Sleepless Floor',  'Melt! Festival 2025',   'Open air techno floor running all night',                  8000,  30, 'The legendary all-night Melt techno floor',               0);
+        add_stage('Ferropolis Stage', 'Melt! Festival 2025', 'Open air stage surrounded by industrial cranes', 20000,
+                  80, 'Unique stage set among giant mining excavators', 0);
+        add_stage('Sleepless Floor', 'Melt! Festival 2025', 'Open air techno floor running all night', 8000, 30,
+                  'The legendary all-night Melt techno floor', 0);
         -- Tomorrowland Winter 2025
-        add_stage('Alpe Stage',    'Tomorrowland Winter 2025', 'Alpine outdoor stage with mountain backdrop',             25000,  90, 'Main stage set against the French Alps',                  0);
-        add_stage('Ice Club',      'Tomorrowland Winter 2025', 'Indoor heated club stage in a ski chalet',                 4000,  20, 'Intimate indoor club stage for the winter edition',        1);
+        add_stage('Alpe Stage', 'Tomorrowland Winter 2025', 'Alpine outdoor stage with mountain backdrop', 25000, 90,
+                  'Main stage set against the French Alps', 0);
+        add_stage('Ice Club', 'Tomorrowland Winter 2025', 'Indoor heated club stage in a ski chalet', 4000, 20,
+                  'Intimate indoor club stage for the winter edition', 1);
         -- Lollapalooza Berlin 2025
-        add_stage('Main Stage',    'Lollapalooza Berlin 2025', 'Grand open air stage in the Olympic stadium grounds',     60000, 200, 'The main headline stage of Lollapalooza Berlin',          0);
-        add_stage('Perry Stage',   'Lollapalooza Berlin 2025', 'Second stage named after Lolla founder Perry Farrell',   25000,  80, 'Second headline stage at Lollapalooza Berlin',            0);
+        add_stage('Main Stage', 'Lollapalooza Berlin 2025', 'Grand open air stage in the Olympic stadium grounds',
+                  60000, 200, 'The main headline stage of Lollapalooza Berlin', 0);
+        add_stage('Perry Stage', 'Lollapalooza Berlin 2025', 'Second stage named after Lolla founder Perry Farrell',
+                  25000, 80, 'Second headline stage at Lollapalooza Berlin', 0);
 
         -- 5. PERFORMANCE
         -- Parent-date check runs inside add_performance.
 
         -- Tomorrowland Summer 2024 (19-07 to 21-07)
-        add_performance(TO_DATE('19-07-2024 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('20-07-2024 00:00','DD-MM-YYYY HH24:MI'),
-                        'Martin Garrix',      'Electronic', 'Mainstage',     'Tomorrowland Summer 2024', 'Martin Garrix closing set Mainstage');
-        add_performance(TO_DATE('20-07-2024 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('20-07-2024 22:00','DD-MM-YYYY HH24:MI'),
-                        'David Guetta',       'House',      'Mainstage',     'Tomorrowland Summer 2024', 'David Guetta pre-closing set Mainstage');
-        add_performance(TO_DATE('20-07-2024 02:00','DD-MM-YYYY HH24:MI'), TO_DATE('20-07-2024 05:00','DD-MM-YYYY HH24:MI'),
-                        'Charlotte de Witte', 'Techno',     'Freedom Stage', 'Tomorrowland Summer 2024', 'Charlotte de Witte deep techno set');
-        add_performance(TO_DATE('21-07-2024 00:00','DD-MM-YYYY HH24:MI'), TO_DATE('21-07-2024 02:00','DD-MM-YYYY HH24:MI'),
-                        'Bicep',              'Electronic', 'Freedom Stage', 'Tomorrowland Summer 2024', 'Bicep live AV on Freedom Stage');
+        add_performance(TO_DATE('19-07-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('20-07-2024 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'Martin Garrix', 'Electronic', 'Mainstage', 'Tomorrowland Summer 2024',
+                        'Martin Garrix closing set Mainstage');
+        add_performance(TO_DATE('20-07-2024 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('20-07-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+                        'David Guetta', 'House', 'Mainstage', 'Tomorrowland Summer 2024',
+                        'David Guetta pre-closing set Mainstage');
+        add_performance(TO_DATE('20-07-2024 02:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('20-07-2024 05:00', 'DD-MM-YYYY HH24:MI'),
+                        'Charlotte de Witte', 'Techno', 'Freedom Stage', 'Tomorrowland Summer 2024',
+                        'Charlotte de Witte deep techno set');
+        add_performance(TO_DATE('21-07-2024 00:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('21-07-2024 02:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bicep', 'Electronic', 'Freedom Stage', 'Tomorrowland Summer 2024',
+                        'Bicep live AV on Freedom Stage');
 
         -- Rock Werchter 2024 (04-07 to 07-07)
-        add_performance(TO_DATE('04-07-2024 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('04-07-2024 23:00','DD-MM-YYYY HH24:MI'),
-                        'Arctic Monkeys',     'Indie Rock', 'Main Stage',    'Rock Werchter 2024', 'Arctic Monkeys headliner set');
-        add_performance(TO_DATE('05-07-2024 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('05-07-2024 22:30','DD-MM-YYYY HH24:MI'),
-                        'Kendrick Lamar',     'Hip-Hop',    'Main Stage',    'Rock Werchter 2024', 'Kendrick Lamar Saturday headline');
-        add_performance(TO_DATE('05-07-2024 23:30','DD-MM-YYYY HH24:MI'), TO_DATE('06-07-2024 01:30','DD-MM-YYYY HH24:MI'),
-                        'David Guetta',       'House',      'Club Stage',    'Rock Werchter 2024', 'David Guetta electronic crossover set');
-        add_performance(TO_DATE('06-07-2024 02:00','DD-MM-YYYY HH24:MI'), TO_DATE('06-07-2024 05:00','DD-MM-YYYY HH24:MI'),
-                        'Charlotte de Witte', 'Techno',     'Club Stage',    'Rock Werchter 2024', 'Charlotte de Witte closing Club Stage');
+        add_performance(TO_DATE('04-07-2024 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('04-07-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Arctic Monkeys', 'Indie Rock', 'Main Stage', 'Rock Werchter 2024',
+                        'Arctic Monkeys headliner set');
+        add_performance(TO_DATE('05-07-2024 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('05-07-2024 22:30', 'DD-MM-YYYY HH24:MI'),
+                        'Kendrick Lamar', 'Hip-Hop', 'Main Stage', 'Rock Werchter 2024',
+                        'Kendrick Lamar Saturday headline');
+        add_performance(TO_DATE('05-07-2024 23:30', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('06-07-2024 01:30', 'DD-MM-YYYY HH24:MI'),
+                        'David Guetta', 'House', 'Club Stage', 'Rock Werchter 2024',
+                        'David Guetta electronic crossover set');
+        add_performance(TO_DATE('06-07-2024 02:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('06-07-2024 05:00', 'DD-MM-YYYY HH24:MI'),
+                        'Charlotte de Witte', 'Techno', 'Club Stage', 'Rock Werchter 2024',
+                        'Charlotte de Witte closing Club Stage');
 
         -- Pukkelpop 2024 (15-08 to 18-08)
-        add_performance(TO_DATE('15-08-2024 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('15-08-2024 22:00','DD-MM-YYYY HH24:MI'),
-                        'Stromae',            'Pop',        'Chateau Stage', 'Pukkelpop 2024', 'Stromae Belgian icon live performance');
-        add_performance(TO_DATE('16-08-2024 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('16-08-2024 23:00','DD-MM-YYYY HH24:MI'),
-                        'Billie Eilish',      'Pop',        'Chateau Stage', 'Pukkelpop 2024', 'Billie Eilish headline Chateau Stage');
-        add_performance(TO_DATE('16-08-2024 01:00','DD-MM-YYYY HH24:MI'), TO_DATE('16-08-2024 03:00','DD-MM-YYYY HH24:MI'),
-                        'Bicep',              'House',      'Boiler Room',   'Pukkelpop 2024', 'Bicep live electronic AV show');
-        add_performance(TO_DATE('17-08-2024 02:00','DD-MM-YYYY HH24:MI'), TO_DATE('17-08-2024 04:00','DD-MM-YYYY HH24:MI'),
-                        'Martin Garrix',      'Electronic', 'Boiler Room',   'Pukkelpop 2024', 'Martin Garrix secret Boiler Room set');
+        add_performance(TO_DATE('15-08-2024 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('15-08-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+                        'Stromae', 'Pop', 'Chateau Stage', 'Pukkelpop 2024', 'Stromae Belgian icon live performance');
+        add_performance(TO_DATE('16-08-2024 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('16-08-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Billie Eilish', 'Pop', 'Chateau Stage', 'Pukkelpop 2024',
+                        'Billie Eilish headline Chateau Stage');
+        add_performance(TO_DATE('16-08-2024 01:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('16-08-2024 03:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bicep', 'House', 'Boiler Room', 'Pukkelpop 2024', 'Bicep live electronic AV show');
+        add_performance(TO_DATE('17-08-2024 02:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('17-08-2024 04:00', 'DD-MM-YYYY HH24:MI'),
+                        'Martin Garrix', 'Electronic', 'Boiler Room', 'Pukkelpop 2024',
+                        'Martin Garrix secret Boiler Room set');
 
         -- Sziget Festival 2024 (07-08 to 12-08)
-        add_performance(TO_DATE('09-08-2024 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('09-08-2024 23:00','DD-MM-YYYY HH24:MI'),
-                        'Bad Bunny',          'Hip-Hop',    'Main Stage',    'Sziget Festival 2024', 'Bad Bunny Friday headline Sziget');
-        add_performance(TO_DATE('10-08-2024 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('10-08-2024 23:30','DD-MM-YYYY HH24:MI'),
-                        'Kendrick Lamar',     'Hip-Hop',    'Main Stage',    'Sziget Festival 2024', 'Kendrick Lamar Saturday headline Sziget');
-        add_performance(TO_DATE('08-08-2024 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('09-08-2024 01:00','DD-MM-YYYY HH24:MI'),
-                        'Charlotte de Witte', 'Techno',     'A38 Stage',     'Sziget Festival 2024', 'Charlotte de Witte techno night A38');
-        add_performance(TO_DATE('11-08-2024 23:00','DD-MM-YYYY HH24:MI'), TO_DATE('12-08-2024 01:30','DD-MM-YYYY HH24:MI'),
-                        'Bicep',              'House',      'A38 Stage',     'Sziget Festival 2024', 'Bicep closing night A38 Stage');
+        add_performance(TO_DATE('09-08-2024 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('09-08-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bad Bunny', 'Hip-Hop', 'Main Stage', 'Sziget Festival 2024',
+                        'Bad Bunny Friday headline Sziget');
+        add_performance(TO_DATE('10-08-2024 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('10-08-2024 23:30', 'DD-MM-YYYY HH24:MI'),
+                        'Kendrick Lamar', 'Hip-Hop', 'Main Stage', 'Sziget Festival 2024',
+                        'Kendrick Lamar Saturday headline Sziget');
+        add_performance(TO_DATE('08-08-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('09-08-2024 01:00', 'DD-MM-YYYY HH24:MI'),
+                        'Charlotte de Witte', 'Techno', 'A38 Stage', 'Sziget Festival 2024',
+                        'Charlotte de Witte techno night A38');
+        add_performance(TO_DATE('11-08-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('12-08-2024 01:30', 'DD-MM-YYYY HH24:MI'),
+                        'Bicep', 'House', 'A38 Stage', 'Sziget Festival 2024', 'Bicep closing night A38 Stage');
 
         -- Roskilde Festival 2024 (29-06 to 06-07)
-        add_performance(TO_DATE('30-06-2024 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('30-06-2024 23:00','DD-MM-YYYY HH24:MI'),
-                        'Billie Eilish',      'Pop',        'Orange Stage',  'Roskilde Festival 2024', 'Billie Eilish headline Orange Stage');
-        add_performance(TO_DATE('04-07-2024 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('04-07-2024 22:30','DD-MM-YYYY HH24:MI'),
-                        'Rammstein',          'Rock',       'Orange Stage',  'Roskilde Festival 2024', 'Rammstein industrial metal headline');
-        add_performance(TO_DATE('01-07-2024 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('02-07-2024 00:00','DD-MM-YYYY HH24:MI'),
-                        'Martin Garrix',      'Electronic', 'Arena Stage',   'Roskilde Festival 2024', 'Martin Garrix Arena Stage Roskilde');
-        add_performance(TO_DATE('03-07-2024 23:00','DD-MM-YYYY HH24:MI'), TO_DATE('04-07-2024 01:00','DD-MM-YYYY HH24:MI'),
-                        'Bad Bunny',          'Hip-Hop',    'Arena Stage',   'Roskilde Festival 2024', 'Bad Bunny reggaeton night Arena Stage');
+        add_performance(TO_DATE('30-06-2024 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('30-06-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Billie Eilish', 'Pop', 'Orange Stage', 'Roskilde Festival 2024',
+                        'Billie Eilish headline Orange Stage');
+        add_performance(TO_DATE('04-07-2024 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('04-07-2024 22:30', 'DD-MM-YYYY HH24:MI'),
+                        'Rammstein', 'Rock', 'Orange Stage', 'Roskilde Festival 2024',
+                        'Rammstein industrial metal headline');
+        add_performance(TO_DATE('01-07-2024 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('02-07-2024 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'Martin Garrix', 'Electronic', 'Arena Stage', 'Roskilde Festival 2024',
+                        'Martin Garrix Arena Stage Roskilde');
+        add_performance(TO_DATE('03-07-2024 23:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('04-07-2024 01:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bad Bunny', 'Hip-Hop', 'Arena Stage', 'Roskilde Festival 2024',
+                        'Bad Bunny reggaeton night Arena Stage');
 
         -- Glastonbury 2025 (25-06 to 29-06)
-        add_performance(TO_DATE('26-06-2025 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('27-06-2025 00:00','DD-MM-YYYY HH24:MI'),
-                        'Billie Eilish',      'Pop',        'Pyramid Stage', 'Glastonbury 2025', 'Billie Eilish Pyramid Stage headline');
-        add_performance(TO_DATE('28-06-2025 21:30','DD-MM-YYYY HH24:MI'), TO_DATE('28-06-2025 23:30','DD-MM-YYYY HH24:MI'),
-                        'Arctic Monkeys',     'Indie Rock', 'Pyramid Stage', 'Glastonbury 2025', 'Arctic Monkeys closing Pyramid Stage');
-        add_performance(TO_DATE('27-06-2025 19:00','DD-MM-YYYY HH24:MI'), TO_DATE('27-06-2025 21:00','DD-MM-YYYY HH24:MI'),
-                        'Stromae',            'Pop',        'Other Stage',   'Glastonbury 2025', 'Stromae Friday evening Other Stage');
-        add_performance(TO_DATE('29-06-2025 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('29-06-2025 22:30','DD-MM-YYYY HH24:MI'),
-                        'Kendrick Lamar',     'Hip-Hop',    'Other Stage',   'Glastonbury 2025', 'Kendrick Lamar closing Other Stage');
+        add_performance(TO_DATE('26-06-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('27-06-2025 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'Billie Eilish', 'Pop', 'Pyramid Stage', 'Glastonbury 2025',
+                        'Billie Eilish Pyramid Stage headline');
+        add_performance(TO_DATE('28-06-2025 21:30', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('28-06-2025 23:30', 'DD-MM-YYYY HH24:MI'),
+                        'Arctic Monkeys', 'Indie Rock', 'Pyramid Stage', 'Glastonbury 2025',
+                        'Arctic Monkeys closing Pyramid Stage');
+        add_performance(TO_DATE('27-06-2025 19:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('27-06-2025 21:00', 'DD-MM-YYYY HH24:MI'),
+                        'Stromae', 'Pop', 'Other Stage', 'Glastonbury 2025', 'Stromae Friday evening Other Stage');
+        add_performance(TO_DATE('29-06-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('29-06-2025 22:30', 'DD-MM-YYYY HH24:MI'),
+                        'Kendrick Lamar', 'Hip-Hop', 'Other Stage', 'Glastonbury 2025',
+                        'Kendrick Lamar closing Other Stage');
 
         -- Primavera Sound 2025 (29-05 to 01-06)
-        add_performance(TO_DATE('30-05-2025 23:00','DD-MM-YYYY HH24:MI'), TO_DATE('31-05-2025 01:00','DD-MM-YYYY HH24:MI'),
-                        'Bad Bunny',          'Hip-Hop',    'ATP Stage',      'Primavera Sound 2025', 'Bad Bunny Latin trap headline Primavera');
-        add_performance(TO_DATE('31-05-2025 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('31-05-2025 23:00','DD-MM-YYYY HH24:MI'),
-                        'Arctic Monkeys',     'Indie Rock', 'ATP Stage',      'Primavera Sound 2025', 'Arctic Monkeys Saturday headline Primavera');
-        add_performance(TO_DATE('29-05-2025 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('30-05-2025 00:00','DD-MM-YYYY HH24:MI'),
-                        'David Guetta',       'House',      'Heineken Stage', 'Primavera Sound 2025', 'David Guetta opening night Heineken Stage');
-        add_performance(TO_DATE('01-06-2025 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('01-06-2025 22:00','DD-MM-YYYY HH24:MI'),
-                        'Stromae',            'Pop',        'Heineken Stage', 'Primavera Sound 2025', 'Stromae closing night Heineken Stage');
+        add_performance(TO_DATE('30-05-2025 23:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('31-05-2025 01:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bad Bunny', 'Hip-Hop', 'ATP Stage', 'Primavera Sound 2025',
+                        'Bad Bunny Latin trap headline Primavera');
+        add_performance(TO_DATE('31-05-2025 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('31-05-2025 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Arctic Monkeys', 'Indie Rock', 'ATP Stage', 'Primavera Sound 2025',
+                        'Arctic Monkeys Saturday headline Primavera');
+        add_performance(TO_DATE('29-05-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('30-05-2025 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'David Guetta', 'House', 'Heineken Stage', 'Primavera Sound 2025',
+                        'David Guetta opening night Heineken Stage');
+        add_performance(TO_DATE('01-06-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('01-06-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        'Stromae', 'Pop', 'Heineken Stage', 'Primavera Sound 2025',
+                        'Stromae closing night Heineken Stage');
 
         -- Melt! Festival 2025 (18-07 to 20-07)
-        add_performance(TO_DATE('18-07-2025 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('19-07-2025 00:30','DD-MM-YYYY HH24:MI'),
-                        'Rammstein',          'Rock',       'Ferropolis Stage', 'Melt! Festival 2025', 'Rammstein opening night Ferropolis Stage');
-        add_performance(TO_DATE('19-07-2025 21:00','DD-MM-YYYY HH24:MI'), TO_DATE('19-07-2025 23:00','DD-MM-YYYY HH24:MI'),
-                        'Bicep',              'Electronic', 'Ferropolis Stage', 'Melt! Festival 2025', 'Bicep live set Ferropolis Stage');
-        add_performance(TO_DATE('19-07-2025 02:00','DD-MM-YYYY HH24:MI'), TO_DATE('19-07-2025 06:00','DD-MM-YYYY HH24:MI'),
-                        'Charlotte de Witte', 'Techno',     'Sleepless Floor',  'Melt! Festival 2025', 'Charlotte de Witte all-night Sleepless Floor');
-        add_performance(TO_DATE('20-07-2025 01:00','DD-MM-YYYY HH24:MI'), TO_DATE('20-07-2025 03:00','DD-MM-YYYY HH24:MI'),
-                        'Martin Garrix',      'Electronic', 'Sleepless Floor',  'Melt! Festival 2025', 'Martin Garrix closing Sleepless Floor');
+        add_performance(TO_DATE('18-07-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('19-07-2025 00:30', 'DD-MM-YYYY HH24:MI'),
+                        'Rammstein', 'Rock', 'Ferropolis Stage', 'Melt! Festival 2025',
+                        'Rammstein opening night Ferropolis Stage');
+        add_performance(TO_DATE('19-07-2025 21:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('19-07-2025 23:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bicep', 'Electronic', 'Ferropolis Stage', 'Melt! Festival 2025',
+                        'Bicep live set Ferropolis Stage');
+        add_performance(TO_DATE('19-07-2025 02:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('19-07-2025 06:00', 'DD-MM-YYYY HH24:MI'),
+                        'Charlotte de Witte', 'Techno', 'Sleepless Floor', 'Melt! Festival 2025',
+                        'Charlotte de Witte all-night Sleepless Floor');
+        add_performance(TO_DATE('20-07-2025 01:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('20-07-2025 03:00', 'DD-MM-YYYY HH24:MI'),
+                        'Martin Garrix', 'Electronic', 'Sleepless Floor', 'Melt! Festival 2025',
+                        'Martin Garrix closing Sleepless Floor');
 
         -- Tomorrowland Winter 2025 (08-03 to 15-03)
-        add_performance(TO_DATE('08-03-2025 18:00','DD-MM-YYYY HH24:MI'), TO_DATE('08-03-2025 20:00','DD-MM-YYYY HH24:MI'),
-                        'David Guetta',       'House',      'Alpe Stage', 'Tomorrowland Winter 2025', 'David Guetta opening Alpe Stage');
-        add_performance(TO_DATE('14-03-2025 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('14-03-2025 22:00','DD-MM-YYYY HH24:MI'),
-                        'Martin Garrix',      'Electronic', 'Alpe Stage', 'Tomorrowland Winter 2025', 'Martin Garrix closing Alpe Stage');
-        add_performance(TO_DATE('10-03-2025 23:00','DD-MM-YYYY HH24:MI'), TO_DATE('11-03-2025 03:00','DD-MM-YYYY HH24:MI'),
-                        'Charlotte de Witte', 'Techno',     'Ice Club',   'Tomorrowland Winter 2025', 'Charlotte de Witte intimate Ice Club set');
-        add_performance(TO_DATE('13-03-2025 01:00','DD-MM-YYYY HH24:MI'), TO_DATE('13-03-2025 03:30','DD-MM-YYYY HH24:MI'),
-                        'Bicep',              'House',      'Ice Club',   'Tomorrowland Winter 2025', 'Bicep live AV Ice Club');
+        add_performance(TO_DATE('08-03-2025 18:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('08-03-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        'David Guetta', 'House', 'Alpe Stage', 'Tomorrowland Winter 2025',
+                        'David Guetta opening Alpe Stage');
+        add_performance(TO_DATE('14-03-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('14-03-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        'Martin Garrix', 'Electronic', 'Alpe Stage', 'Tomorrowland Winter 2025',
+                        'Martin Garrix closing Alpe Stage');
+        add_performance(TO_DATE('10-03-2025 23:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('11-03-2025 03:00', 'DD-MM-YYYY HH24:MI'),
+                        'Charlotte de Witte', 'Techno', 'Ice Club', 'Tomorrowland Winter 2025',
+                        'Charlotte de Witte intimate Ice Club set');
+        add_performance(TO_DATE('13-03-2025 01:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('13-03-2025 03:30', 'DD-MM-YYYY HH24:MI'),
+                        'Bicep', 'House', 'Ice Club', 'Tomorrowland Winter 2025', 'Bicep live AV Ice Club');
 
         -- Lollapalooza Berlin 2025 (07-09 to 08-09)
-        add_performance(TO_DATE('07-09-2025 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('07-09-2025 22:30','DD-MM-YYYY HH24:MI'),
-                        'Rammstein',          'Rock',    'Main Stage',  'Lollapalooza Berlin 2025', 'Rammstein Friday headline Lollapalooza');
-        add_performance(TO_DATE('08-09-2025 20:00','DD-MM-YYYY HH24:MI'), TO_DATE('08-09-2025 22:30','DD-MM-YYYY HH24:MI'),
-                        'Kendrick Lamar',     'Hip-Hop', 'Main Stage',  'Lollapalooza Berlin 2025', 'Kendrick Lamar Saturday headline Lollapalooza');
-        add_performance(TO_DATE('07-09-2025 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('08-09-2025 00:00','DD-MM-YYYY HH24:MI'),
-                        'Bad Bunny',          'Hip-Hop', 'Perry Stage', 'Lollapalooza Berlin 2025', 'Bad Bunny Friday night Perry Stage');
-        add_performance(TO_DATE('08-09-2025 22:00','DD-MM-YYYY HH24:MI'), TO_DATE('09-09-2025 00:00','DD-MM-YYYY HH24:MI'),
-                        'David Guetta',       'House',   'Perry Stage', 'Lollapalooza Berlin 2025', 'David Guetta closing Perry Stage');
+        add_performance(TO_DATE('07-09-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('07-09-2025 22:30', 'DD-MM-YYYY HH24:MI'),
+                        'Rammstein', 'Rock', 'Main Stage', 'Lollapalooza Berlin 2025',
+                        'Rammstein Friday headline Lollapalooza');
+        add_performance(TO_DATE('08-09-2025 20:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('08-09-2025 22:30', 'DD-MM-YYYY HH24:MI'),
+                        'Kendrick Lamar', 'Hip-Hop', 'Main Stage', 'Lollapalooza Berlin 2025',
+                        'Kendrick Lamar Saturday headline Lollapalooza');
+        add_performance(TO_DATE('07-09-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('08-09-2025 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'Bad Bunny', 'Hip-Hop', 'Perry Stage', 'Lollapalooza Berlin 2025',
+                        'Bad Bunny Friday night Perry Stage');
+        add_performance(TO_DATE('08-09-2025 22:00', 'DD-MM-YYYY HH24:MI'),
+                        TO_DATE('09-09-2025 00:00', 'DD-MM-YYYY HH24:MI'),
+                        'David Guetta', 'House', 'Perry Stage', 'Lollapalooza Berlin 2025',
+                        'David Guetta closing Perry Stage');
 
         COMMIT;
 
