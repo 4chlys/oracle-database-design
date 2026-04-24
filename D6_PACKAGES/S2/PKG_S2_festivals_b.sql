@@ -120,81 +120,62 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     END generateRandomArtists;
 
     PROCEDURE generateRandomFestivals(p_amount IN NUMBER) IS
-        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_start      TIMESTAMP := SYSTIMESTAMP;
 
-        -- Load existing company IDs into an associative array
-        TYPE t_company_ids IS TABLE OF COMPANY.COMPANY_ID%TYPE INDEX BY PLS_INTEGER;
-        TYPE t_city_ids IS TABLE OF CITY.CITY_ID%TYPE INDEX BY PLS_INTEGER;
-        v_companies  t_company_ids;
-        v_cities     t_city_ids;
-        v_comp_count PLS_INTEGER := 0;
-        v_city_count PLS_INTEGER := 0;
-        v_company_id COMPANY.COMPANY_ID%TYPE;
-        v_city_id    CITY.CITY_ID%TYPE;
-        v_start_date DATE;
-        v_end_date   DATE;
-        v_fest_name  VARCHAR2(200);
-        v_location   VARCHAR2(200);
-        v_open_hour  FESTIVAL.FESTIVAL_OPENING_HOUR%TYPE;
-        v_close_hour FESTIVAL.FESTIVAL_CLOSING_HOUR%TYPE;
-        v_capacity   NUMBER;
-        CURSOR c_companies IS SELECT COMPANY_ID
-                              FROM COMPANY;
-        CURSOR c_cities IS SELECT CITY_ID
-                           FROM CITY;
+        TYPE t_id_tab   IS TABLE OF NUMBER                              INDEX BY PLS_INTEGER;
+        TYPE t_name_tab IS TABLE OF VARCHAR2(200)                       INDEX BY PLS_INTEGER;
+        TYPE t_date_tab IS TABLE OF DATE                                INDEX BY PLS_INTEGER;
+        TYPE t_hour_tab IS TABLE OF FESTIVAL.FESTIVAL_OPENING_HOUR%TYPE INDEX BY PLS_INTEGER;
+
+        -- Reference pools (BULK COLLECT replaces row-by-row cursor loops)
+        v_comp_pool  t_id_tab;
+        v_city_pool  t_id_tab;
+
+        -- Insert arrays (one slot per festival)
+        v_names      t_name_tab;
+        v_comp_arr   t_id_tab;
+        v_city_arr   t_id_tab;
+        v_starts     t_date_tab;
+        v_ends       t_date_tab;
+        v_locs       t_name_tab;
+        v_opens      t_hour_tab;
+        v_closes     t_hour_tab;
+        v_caps       t_id_tab;
+
+        v_comp_count PLS_INTEGER;
+        v_city_count PLS_INTEGER;
+        v_open       FESTIVAL.FESTIVAL_OPENING_HOUR%TYPE;
     BEGIN
-        -- Fill company collection
-        FOR r IN c_companies
-            LOOP
-                v_comp_count := v_comp_count + 1;
-                v_companies(v_comp_count) := r.COMPANY_ID;
-            END LOOP;
+        SELECT COMPANY_ID BULK COLLECT INTO v_comp_pool FROM COMPANY;
+        SELECT CITY_ID    BULK COLLECT INTO v_city_pool FROM CITY;
+        v_comp_count := v_comp_pool.COUNT;
+        v_city_count := v_city_pool.COUNT;
 
-        -- Fill city collection
-        FOR r IN c_cities
-            LOOP
-                v_city_count := v_city_count + 1;
-                v_cities(v_city_count) := r.CITY_ID;
-            END LOOP;
+        FOR i IN 1 .. p_amount LOOP
+            v_names(i)    := PKG_SAMEN_festivals.give_random_combo(
+                                 PKG_SAMEN_festivals.give_random_location
+                                     || ' ' || PKG_SAMEN_festivals.give_random_festival_suffix, i);
+            v_comp_arr(i) := v_comp_pool(PKG_SAMEN_festivals.give_random_number(1, v_comp_count));
+            v_city_arr(i) := v_city_pool(PKG_SAMEN_festivals.give_random_number(1, v_city_count));
+            v_starts(i)   := PKG_SAMEN_festivals.give_random_date(
+                                 TO_DATE('01-06-2024', 'DD-MM-YYYY'),
+                                 TO_DATE('01-09-2026', 'DD-MM-YYYY'));
+            v_ends(i)     := v_starts(i) + PKG_SAMEN_festivals.give_random_number(2, 5);
+            v_locs(i)     := PKG_SAMEN_festivals.give_random_location;
+            v_open        := TRUNC(SYSDATE) + PKG_SAMEN_festivals.give_random_number(9, 14) / 24;
+            v_opens(i)    := v_open;
+            v_closes(i)   := v_open + PKG_SAMEN_festivals.give_random_number(10, 18) / 24;
+            v_caps(i)     := PKG_SAMEN_festivals.give_random_number(10000, 200000);
+        END LOOP;
 
-        FOR i IN 1 .. p_amount
-            LOOP
-                v_company_id := v_companies(
-                        PKG_SAMEN_festivals.give_random_number(1, v_comp_count));
-                v_city_id := v_cities(
-                        PKG_SAMEN_festivals.give_random_number(1, v_city_count));
-
-                -- Festival runs 2–5 days, start somewhere in 2024-2026
-                v_start_date := PKG_SAMEN_festivals.give_random_date(
-                        TO_DATE('01-06-2024', 'DD-MM-YYYY'),
-                        TO_DATE('01-09-2026', 'DD-MM-YYYY'));
-                v_end_date := v_start_date
-                    + PKG_SAMEN_festivals.give_random_number(2, 5);
-
-                v_fest_name := PKG_SAMEN_festivals.give_random_combo(
-                        PKG_SAMEN_festivals.give_random_location
-                            || ' '
-                            || PKG_SAMEN_festivals.give_random_festival_suffix,
-                        i);
-                v_location := PKG_SAMEN_festivals.give_random_location;
-
-                -- Opening hour between 09:00 and 14:00
-                v_open_hour := TRUNC(SYSDATE)
-                    + PKG_SAMEN_festivals.give_random_number(9, 14) / 24;
-                -- Closing: 10 to 18 hours after opening
-                v_close_hour := v_open_hour
-                    + PKG_SAMEN_festivals.give_random_number(10, 18) / 24;
-
-                v_capacity := PKG_SAMEN_festivals.give_random_number(10000, 200000);
-
-                INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate,
-                                      Festival_EndDate, Festival_Location, City_ID,
-                                      Festival_Opening_Hour, Festival_Closing_Hour,
-                                      Festival_Capacity)
-                VALUES (v_fest_name, v_company_id, v_start_date,
-                        v_end_date, v_location, v_city_id,
-                        v_open_hour, v_close_hour, v_capacity);
-            END LOOP;
+        FORALL i IN 1 .. p_amount
+            INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate,
+                                  Festival_EndDate, Festival_Location, City_ID,
+                                  Festival_Opening_Hour, Festival_Closing_Hour,
+                                  Festival_Capacity)
+            VALUES (v_names(i), v_comp_arr(i), v_starts(i),
+                    v_ends(i), v_locs(i), v_city_arr(i),
+                    v_opens(i), v_closes(i), v_caps(i));
 
         log('generateRandomFestivals', 'p_amount=' || p_amount,
             p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
@@ -213,64 +194,64 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         -- NESTED TABLE collection (required by assignment for Tabel Y)
         TYPE t_festival_tab IS TABLE OF FESTIVAL.FESTIVAL_ID%TYPE;
         v_festival_ids t_festival_tab;
-        v_total_rows   NUMBER    := 0;
-        v_stage_name   STAGE.STAGE_NAME%TYPE;
-        v_capacity     NUMBER;
-        v_toilets      NUMBER;
-        v_roofed       NUMBER;
-        v_style        STAGE.STAGE_STYLE_DESCRIPTION%TYPE;
-        v_desc         STAGE.STAGE_DESCRIPTION%TYPE;
+
+        TYPE t_id_tab  IS TABLE OF NUMBER       INDEX BY PLS_INTEGER;
+        TYPE t_str_tab IS TABLE OF VARCHAR2(500) INDEX BY PLS_INTEGER;
+
+        -- Insert arrays (one slot per stage row across all festivals)
+        v_fid_arr  t_id_tab;
+        v_names    t_str_tab;
+        v_styles   t_str_tab;
+        v_caps     t_id_tab;
+        v_toilets  t_id_tab;
+        v_descs    t_str_tab;
+        v_roofed   t_id_tab;
+
+        v_roofed_val NUMBER;
+        k            PLS_INTEGER := 0;
+        v_desc_max   PLS_INTEGER;
     BEGIN
-        -- Bulk collect all festival IDs into the nested table
-        SELECT Festival_ID
-            BULK COLLECT
-        INTO v_festival_ids
-        FROM Festival;
+        SELECT DATA_LENGTH INTO v_desc_max
+        FROM USER_TAB_COLUMNS
+        WHERE TABLE_NAME = 'STAGE' AND COLUMN_NAME = 'STAGE_DESCRIPTION';
 
-        -- For each festival, insert p_per_festival stages
-        FOR fi IN 1 .. v_festival_ids.COUNT
-            LOOP
-                FOR si IN 1 .. p_per_festival
-                    LOOP
+        SELECT Festival_ID BULK COLLECT INTO v_festival_ids FROM Festival;
 
-                        v_stage_name := PKG_SAMEN_festivals.give_random_combo(
-                                PKG_SAMEN_festivals.give_random_artist_prefix
-                                    || ' '
-                                    || PKG_SAMEN_festivals.give_random_stage_suffix,
-                                (fi - 1) * p_per_festival + si);
-
-                        v_capacity := PKG_SAMEN_festivals.give_random_number(3000, 80000);
-                        v_toilets := PKG_SAMEN_festivals.give_random_number(20, 300);
-                        v_roofed := PKG_SAMEN_festivals.give_random_number(0, 1);
-                        v_style := CASE v_roofed
-                                       WHEN 1 THEN 'Indoor covered venue with full sound system'
-                                       ELSE 'Open air stage with full LED rig'
-                            END;
-                        v_desc := 'Auto-generated stage for festival id '
-                            || v_festival_ids(fi);
-
-                        INSERT INTO Stage (Stage_Name, Festival_ID,
-                                           Stage_Style_Description,
-                                           Stage_Standing_Capacity,
-                                           Stage_Toilet_Count,
-                                           Stage_Description,
-                                           Stage_Roofed_Status)
-                        VALUES (v_stage_name,
-                                v_festival_ids(fi),
-                                v_style,
-                                v_capacity,
-                                v_toilets,
-                                v_desc,
-                                v_roofed);
-
-                        v_total_rows := v_total_rows + 1;
-                    END LOOP;
+        -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
+        FOR fi IN 1 .. v_festival_ids.COUNT LOOP
+            FOR si IN 1 .. p_per_festival LOOP
+                k := k + 1;
+                v_fid_arr(k)  := v_festival_ids(fi);
+                v_names(k)    := PKG_SAMEN_festivals.give_random_combo(
+                                     PKG_SAMEN_festivals.give_random_artist_prefix
+                                         || ' ' || PKG_SAMEN_festivals.give_random_stage_suffix,
+                                     (fi - 1) * p_per_festival + si);
+                v_roofed_val  := PKG_SAMEN_festivals.give_random_number(0, 1);
+                v_roofed(k)   := v_roofed_val;
+                v_caps(k)     := PKG_SAMEN_festivals.give_random_number(3000, 80000);
+                v_toilets(k)  := PKG_SAMEN_festivals.give_random_number(20, 300);
+                v_styles(k)   := CASE v_roofed_val
+                                     WHEN 1 THEN 'Indoor covered venue with full sound system'
+                                     ELSE 'Open air stage with full LED rig'
+                                 END;
+                v_descs(k)    := PKG_SAMEN_festivals.give_random_description;
             END LOOP;
+        END LOOP;
+
+        FORALL i IN 1 .. k
+            INSERT INTO Stage (Stage_Name, Festival_ID,
+                               Stage_Style_Description,
+                               Stage_Standing_Capacity,
+                               Stage_Toilet_Count,
+                               Stage_Description,
+                               Stage_Roofed_Status)
+            VALUES (v_names(i), v_fid_arr(i), v_styles(i),
+                    v_caps(i), v_toilets(i), v_descs(i), v_roofed(i));
 
         log('generateRandomStages',
             'p_per_festival=' || p_per_festival
                 || ', festivals_processed=' || v_festival_ids.COUNT,
-            v_total_rows, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            k, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomStages;
 
     -- ===========================================================
@@ -282,119 +263,127 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     --   Stage data (id + festival start/end dates).
     -- ===========================================================
     PROCEDURE generateRandomPerformances(p_per_stage IN NUMBER) IS
-        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_start      TIMESTAMP := SYSTIMESTAMP;
 
         -- Record type for stage context
         TYPE t_stage_rec IS RECORD
-                            (
-                                stage_id       STAGE.STAGE_ID%TYPE,
-                                festival_start FESTIVAL.FESTIVAL_STARTDATE%TYPE,
-                                festival_end   FESTIVAL.FESTIVAL_ENDDATE%TYPE
-                            );
+        (
+            stage_id       STAGE.STAGE_ID%TYPE,
+            festival_start FESTIVAL.FESTIVAL_STARTDATE%TYPE,
+            festival_end   FESTIVAL.FESTIVAL_ENDDATE%TYPE
+        );
 
         -- ASSOCIATIVE ARRAY (INDEX BY PLS_INTEGER) – required by assignment
         TYPE t_stage_map IS TABLE OF t_stage_rec INDEX BY PLS_INTEGER;
         v_stages     t_stage_map;
         v_idx        PLS_INTEGER := 0;
 
-        -- Cursor joining Stage to Festival for date bounds
-        CURSOR c_stages IS
-            SELECT s.Stage_ID,
-                   f.Festival_StartDate,
-                   f.Festival_EndDate
-            FROM Stage s
-                     JOIN Festival f ON f.Festival_ID = s.Festival_ID;
+        -- Bulk-load helpers for stages
+        TYPE t_id_list   IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+        TYPE t_date_list IS TABLE OF DATE   INDEX BY PLS_INTEGER;
+        v_s_ids    t_id_list;
+        v_f_starts t_date_list;
+        v_f_ends   t_date_list;
 
-        -- Artist / Genre arrays for random lookup
-        TYPE t_id_list IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+        -- Reference pools loaded with BULK COLLECT
         v_artist_ids t_id_list;
         v_genre_ids  t_id_list;
-        v_art_count  PLS_INTEGER := 0;
-        v_gen_count  PLS_INTEGER := 0;
-        v_total_rows NUMBER      := 0;
+        v_art_count  PLS_INTEGER;
+        v_gen_count  PLS_INTEGER;
+
+        -- Insert arrays (one slot per performance row across all stages)
+        TYPE t_str_list IS TABLE OF VARCHAR2(500) INDEX BY PLS_INTEGER;
+        v_perf_starts t_date_list;
+        v_perf_ends   t_date_list;
+        v_ins_artist  t_id_list;
+        v_ins_genre   t_id_list;
+        v_ins_stage   t_id_list;
+        v_descs       t_str_list;
+
         v_perf_start DATE;
-        v_perf_end   DATE;
-        v_dur_hours  NUMBER;
-        v_artist_id  ARTIST.ARTIST_ID%TYPE;
-        v_genre_id   GENRE.GENRE_ID%TYPE;
-        v_desc       PERFORMANCE.PERFORMANCE_DESCRIPTION%TYPE;
+        k            PLS_INTEGER := 0;
     BEGIN
-        -- Load stage map
-        FOR r IN c_stages
-            LOOP
-                v_idx := v_idx + 1;
-                v_stages(v_idx).stage_id := r.Stage_ID;
-                v_stages(v_idx).festival_start := r.Festival_StartDate;
-                v_stages(v_idx).festival_end := r.Festival_EndDate;
+        -- Bulk load stage + festival dates, then populate the required associative array of records
+        SELECT s.Stage_ID, f.Festival_StartDate, f.Festival_EndDate
+        BULK COLLECT INTO v_s_ids, v_f_starts, v_f_ends
+        FROM Stage s JOIN Festival f ON f.Festival_ID = s.Festival_ID;
+
+        FOR i IN 1 .. v_s_ids.COUNT LOOP
+            v_idx := v_idx + 1;
+            v_stages(v_idx).stage_id       := v_s_ids(i);
+            v_stages(v_idx).festival_start := v_f_starts(i);
+            v_stages(v_idx).festival_end   := v_f_ends(i);
+        END LOOP;
+
+        -- Bulk load artist and genre reference pools
+        SELECT Artist_ID BULK COLLECT INTO v_artist_ids FROM Artist;
+        SELECT Genre_ID  BULK COLLECT INTO v_genre_ids  FROM Genre;
+        v_art_count := v_artist_ids.COUNT;
+        v_gen_count := v_genre_ids.COUNT;
+
+        -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
+        FOR si IN 1 .. v_idx LOOP
+            FOR pi IN 1 .. p_per_stage LOOP
+                k := k + 1;
+                v_perf_start     := TRUNC(
+                                        PKG_SAMEN_festivals.give_random_date(
+                                            v_stages(si).festival_start,
+                                            v_stages(si).festival_end))
+                                    + PKG_SAMEN_festivals.give_random_number(18, 23) / 24;
+                v_perf_starts(k) := v_perf_start;
+                v_perf_ends(k)   := v_perf_start + PKG_SAMEN_festivals.give_random_number(1, 3) / 24;
+                v_ins_artist(k)  := v_artist_ids(PKG_SAMEN_festivals.give_random_number(1, v_art_count));
+                v_ins_genre(k)   := v_genre_ids(PKG_SAMEN_festivals.give_random_number(1, v_gen_count));
+                v_ins_stage(k)   := v_stages(si).stage_id;
+                v_descs(k)       := PKG_SAMEN_festivals.give_random_description;
             END LOOP;
+        END LOOP;
 
-        -- Load artist IDs into associative array
-        DECLARE
-            CURSOR c_artists IS SELECT Artist_ID FROM Artist;
-        BEGIN
-            FOR r IN c_artists
-                LOOP
-                    v_art_count := v_art_count + 1;
-                    v_artist_ids(v_art_count) := r.Artist_ID;
-                END LOOP;
-        END;
-
-        -- Load genre IDs into associative array
-        DECLARE
-            CURSOR c_genres IS SELECT Genre_ID FROM Genre;
-        BEGIN
-            FOR r IN c_genres
-                LOOP
-                    v_gen_count := v_gen_count + 1;
-                    v_genre_ids(v_gen_count) := r.Genre_ID;
-                END LOOP;
-        END;
-
-        -- For each stage, insert p_per_stage performances
-        FOR si IN 1 .. v_idx
-            LOOP
-                FOR pi IN 1 .. p_per_stage
-                    LOOP
-
-                        -- Performance starts on a random day within the festival
-                        v_perf_start := TRUNC(
-                                                PKG_SAMEN_festivals.give_random_date(
-                                                        v_stages(si).festival_start,
-                                                        v_stages(si).festival_end))
-                            + PKG_SAMEN_festivals.give_random_number(18, 23) / 24;
-                        -- 18:00 – 23:00
-
-                        -- Duration 1–3 hours
-                        v_dur_hours := PKG_SAMEN_festivals.give_random_number(1, 3);
-                        v_perf_end := v_perf_start + v_dur_hours / 24;
-
-                        v_artist_id := v_artist_ids(
-                                PKG_SAMEN_festivals.give_random_number(1, v_art_count));
-                        v_genre_id := v_genre_ids(
-                                PKG_SAMEN_festivals.give_random_number(1, v_gen_count));
-
-                        v_desc := PKG_SAMEN_festivals.give_random_combo(
-                                PKG_SAMEN_festivals.give_random_artist_prefix
-                                    || ' live set', pi);
-
-                        INSERT INTO Performance (Performance_Start_Time,
-                                                 Performance_End_Time,
-                                                 Artist_ID, Genre_ID, Stage_ID,
-                                                 Performance_Description)
-                        VALUES (v_perf_start, v_perf_end,
-                                v_artist_id, v_genre_id,
-                                v_stages(si).stage_id,
-                                v_desc);
-
-                        v_total_rows := v_total_rows + 1;
-                    END LOOP;
-            END LOOP;
+        FORALL i IN 1 .. k
+            INSERT INTO Performance (Performance_Start_Time,
+                                     Performance_End_Time,
+                                     Artist_ID, Genre_ID, Stage_ID,
+                                     Performance_Description)
+            VALUES (v_perf_starts(i), v_perf_ends(i),
+                    v_ins_artist(i), v_ins_genre(i),
+                    v_ins_stage(i), v_descs(i));
 
         log('generateRandomPerformances',
             'p_per_stage=' || p_per_stage
                 || ', stages_processed=' || v_idx,
-            v_total_rows, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            k, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomPerformances;
+
+    PROCEDURE bewijs_M5_S2(p_festivals IN NUMBER,
+                                    p_genres    IN NUMBER,
+                                    p_stages    IN NUMBER,
+                                    p_perfs     IN NUMBER) IS
+        v_start TIMESTAMP := SYSTIMESTAMP;
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S2 START ===');
+        DBMS_OUTPUT.PUT_LINE('params: p_festivals=' || p_festivals
+            || ' | p_genres(artists)=' || p_genres
+            || ' | p_stages=' || p_stages
+            || ' | p_perfs=' || p_perfs);
+
+        -- Generate extra artists so performances have enough variety
+        generateRandomArtists(p_genres);
+
+        -- Tabel W/X: Festivals
+        generateRandomFestivals(p_festivals);
+
+        -- Tabel Y: Stages
+        generateRandomStages(p_stages);
+
+        -- Tabel Z: Performances
+        generateRandomPerformances(p_perfs);
+
+        COMMIT;
+
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S2 END | total duration: '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000)
+            || ' ms ===');
+    END bewijs_M5_S2;
 
 -- ---------------------------------------------------------------------------------------------------------------------
     -- PRIVATE ADD PROCEDURES
