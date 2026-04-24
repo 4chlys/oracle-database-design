@@ -28,19 +28,19 @@ CREATE OR REPLACE PACKAGE PKG_S1_festivals AS
     --   bewijs_milestone_5_S1_children must run AFTER  bewijs_milestone_5_S2 (tickets/permits need festivals)
     --   bewijs_milestone_5_S1          convenience wrapper – only safe when S2 festivals already exist
     --   SAMEN script orchestrates: S1_base → S2 → S1_children
-    PROCEDURE bewijs_milestone_5_S1_base(p_cities    IN NUMBER,
+    PROCEDURE bewijs_milestone_5_S1_base(p_cities IN NUMBER,
                                          p_companies IN NUMBER,
                                          p_platforms IN NUMBER,
-                                         p_visitors  IN NUMBER);
+                                         p_visitors IN NUMBER);
 
-    PROCEDURE bewijs_milestone_5_S1_children(p_tickets          IN NUMBER,
-                                              p_permits_per_fest IN NUMBER);
+    PROCEDURE bewijs_milestone_5_S1_children(p_tickets IN NUMBER,
+                                             p_permits_per_fest IN NUMBER);
 
-    PROCEDURE bewijs_milestone_5_S1(p_cities           IN NUMBER,
-                                    p_companies        IN NUMBER,
-                                    p_platforms        IN NUMBER,
-                                    p_visitors         IN NUMBER,
-                                    p_tickets          IN NUMBER,
+    PROCEDURE bewijs_milestone_5_S1(p_cities IN NUMBER,
+                                    p_companies IN NUMBER,
+                                    p_platforms IN NUMBER,
+                                    p_visitors IN NUMBER,
+                                    p_tickets IN NUMBER,
                                     p_permits_per_fest IN NUMBER);
 
 END PKG_S1_festivals;

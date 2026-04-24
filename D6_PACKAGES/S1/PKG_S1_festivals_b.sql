@@ -1,22 +1,21 @@
 CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
-
     -- =========================================================
     -- Private collection types – shared by all M5 generators.
     -- Declared here once so procedures need no local TYPE stmts.
     -- =========================================================
-    TYPE t_id_tab   IS TABLE OF NUMBER          INDEX BY PLS_INTEGER;
-    TYPE t_date_tab IS TABLE OF DATE            INDEX BY PLS_INTEGER;
-    TYPE t_num10_2  IS TABLE OF NUMBER(10, 2)   INDEX BY PLS_INTEGER;
-    TYPE t_str500   IS TABLE OF VARCHAR2(500)   INDEX BY PLS_INTEGER;
-    TYPE t_str100   IS TABLE OF VARCHAR2(100)   INDEX BY PLS_INTEGER;
-    TYPE t_str50    IS TABLE OF VARCHAR2(50)    INDEX BY PLS_INTEGER;
-    TYPE t_str14    IS TABLE OF VARCHAR2(14)    INDEX BY PLS_INTEGER;
-    TYPE t_str10    IS TABLE OF VARCHAR2(10)    INDEX BY PLS_INTEGER;
-    TYPE t_char3    IS TABLE OF VARCHAR2(3)     INDEX BY PLS_INTEGER;
+    TYPE t_id_tab IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+    TYPE t_date_tab IS TABLE OF DATE INDEX BY PLS_INTEGER;
+    TYPE t_num10_2 IS TABLE OF NUMBER(10, 2) INDEX BY PLS_INTEGER;
+    TYPE t_str500 IS TABLE OF VARCHAR2(500) INDEX BY PLS_INTEGER;
+    TYPE t_str100 IS TABLE OF VARCHAR2(100) INDEX BY PLS_INTEGER;
+    TYPE t_str50 IS TABLE OF VARCHAR2(50) INDEX BY PLS_INTEGER;
+    TYPE t_str14 IS TABLE OF VARCHAR2(14) INDEX BY PLS_INTEGER;
+    TYPE t_str10 IS TABLE OF VARCHAR2(10) INDEX BY PLS_INTEGER;
+    TYPE t_char3 IS TABLE OF VARCHAR2(3) INDEX BY PLS_INTEGER;
 
     -- Mapped to ORA-24381 so FORALL SAVE EXCEPTIONS can be caught by name
     e_bulk_errors EXCEPTION;
-    PRAGMA EXCEPTION_INIT(e_bulk_errors, -24381);
+    PRAGMA EXCEPTION_INIT (e_bulk_errors, -24381);
 
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
@@ -742,15 +741,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_zips   t_str10;
         v_names  t_str50;
         v_cntrs  t_str50;
-        v_ins    NUMBER := p_amount;
+        v_ins    NUMBER    := p_amount;
     BEGIN
         SELECT NVL(COUNT(*), 0) INTO v_offset FROM CITY;
-        FOR i IN 1..p_amount LOOP
-            v_zips(i)  := 'Z' || LPAD(TO_CHAR(v_offset + i), 8, '0');
-            v_names(i) := PKG_SAMEN_festivals.give_random_location
-                          || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0');
-            v_cntrs(i) := PKG_SAMEN_festivals.give_random_country;
-        END LOOP;
+        FOR i IN 1..p_amount
+            LOOP
+                v_zips(i) := 'Z' || LPAD(TO_CHAR(v_offset + i), 8, '0');
+                v_names(i) := PKG_SAMEN_festivals.give_random_location
+                    || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0');
+                v_cntrs(i) := PKG_SAMEN_festivals.give_random_country;
+            END LOOP;
         BEGIN
             FORALL i IN 1..p_amount SAVE EXCEPTIONS
                 INSERT INTO CITY (ZIPCODE, CITY, COUNTRY)
@@ -773,13 +773,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_offset NUMBER;
         v_names  t_str50;
         v_years  t_id_tab;
-        v_ins    NUMBER := p_amount;
+        v_ins    NUMBER    := p_amount;
     BEGIN
         SELECT NVL(COUNT(*), 0) INTO v_offset FROM COMPANY;
-        FOR i IN 1..p_amount LOOP
-            v_names(i) := 'RndCo_' || LPAD(TO_CHAR(v_offset + i), 6, '0');
-            v_years(i) := PKG_SAMEN_festivals.give_random_number(1800, 2025);
-        END LOOP;
+        FOR i IN 1..p_amount
+            LOOP
+                v_names(i) := 'RndCo_' || LPAD(TO_CHAR(v_offset + i), 6, '0');
+                v_years(i) := PKG_SAMEN_festivals.give_random_number(1800, 2025);
+            END LOOP;
         BEGIN
             FORALL i IN 1..p_amount SAVE EXCEPTIONS
                 INSERT INTO COMPANY (COMPANY_NAME, COMPANY_FOUNDING_YEAR)
@@ -801,14 +802,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_offset NUMBER;
         v_names  t_str100;
         v_urls   t_str500;
-        v_ins    NUMBER := p_amount;
+        v_ins    NUMBER    := p_amount;
     BEGIN
         SELECT NVL(COUNT(*), 0) INTO v_offset FROM TICKETPLATFORM;
-        FOR i IN 1..p_amount LOOP
-            v_names(i) := PKG_SAMEN_festivals.give_random_platform_name
-                          || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0');
-            v_urls(i)  := 'https://platform' || LPAD(TO_CHAR(v_offset + i), 8, '0') || '.com';
-        END LOOP;
+        FOR i IN 1..p_amount
+            LOOP
+                v_names(i) := PKG_SAMEN_festivals.give_random_platform_name
+                    || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0');
+                v_urls(i) := 'https://platform' || LPAD(TO_CHAR(v_offset + i), 8, '0') || '.com';
+            END LOOP;
         BEGIN
             FORALL i IN 1..p_amount SAVE EXCEPTIONS
                 INSERT INTO TICKETPLATFORM (TICKETPLATFORM_NAME, TICKETPLATFORM_URL)
@@ -841,7 +843,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_genders  t_str50;
         v_fname    VARCHAR2(50);
         v_ci       PLS_INTEGER;
-        v_ins      NUMBER := p_amount;
+        v_ins      NUMBER    := p_amount;
     BEGIN
         SELECT CITY_ID BULK COLLECT INTO v_city_ids FROM CITY;
         IF v_city_ids.COUNT = 0 THEN
@@ -851,18 +853,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 
         SELECT NVL(COUNT(*), 0) INTO v_offset FROM VISITOR;
 
-        FOR i IN 1..p_amount LOOP
-            v_ci         := PKG_SAMEN_festivals.give_random_number(1, v_city_ids.COUNT);
-            v_fname      := PKG_SAMEN_festivals.give_random_first_name;
-            v_fnames(i)  := v_fname;
-            v_lnames(i)  := PKG_SAMEN_festivals.give_random_last_name;
-            v_births(i)  := PKG_SAMEN_festivals.give_random_date(DATE '1960-01-01', DATE '2005-12-31');
-            v_emails(i)  := LOWER(v_fname) || (v_offset + i) || '@rnd.com';
-            v_streets(i) := PKG_SAMEN_festivals.give_random_street;
-            v_snums(i)   := TO_CHAR(PKG_SAMEN_festivals.give_random_number(1, 999));
-            v_cids(i)    := v_city_ids(v_ci);
-            v_genders(i) := PKG_SAMEN_festivals.give_random_gender;
-        END LOOP;
+        FOR i IN 1..p_amount
+            LOOP
+                v_ci := PKG_SAMEN_festivals.give_random_number(1, v_city_ids.COUNT);
+                v_fname := PKG_SAMEN_festivals.give_random_first_name;
+                v_fnames(i) := v_fname;
+                v_lnames(i) := PKG_SAMEN_festivals.give_random_last_name;
+                v_births(i) := PKG_SAMEN_festivals.give_random_date(DATE '1960-01-01', DATE '2005-12-31');
+                v_emails(i) := LOWER(v_fname) || (v_offset + i) || '@rnd.com';
+                v_streets(i) := PKG_SAMEN_festivals.give_random_street;
+                v_snums(i) := TO_CHAR(PKG_SAMEN_festivals.give_random_number(1, 999));
+                v_cids(i) := v_city_ids(v_ci);
+                v_genders(i) := PKG_SAMEN_festivals.give_random_gender;
+            END LOOP;
 
         BEGIN
             FORALL i IN 1..p_amount SAVE EXCEPTIONS
@@ -918,23 +921,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_ins_plats   t_id_tab;
         v_ins_vis     t_id_tab;
         v_ins_fests   t_id_tab;
-
-        v_start     TIMESTAMP := SYSTIMESTAMP;
-        v_offset    NUMBER;
-        v_fi        PLS_INTEGER;
-        v_vi        PLS_INTEGER;
-        v_pi        PLS_INTEGER;
-        v_tkt_date  DATE;
-        v_max_purch DATE;
-        v_barcode   VARCHAR2(14);
-        v_ins       NUMBER := p_amount;
+        v_start       TIMESTAMP := SYSTIMESTAMP;
+        v_offset      NUMBER;
+        v_fi          PLS_INTEGER;
+        v_vi          PLS_INTEGER;
+        v_pi          PLS_INTEGER;
+        v_tkt_date    DATE;
+        v_max_purch   DATE;
+        v_barcode     VARCHAR2(14);
+        v_ins         NUMBER    := p_amount;
     BEGIN
         -- One round-trip each for festival, visitor, and platform data
-        SELECT FESTIVAL_ID, FESTIVAL_STARTDATE, FESTIVAL_ENDDATE
-        BULK COLLECT INTO v_fest_ids, v_fest_starts, v_fest_ends
+        SELECT FESTIVAL_ID,
+               FESTIVAL_STARTDATE,
+               FESTIVAL_ENDDATE
+            BULK COLLECT
+        INTO v_fest_ids, v_fest_starts, v_fest_ends
         FROM FESTIVAL;
 
-        SELECT VISITOR_ID        BULK COLLECT INTO v_vis_pool  FROM VISITOR;
+        SELECT VISITOR_ID BULK COLLECT INTO v_vis_pool FROM VISITOR;
         SELECT TICKETPLATFORM_ID BULK COLLECT INTO v_plat_pool FROM TICKETPLATFORM;
 
         IF v_fest_ids.COUNT = 0 THEN
@@ -953,29 +958,30 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         SELECT NVL(COUNT(*), 0) INTO v_offset FROM TICKET;
 
         -- Build all 12 value arrays in pure PL/SQL (no SQL round-trips)
-        FOR i IN 1..p_amount LOOP
-            v_fi := PKG_SAMEN_festivals.give_random_number(1, v_fest_ids.COUNT);
-            v_vi := PKG_SAMEN_festivals.give_random_number(1, v_vis_pool.COUNT);
-            v_pi := PKG_SAMEN_festivals.give_random_number(1, v_plat_pool.COUNT);
+        FOR i IN 1..p_amount
+            LOOP
+                v_fi := PKG_SAMEN_festivals.give_random_number(1, v_fest_ids.COUNT);
+                v_vi := PKG_SAMEN_festivals.give_random_number(1, v_vis_pool.COUNT);
+                v_pi := PKG_SAMEN_festivals.give_random_number(1, v_plat_pool.COUNT);
 
-            v_tkt_date  := PKG_SAMEN_festivals.give_random_date(v_fest_starts(v_fi), v_fest_ends(v_fi));
-            v_max_purch := LEAST(v_tkt_date, DATE '2026-03-10');
-            v_barcode   := 'R' || LPAD(TO_CHAR(v_offset + i), 12, '0');
+                v_tkt_date := PKG_SAMEN_festivals.give_random_date(v_fest_starts(v_fi), v_fest_ends(v_fi));
+                v_max_purch := LEAST(v_tkt_date, DATE '2026-03-10');
+                v_barcode := 'R' || LPAD(TO_CHAR(v_offset + i), 12, '0');
 
-            v_prices(i)      := PKG_SAMEN_festivals.give_random_number(50, 500);
-            v_currencies(i)  := PKG_SAMEN_festivals.give_random_currency;
-            v_tkt_dates(i)   := v_tkt_date;
-            v_purch_dates(i) := PKG_SAMEN_festivals.give_random_date(
-                                     GREATEST(v_max_purch - 365, DATE '2020-01-01'), v_max_purch);
-            v_descs(i)       := 'RndTicket_' || LPAD(TO_CHAR(v_offset + i), 6, '0');
-            v_barcodes(i)    := v_barcode;
-            v_types(i)       := PKG_SAMEN_festivals.give_random_ticket_type;
-            v_statuses(i)    := PKG_SAMEN_festivals.give_random_ticket_status;
-            v_qr_codes(i)    := 'https://qr.rnd.be/' || v_barcode;
-            v_ins_plats(i)   := v_plat_pool(v_pi);
-            v_ins_vis(i)     := v_vis_pool(v_vi);
-            v_ins_fests(i)   := v_fest_ids(v_fi);
-        END LOOP;
+                v_prices(i) := PKG_SAMEN_festivals.give_random_number(50, 500);
+                v_currencies(i) := PKG_SAMEN_festivals.give_random_currency;
+                v_tkt_dates(i) := v_tkt_date;
+                v_purch_dates(i) := PKG_SAMEN_festivals.give_random_date(
+                        GREATEST(v_max_purch - 365, DATE '2020-01-01'), v_max_purch);
+                v_descs(i) := 'RndTicket_' || LPAD(TO_CHAR(v_offset + i), 6, '0');
+                v_barcodes(i) := v_barcode;
+                v_types(i) := PKG_SAMEN_festivals.give_random_ticket_type;
+                v_statuses(i) := PKG_SAMEN_festivals.give_random_ticket_status;
+                v_qr_codes(i) := 'https://qr.rnd.be/' || v_barcode;
+                v_ins_plats(i) := v_plat_pool(v_pi);
+                v_ins_vis(i) := v_vis_pool(v_vi);
+                v_ins_fests(i) := v_fest_ids(v_fi);
+            END LOOP;
 
         -- Single batched INSERT – skips (visitor, festival, date) duplicates
         BEGIN
@@ -1014,18 +1020,19 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_rec_dates   t_date_tab;
         v_exp_dates   t_date_tab;
         v_fids        t_id_tab;
-
-        v_start     TIMESTAMP := SYSTIMESTAMP;
-        v_total     PLS_INTEGER;
-        v_idx       PLS_INTEGER := 1;
-        v_max_app   DATE;
-        v_min_app   DATE;
-        v_app_date  DATE;
-        v_rec_date  DATE;
-        v_ins       NUMBER;
+        v_start       TIMESTAMP   := SYSTIMESTAMP;
+        v_total       PLS_INTEGER;
+        v_idx         PLS_INTEGER := 1;
+        v_max_app     DATE;
+        v_min_app     DATE;
+        v_app_date    DATE;
+        v_rec_date    DATE;
+        v_ins         NUMBER;
     BEGIN
-        SELECT FESTIVAL_ID, FESTIVAL_STARTDATE
-        BULK COLLECT INTO v_fest_ids, v_fest_starts
+        SELECT FESTIVAL_ID,
+               FESTIVAL_STARTDATE
+            BULK COLLECT
+        INTO v_fest_ids, v_fest_starts
         FROM FESTIVAL;
 
         IF v_fest_ids.COUNT = 0 THEN
@@ -1034,27 +1041,29 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         END IF;
 
         v_total := v_fest_ids.COUNT * p_per_festival;
-        v_ins   := v_total;
+        v_ins := v_total;
 
         -- Build flat arrays across all festivals
-        FOR fi IN 1..v_fest_ids.COUNT LOOP
-            v_max_app := LEAST(v_fest_starts(fi) - 1, DATE '2026-03-10');
-            v_min_app := GREATEST(v_max_app - 365, DATE '2020-01-01');
-            IF v_min_app > v_max_app THEN v_min_app := v_max_app; END IF;
+        FOR fi IN 1..v_fest_ids.COUNT
+            LOOP
+                v_max_app := LEAST(v_fest_starts(fi) - 1, DATE '2026-03-10');
+                v_min_app := GREATEST(v_max_app - 365, DATE '2020-01-01');
+                IF v_min_app > v_max_app THEN v_min_app := v_max_app; END IF;
 
-            FOR j IN 1..p_per_festival LOOP
-                v_app_date        := PKG_SAMEN_festivals.give_random_date(v_min_app, v_max_app);
-                v_rec_date        := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
-                v_cats(v_idx)  := PKG_SAMEN_festivals.give_random_permit_category;
-                v_descs(v_idx) := v_cats(v_idx) || ' permit for '
-                                  || PKG_SAMEN_festivals.give_random_festival_suffix || ' event';
-                v_app_dates(v_idx):= v_app_date;
-                v_rec_dates(v_idx):= v_rec_date;
-                v_exp_dates(v_idx):= PKG_SAMEN_festivals.give_random_date(v_rec_date + 1, v_rec_date + 180);
-                v_fids(v_idx)     := v_fest_ids(fi);
-                v_idx             := v_idx + 1;
+                FOR j IN 1..p_per_festival
+                    LOOP
+                        v_app_date := PKG_SAMEN_festivals.give_random_date(v_min_app, v_max_app);
+                        v_rec_date := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
+                        v_cats(v_idx) := PKG_SAMEN_festivals.give_random_permit_category;
+                        v_descs(v_idx) := v_cats(v_idx) || ' permit for '
+                            || PKG_SAMEN_festivals.give_random_festival_suffix || ' event';
+                        v_app_dates(v_idx) := v_app_date;
+                        v_rec_dates(v_idx) := v_rec_date;
+                        v_exp_dates(v_idx) := PKG_SAMEN_festivals.give_random_date(v_rec_date + 1, v_rec_date + 180);
+                        v_fids(v_idx) := v_fest_ids(fi);
+                        v_idx := v_idx + 1;
+                    END LOOP;
             END LOOP;
-        END LOOP;
 
         BEGIN
             FORALL i IN 1..v_total SAVE EXCEPTIONS
@@ -1078,10 +1087,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     --   that S2 can pick random companies as festival owners.
     --   Mirrors M4's fill_s1_base.
     -- ---------------------------------------------------------
-    PROCEDURE bewijs_milestone_5_S1_base(p_cities    IN NUMBER,
+    PROCEDURE bewijs_milestone_5_S1_base(p_cities IN NUMBER,
                                          p_companies IN NUMBER,
                                          p_platforms IN NUMBER,
-                                         p_visitors  IN NUMBER) IS
+                                         p_visitors IN NUMBER) IS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S1_base START ===');
@@ -1099,8 +1108,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     --   festivals to already exist in S2.  Must run AFTER
     --   bewijs_milestone_5_S2.  Mirrors M4's fill_s1_children.
     -- ---------------------------------------------------------
-    PROCEDURE bewijs_milestone_5_S1_children(p_tickets          IN NUMBER,
-                                              p_permits_per_fest IN NUMBER) IS
+    PROCEDURE bewijs_milestone_5_S1_children(p_tickets IN NUMBER,
+                                             p_permits_per_fest IN NUMBER) IS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S1_children START ===');
@@ -1117,11 +1126,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     --   as bewijs_M4_S1).  The SAMEN script is the correct entry
     --   point for a full cross-schema M5 demonstration.
     -- ---------------------------------------------------------
-    PROCEDURE bewijs_milestone_5_S1(p_cities           IN NUMBER,
-                                    p_companies        IN NUMBER,
-                                    p_platforms        IN NUMBER,
-                                    p_visitors         IN NUMBER,
-                                    p_tickets          IN NUMBER,
+    PROCEDURE bewijs_milestone_5_S1(p_cities IN NUMBER,
+                                    p_companies IN NUMBER,
+                                    p_platforms IN NUMBER,
+                                    p_visitors IN NUMBER,
+                                    p_tickets IN NUMBER,
                                     p_permits_per_fest IN NUMBER) IS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN

@@ -1,5 +1,4 @@
 CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
-
     -- =========================================================
     -- MILESTONE 5 – SAMEN package (festivals domain)
     -- Contains shared random helpers + proof procedure
@@ -21,21 +20,21 @@ CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
     FUNCTION give_random_genre RETURN VARCHAR2;
 
     -- Additional domain lists (used by S1 and S2 random generators)
-    FUNCTION give_random_location        RETURN VARCHAR2;
-    FUNCTION give_random_country         RETURN VARCHAR2;
-    FUNCTION give_random_artist_prefix   RETURN VARCHAR2;
-    FUNCTION give_random_stage_suffix    RETURN VARCHAR2;
+    FUNCTION give_random_location RETURN VARCHAR2;
+    FUNCTION give_random_country RETURN VARCHAR2;
+    FUNCTION give_random_artist_prefix RETURN VARCHAR2;
+    FUNCTION give_random_stage_suffix RETURN VARCHAR2;
     FUNCTION give_random_festival_suffix RETURN VARCHAR2;
-    FUNCTION give_random_ticket_type     RETURN VARCHAR2;
-    FUNCTION give_random_ticket_status   RETURN VARCHAR2;
-    FUNCTION give_random_currency        RETURN VARCHAR2;
-    FUNCTION give_random_gender          RETURN VARCHAR2;
-    FUNCTION give_random_street          RETURN VARCHAR2;
-    FUNCTION give_random_first_name      RETURN VARCHAR2;
-    FUNCTION give_random_last_name       RETURN VARCHAR2;
+    FUNCTION give_random_ticket_type RETURN VARCHAR2;
+    FUNCTION give_random_ticket_status RETURN VARCHAR2;
+    FUNCTION give_random_currency RETURN VARCHAR2;
+    FUNCTION give_random_gender RETURN VARCHAR2;
+    FUNCTION give_random_street RETURN VARCHAR2;
+    FUNCTION give_random_first_name RETURN VARCHAR2;
+    FUNCTION give_random_last_name RETURN VARCHAR2;
     FUNCTION give_random_permit_category RETURN VARCHAR2;
-    FUNCTION give_random_platform_name   RETURN VARCHAR2;
-    FUNCTION give_random_description     RETURN VARCHAR2;
+    FUNCTION give_random_platform_name RETURN VARCHAR2;
+    FUNCTION give_random_description RETURN VARCHAR2;
 
     -- 4) Random combo: domain list item + zero-padded counter
     --    e.g. give_random_combo('BassDrop', 42) --> 'BassDrop_0042'
