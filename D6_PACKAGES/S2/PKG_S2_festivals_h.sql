@@ -1,6 +1,4 @@
 CREATE OR REPLACE PACKAGE PKG_S2_festivals AS
-
-
     -- PUBLIC: Empty all S2 tables
     -- (Performance, Stage, Genre, Artist, Festival
     PROCEDURE empty_tables_S2;
