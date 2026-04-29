@@ -161,7 +161,7 @@ CREATE TABLE Artist
 CREATE TABLE Stage
 (
     Stage_ID                NUMBER GENERATED ALWAYS AS IDENTITY,
-    Stage_Name              VARCHAR2(20 CHAR) NOT NULL,
+    Stage_Name              VARCHAR2(100 CHAR) NOT NULL,
     Festival_ID             NUMBER            NOT NULL,
     Stage_Style_Description VARCHAR2(300 CHAR),
     Stage_Standing_Capacity NUMBER(10),
