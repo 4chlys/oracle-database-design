@@ -11,7 +11,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         RETURN v_id;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20013, 'Festival "' || p_festival_name || '" not found.');
+            RAISE_APPLICATION_ERROR(-20013,
+                                    'Festival "' || p_festival_name || '" not found.');
     END lookup_festival_id;
 
     -- PRIVATE LOOKUP FUNCTIONS
@@ -25,7 +26,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         RETURN v_id;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20014, 'Company "' || p_company_name || '" not found.');
+            RAISE_APPLICATION_ERROR(-20014,
+                                    'Company "' || p_company_name || '" not found.');
     END lookup_company_id;
 
     -- ---------------------------------------------------------
@@ -41,7 +43,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         RETURN v_id;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20015, 'City with zipcode "' || p_zipcode || '" in ' || p_country || ' not found.');
+            RAISE_APPLICATION_ERROR(-20015,
+                                    'City with zipcode "' || p_zipcode || '" in ' || p_country || ' not found.');
     END lookup_city_id;
 
     -- ---------------------------------------------------------
@@ -56,7 +59,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         RETURN v_id;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20016, 'Genre "' || p_genre_name || '" not found.');
+            RAISE_APPLICATION_ERROR(-20016,
+                                    'Genre "' || p_genre_name || '" not found.');
     END lookup_genre_id;
 
     -- ---------------------------------------------------------
@@ -71,7 +75,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         RETURN v_id;
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
-            RAISE_APPLICATION_ERROR(-20017, 'Artist "' || p_artist_name || '" not found.');
+            RAISE_APPLICATION_ERROR(-20017,
+                                    'Artist "' || p_artist_name || '" not found.');
     END lookup_artist_id;
 
     -- ---------------------------------------------------------
@@ -91,7 +96,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
             RAISE_APPLICATION_ERROR(-20018,
-                'Stage "' || p_stage_name || '" for festival "' || p_festival_name || '" not found.');
+                                    'Stage "' || p_stage_name || '" for festival "' || p_festival_name || '" not found.');
     END lookup_stage_id;
 
 -- ------------------------------------------------------M5-------------------------------------------------------------
@@ -113,10 +118,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         TYPE t_countries IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
         TYPE t_dates IS TABLE OF DATE INDEX BY PLS_INTEGER;
         TYPE t_numbers IS TABLE OF NUMBER INDEX BY PLS_INTEGER;
+        TYPE t_currs IS TABLE OF VARCHAR2(10) INDEX BY PLS_INTEGER;
         v_names     t_names;
         v_countries t_countries;
         v_bdays     t_dates;
         v_prices    t_numbers;
+        v_currs     t_currs;
     BEGIN
         FOR i IN 1 .. p_amount
             LOOP
@@ -127,12 +134,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                         TO_DATE('01-01-1960', 'DD-MM-YYYY'),
                         TO_DATE('31-12-2000', 'DD-MM-YYYY'));
                 v_prices(i) := PKG_SAMEN_festivals.give_random_number(10000, 500000);
+                v_currs(i)  := PKG_SAMEN_festivals.give_random_currency;
             END LOOP;
 
         FORALL i IN 1 .. p_amount
             INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
                                 Artist_Price_Currency, Artist_Land_Of_Birth)
-            VALUES (v_names(i), v_bdays(i), v_prices(i), 'EUR', v_countries(i));
+            VALUES (v_names(i), v_bdays(i), v_prices(i), v_currs(i), v_countries(i));
 
         log('generateRandomArtists', 'p_amount=' || p_amount,
             p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
@@ -169,6 +177,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         SELECT CITY_ID    BULK COLLECT INTO v_city_pool FROM CITY;
         v_comp_count := v_comp_pool.COUNT;
         v_city_count := v_city_pool.COUNT;
+
+        IF v_comp_count = 0 OR v_city_count = 0 THEN
+            RAISE_APPLICATION_ERROR(-20019,
+                                    'generateRandomFestivals requires Company and City to be populated first');
+        END IF;
 
         FOR i IN 1 .. p_amount LOOP
             v_names(i)    := PKG_SAMEN_festivals.give_random_combo(
@@ -228,13 +241,24 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
         v_roofed_val NUMBER;
         k            PLS_INTEGER := 0;
+        v_style_max  PLS_INTEGER;
         v_desc_max   PLS_INTEGER;
     BEGIN
+        SELECT DATA_LENGTH INTO v_style_max
+        FROM USER_TAB_COLUMNS
+        WHERE TABLE_NAME = 'STAGE' AND COLUMN_NAME = 'STAGE_STYLE_DESCRIPTION';
+
         SELECT DATA_LENGTH INTO v_desc_max
         FROM USER_TAB_COLUMNS
         WHERE TABLE_NAME = 'STAGE' AND COLUMN_NAME = 'STAGE_DESCRIPTION';
 
         SELECT Festival_ID BULK COLLECT INTO v_festival_ids FROM Festival;
+
+        IF v_festival_ids.COUNT = 0 THEN
+            RAISE_APPLICATION_ERROR(-20020,
+                                    'generateRandomStages requires at least one Festival row '
+                );
+        END IF;
 
         -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
         FOR fi IN 1 .. v_festival_ids.COUNT LOOP
@@ -249,11 +273,14 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 v_roofed(k)   := v_roofed_val;
                 v_caps(k)     := PKG_SAMEN_festivals.give_random_number(3000, 80000);
                 v_toilets(k)  := PKG_SAMEN_festivals.give_random_number(20, 300);
-                v_styles(k)   := CASE v_roofed_val
-                                     WHEN 1 THEN 'Indoor covered venue with full sound system'
-                                     ELSE 'Open air stage with full LED rig'
-                                 END;
-                v_descs(k)    := PKG_SAMEN_festivals.give_random_description;
+                v_styles(k)   := SUBSTR(
+                                     CASE v_roofed_val
+                                         WHEN 1 THEN 'Indoor covered venue: '
+                                         ELSE 'Open air stage: '
+                                     END
+                                     || PKG_SAMEN_festivals.give_random_description,
+                                     1, v_style_max);
+                v_descs(k)    := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
             END LOOP;
         END LOOP;
 
@@ -447,7 +474,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                         p_bpm IN GENRE.GENRE_BPM%type) IS
     BEGIN
         IF p_origin_year >= EXTRACT(YEAR FROM SYSDATE) THEN
-            RAISE_APPLICATION_ERROR(-20003, 'Genre origin year must be in the past.');
+            RAISE_APPLICATION_ERROR(-20003,
+                                    'Genre origin year must be in the past.');
         END IF;
         INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
         VALUES (p_name, p_origin_year, p_origin_location, p_bpm);
@@ -462,7 +490,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                          p_land_of_birth IN ARTIST.ARTIST_LAND_OF_BIRTH%type) IS
     BEGIN
         IF p_birthday >= SYSDATE THEN
-            RAISE_APPLICATION_ERROR(-20002, 'Artist birthday must be in the past.');
+            RAISE_APPLICATION_ERROR(-20002,
+                                    'Artist birthday must be in the past.');
         END IF;
         INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
                             Artist_Price_Currency, Artist_Land_Of_Birth)
