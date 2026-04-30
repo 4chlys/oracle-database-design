@@ -346,13 +346,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_ins_stage   t_id_list;
         v_descs       t_str_list;
 
-        v_perf_start DATE;
-        k            PLS_INTEGER := 0;
+        v_perf_start   DATE;
+        v_duration_hr  PLS_INTEGER;
+        v_latest_start DATE;
+        k              PLS_INTEGER := 0;
+        v_desc_max     PLS_INTEGER;
     BEGIN
+        SELECT DATA_LENGTH INTO v_desc_max
+        FROM USER_TAB_COLUMNS
+        WHERE TABLE_NAME = 'PERFORMANCE' AND COLUMN_NAME = 'PERFORMANCE_DESCRIPTION';
+
         -- Bulk load stage + festival dates, then populate the required associative array of records
         SELECT s.Stage_ID, f.Festival_StartDate, f.Festival_EndDate
         BULK COLLECT INTO v_s_ids, v_f_starts, v_f_ends
         FROM Stage s JOIN Festival f ON f.Festival_ID = s.Festival_ID;
+
+        IF v_s_ids.COUNT = 0 THEN
+            RAISE_APPLICATION_ERROR(-20021,
+                'generateRandomPerformances requires at least one Stage row '
+                || '(call generateRandomStages or bewijs_M4_S2 first).');
+        END IF;
 
         FOR i IN 1 .. v_s_ids.COUNT LOOP
             v_idx := v_idx + 1;
@@ -367,21 +380,30 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_art_count := v_artist_ids.COUNT;
         v_gen_count := v_genre_ids.COUNT;
 
+        IF v_art_count = 0 OR v_gen_count = 0 THEN
+            RAISE_APPLICATION_ERROR(-20022,
+                'generateRandomPerformances requires Artist and Genre to be populated first.');
+        END IF;
+
         -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
+        -- Constrain so the END time still falls within the festival's date range
+        -- (add_performance only checks the start, but the bulk path enforces both).
         FOR si IN 1 .. v_idx LOOP
             FOR pi IN 1 .. p_per_stage LOOP
                 k := k + 1;
-                v_perf_start     := TRUNC(
-                                        PKG_SAMEN_festivals.give_random_date(
-                                            v_stages(si).festival_start,
-                                            v_stages(si).festival_end))
-                                    + PKG_SAMEN_festivals.give_random_number(18, 23) / 24;
+                v_duration_hr  := PKG_SAMEN_festivals.give_random_number(1, 3);
+                v_latest_start := v_stages(si).festival_end + (24 - v_duration_hr) / 24;
+                v_perf_start   := TRUNC(
+                                      PKG_SAMEN_festivals.give_random_date(
+                                          v_stages(si).festival_start + 18/24,
+                                          v_latest_start),
+                                      'HH24');
                 v_perf_starts(k) := v_perf_start;
-                v_perf_ends(k)   := v_perf_start + PKG_SAMEN_festivals.give_random_number(1, 3) / 24;
+                v_perf_ends(k)   := v_perf_start + v_duration_hr / 24;
                 v_ins_artist(k)  := v_artist_ids(PKG_SAMEN_festivals.give_random_number(1, v_art_count));
                 v_ins_genre(k)   := v_genre_ids(PKG_SAMEN_festivals.give_random_number(1, v_gen_count));
                 v_ins_stage(k)   := v_stages(si).stage_id;
-                v_descs(k)       := PKG_SAMEN_festivals.give_random_description;
+                v_descs(k)       := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
             END LOOP;
         END LOOP;
 
