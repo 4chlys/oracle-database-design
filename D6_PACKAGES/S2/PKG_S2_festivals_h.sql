@@ -11,6 +11,7 @@ CREATE OR REPLACE PACKAGE PKG_S2_festivals AS
     FUNCTION lookup_festival_id(p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN FESTIVAL.FESTIVAL_ID%type;
 
     -- M5: Random generators (Stap 2 + 3)
+    PROCEDURE generateRandomGenres(p_amount IN NUMBER);
     PROCEDURE generateRandomArtists(p_amount IN NUMBER);
     PROCEDURE generateRandomFestivals(p_amount IN NUMBER);
     PROCEDURE generateRandomStages(p_per_festival IN NUMBER);

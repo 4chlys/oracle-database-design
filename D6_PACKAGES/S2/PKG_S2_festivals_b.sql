@@ -112,6 +112,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     END log;
 
 
+    PROCEDURE generateRandomGenres(p_amount IN NUMBER) IS
+        v_start     TIMESTAMP := SYSTIMESTAMP;
+        TYPE t_names     IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
+        TYPE t_years     IS TABLE OF NUMBER        INDEX BY PLS_INTEGER;
+        TYPE t_locations IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
+        TYPE t_bpms      IS TABLE OF NUMBER        INDEX BY PLS_INTEGER;
+        v_names      t_names;
+        v_years      t_years;
+        v_locations  t_locations;
+        v_bpms       t_bpms;
+        v_max_year   PLS_INTEGER := EXTRACT(YEAR FROM SYSDATE) - 1;
+    BEGIN
+        FOR i IN 1 .. p_amount LOOP
+            -- give_random_combo guarantees a unique-looking name even though
+            -- give_random_genre only has 10 entries to pick from.
+            v_names(i)     := PKG_SAMEN_festivals.give_random_combo(
+                                  PKG_SAMEN_festivals.give_random_genre, i);
+            v_years(i)     := PKG_SAMEN_festivals.give_random_number(1900, v_max_year);
+            v_locations(i) := PKG_SAMEN_festivals.give_random_location;
+            v_bpms(i)      := PKG_SAMEN_festivals.give_random_number(60, 200);
+        END LOOP;
+
+        FORALL i IN 1 .. p_amount
+            INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
+            VALUES (v_names(i), v_years(i), v_locations(i), v_bpms(i));
+
+        log('generateRandomGenres', 'p_amount=' || p_amount,
+            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomGenres;
+
     PROCEDURE generateRandomArtists(p_amount IN NUMBER) IS
         v_start     TIMESTAMP := SYSTIMESTAMP;
         TYPE t_names IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
@@ -430,11 +460,15 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S2 START ===');
         DBMS_OUTPUT.PUT_LINE('params: p_festivals=' || p_festivals
-            || ' | p_genres(artists)=' || p_genres
+            || ' | p_genres=' || p_genres
             || ' | p_stages=' || p_stages
             || ' | p_perfs=' || p_perfs);
 
-        -- Generate extra artists so performances have enough variety
+        -- p_genres is reused as the Artist count too: every Genre row gets a
+        -- companion Artist so the Performance generator has variety on both axes.
+        -- Genres must exist before Performances (FK) and before any code that
+        -- references Genre, so generate them first.
+        generateRandomGenres(p_genres);
         generateRandomArtists(p_genres);
 
         -- Tabel W/X: Festivals

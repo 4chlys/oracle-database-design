@@ -6,10 +6,10 @@ BEGIN
 -- --
 -- --     -- === FILL (interleaved: COMPANY before FESTIVAL, FESTIVAL before TICKET/PERMIT) ===
     PKG_S1_festivals.fill_s1_base;        -- COMPANY, CITY, VISITOR, TICKETPLATFORM
-    PKG_S2_festivals.bewijs_M4_S2;        -- FESTIVAL, GENRE, ARTIST, STAGE, PERFORMANCE
-    PKG_S1_festivals.fill_s1_children;    -- PERMIT, TICKET
+--     PKG_S2_festivals.bewijs_M4_S2;        -- FESTIVAL, GENRE, ARTIST, STAGE, PERFORMANCE
+--     PKG_S1_festivals.fill_s1_children;    -- PERMIT, TICKET
 
-    PKG_S2_festivals.bewijs_M5_S2(500,500,500,500);
+    PKG_S2_festivals.bewijs_M5_S2(100,100,100,100);
 END;
 /
 SELECT 'S1-A   : Visitor' AS "Table", COUNT(*) AS "Count"
