@@ -20,29 +20,30 @@
 -- =============================================================
 BEGIN
     -- === EMPTY (children first to satisfy cross-schema FKs) ===
-    PKG_S1_festivals.empty_s1_children;   -- TICKET, PERMIT
-    PKG_S2_festivals.empty_tables_S2;     -- PERFORMANCE, STAGE, FESTIVAL, ARTIST, GENRE
-    PKG_S1_festivals.empty_s1_base;       -- TICKETPLATFORM, VISITOR, COMPANY, CITY
+    PKG_S1_festivals.empty_s1_children; -- TICKET, PERMIT
+    PKG_S2_festivals.empty_tables_S2; -- PERFORMANCE, STAGE, FESTIVAL, ARTIST, GENRE
+    PKG_S1_festivals.empty_s1_base;
+    -- TICKETPLATFORM, VISITOR, COMPANY, CITY
 
     -- === FILL with M5 RANDOM data, interleaved ===
     --   1) S1 base       (CITY, COMPANY, TICKETPLATFORM, VISITOR)
     --   2) S2 W-X-Y-Z    (GENRE, ARTIST, FESTIVAL, STAGE, PERFORMANCE)
     --   3) S1 children   (TICKET, PERMIT) – needs FESTIVAL to exist
     PKG_S1_festivals.bewijs_milestone_5_S1_base(
-        p_cities    => 3000,
-        p_companies => 3000,
-        p_platforms => 3000,
-        p_visitors  => 3000);
+            p_cities => 3000,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors => 3000);
 
     PKG_S2_festivals.bewijs_M5_S2(
-        p_genres    => 30,
-        p_festivals => 30,
-        p_stages    => 30,    -- per festival -> 900 stages
-        p_perfs     => 60);   -- per stage    -> 54000 performances
+            p_genres => 30,
+            p_festivals => 30,
+            p_stages => 30, -- per festival -> 900 stages
+            p_perfs => 60); -- per stage    -> 54000 performances
 
     PKG_S1_festivals.bewijs_milestone_5_S1_children(
-        p_tickets          => 40000,
-        p_permits_per_fest => 5);
+            p_tickets => 40000,
+            p_permits_per_fest => 5);
 
     -- === STAP 4: showcase every random helper via DBMS_OUTPUT ===
     PKG_SAMEN_festivals.bewijs_Random_M5;
@@ -90,9 +91,9 @@ SELECT VISITOR_FIRSTNAME || ' ' || VISITOR_LASTNAME AS "Visitor",
        VISITOR_EMAIL,
        VISITOR_GENDER,
        VISITOR_BIRTHDATE
-FROM   VISITOR
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM VISITOR
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT TICKET_BARCODE,
        TICKET_TYPE,
@@ -100,32 +101,32 @@ SELECT TICKET_BARCODE,
        TICKET_PRICE,
        TICKET_CURRENCY,
        TICKET_DATE
-FROM   TICKET
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM TICKET
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT TICKETPLATFORM_NAME,
        TICKETPLATFORM_URL
-FROM   TICKETPLATFORM
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM TICKETPLATFORM
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT PERMIT_CATEGORY,
        PERMIT_DESCRIPTION,
        PERMIT_APPLICATION_DATE,
        PERMIT_RECEPTION_DATE,
        PERMIT_EXPIRATION_DATE
-FROM   PERMIT
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM PERMIT
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT ARTIST_NAME,
        ARTIST_BIRTHDAY,
        ARTIST_LAND_OF_BIRTH,
        ARTIST_PRICE
-FROM   ARTIST
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM ARTIST
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT FESTIVAL_NAME,
        FESTIVAL_LOCATION,
@@ -134,16 +135,16 @@ SELECT FESTIVAL_NAME,
        FESTIVAL_CLOSING_HOUR,
        FESTIVAL_STARTDATE,
        FESTIVAL_ENDDATE
-FROM   FESTIVAL
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM FESTIVAL
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT PERFORMANCE_DESCRIPTION,
        PERFORMANCE_START_TIME,
        PERFORMANCE_END_TIME
-FROM   PERFORMANCE
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM PERFORMANCE
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
 SELECT STAGE_NAME,
        STAGE_DESCRIPTION,
@@ -151,7 +152,7 @@ SELECT STAGE_NAME,
        STAGE_STANDING_CAPACITY,
        STAGE_STYLE_DESCRIPTION,
        STAGE_TOILET_COUNT
-FROM   STAGE
-ORDER  BY DBMS_RANDOM.VALUE()
-    FETCH  FIRST 10 ROWS ONLY;
+FROM STAGE
+ORDER BY DBMS_RANDOM.VALUE()
+    FETCH FIRST 10 ROWS ONLY;
 
