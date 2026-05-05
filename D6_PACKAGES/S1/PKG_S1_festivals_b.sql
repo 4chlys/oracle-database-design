@@ -16,6 +16,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     -- Bulk-insert exception lives in PKG_SAMEN_festivals.bulk_errors
     -- (shared with S2 to avoid duplicating the PRAGMA EXCEPTION_INIT).
 
+    -- Private logging helper – matches S2's format
+    PROCEDURE log(p_proc IN VARCHAR2, p_param IN VARCHAR2,
+                  p_rows IN NUMBER, p_secs IN NUMBER) IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('[LOG] ' || p_proc
+            || ' | params: ' || p_param
+            || ' | rows added: ' || p_rows
+            || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
+    END log;
+
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
         v_id COMPANY.COMPANY_ID%type;
@@ -742,7 +752,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_cntrs  t_str50;
         v_ins    NUMBER    := p_amount;
     BEGIN
-        SELECT NVL(COUNT(*), 0) INTO v_offset FROM CITY;
+        SELECT COUNT(*) INTO v_offset FROM CITY;
         FOR i IN 1..p_amount
             LOOP
                 v_zips(i) := 'Z' || LPAD(TO_CHAR(v_offset + i), 8, '0');
@@ -774,7 +784,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_years  t_id_tab;
         v_ins    NUMBER    := p_amount;
     BEGIN
-        SELECT NVL(COUNT(*), 0) INTO v_offset FROM COMPANY;
+        SELECT COUNT(*) INTO v_offset FROM COMPANY;
         FOR i IN 1..p_amount
             LOOP
                 v_names(i) := 'RndCo_' || LPAD(TO_CHAR(v_offset + i), 6, '0');
@@ -803,7 +813,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_urls   t_str500;
         v_ins    NUMBER    := p_amount;
     BEGIN
-        SELECT NVL(COUNT(*), 0) INTO v_offset FROM TICKETPLATFORM;
+        SELECT COUNT(*) INTO v_offset FROM TICKETPLATFORM;
         FOR i IN 1..p_amount
             LOOP
                 v_names(i) := PKG_SAMEN_festivals.give_random_platform_name
@@ -850,7 +860,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
             RETURN;
         END IF;
 
-        SELECT NVL(COUNT(*), 0) INTO v_offset FROM VISITOR;
+        SELECT COUNT(*) INTO v_offset FROM VISITOR;
 
         FOR i IN 1..p_amount
             LOOP
@@ -954,7 +964,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
             RETURN;
         END IF;
 
-        SELECT NVL(COUNT(*), 0) INTO v_offset FROM TICKET;
+        SELECT COUNT(*) INTO v_offset FROM TICKET;
 
         -- Build all 12 value arrays in pure PL/SQL (no SQL round-trips)
         FOR i IN 1..p_amount
