@@ -340,6 +340,15 @@ BEGIN
 
     g_currencies(1) := 'EUR';  g_currencies(2) := 'GBP';
     g_currencies(3) := 'USD';  g_currencies(4) := 'DKK';
+    g_currencies(5) := 'CHF';  g_currencies(6) := 'SEK';
+    g_currencies(7) := 'NOK';  g_currencies(8) := 'PLN';
+    g_currencies(9) := 'CZK';  g_currencies(10) := 'HUF';
+    g_currencies(11) := 'RON';  g_currencies(12) := 'BTC';
+    g_currencies(13) := 'JPY';  g_currencies(14) := 'INR';
+    g_currencies(15) := 'BRL';  g_currencies(16) := 'RUB';
+    g_currencies(17) := 'CAD';  g_currencies(18) := 'AUD';
+    g_currencies(19) := 'NZD';  g_currencies(20) := 'SGD';
+    g_currencies(21) := 'ETH';
 
     g_genders(1) := 'Male';  g_genders(2) := 'Female';  g_genders(3) := 'Other';
 
@@ -348,6 +357,7 @@ BEGIN
     g_streets(5)  := 'Kerkstraat';     g_streets(6)  := 'Stationslaan';
     g_streets(7)  := 'Marktplein';     g_streets(8)  := 'Havenstraat';
     g_streets(9)  := 'Ringlaan';       g_streets(10) := 'Festivalweg';
+    g_streets(11) := 'Kruisstraat';    g_streets(12) := 'Kruislaan';
 
     g_first_names(1)  := 'Amber';    g_first_names(2)  := 'Bram';
     g_first_names(3)  := 'Celeste';  g_first_names(4)  := 'Dylan';
@@ -359,6 +369,22 @@ BEGIN
     g_first_names(15) := 'Olivier';  g_first_names(16) := 'Petra';
     g_first_names(17) := 'Quinten';  g_first_names(18) := 'Roos';
     g_first_names(19) := 'Simon';    g_first_names(20) := 'Tine';
+    g_first_names(21) := 'Victor';   g_first_names(22) := 'Willem';
+    g_first_names(23) := 'Xavier';   g_first_names(24) := 'Yann';
+    g_first_names(25) := 'Zachary';  g_first_names(26) := 'Zoe';
+    g_first_names(27) := 'Aaron';    g_first_names(28) := 'Alex';
+    g_first_names(29) := 'Benjamin'; g_first_names(30) := 'Brian';
+    g_first_names(31) := 'Christopher'; g_first_names(32) := 'Daniel';
+    g_first_names(33) := 'Elijah';  g_first_names(34) := 'Emma';
+    g_first_names(35) := 'Ethan';   g_first_names(36) := 'Evan';
+    g_first_names(37) := 'Frank';   g_first_names(38) := 'Gabriel';
+    g_first_names(39) := 'Henry';   g_first_names(40) := 'Isaac';
+    g_first_names(41) := 'Jack';    g_first_names(42) := 'Jacob';
+    g_first_names(43) := 'James';   g_first_names(44) := 'Jason';
+    g_first_names(45) := 'Joshua';  g_first_names(46) := 'Kai';
+    g_first_names(47) := 'Kevin';   g_first_names(48) := 'Liam';
+    g_first_names(49) := 'Lucas';   g_first_names(50) := 'Luke';
+    g_first_names(51) := 'Mason';   g_first_names(52) := 'Matthew';
 
     g_last_names(1)  := 'Aerts';    g_last_names(2)  := 'Bogaert';
     g_last_names(3)  := 'Claes';    g_last_names(4)  := 'Dubois';
@@ -375,7 +401,7 @@ BEGIN
     g_permit_categories(3) := 'Traffic';       g_permit_categories(4) := 'Fire Safety';
     g_permit_categories(5) := 'Public Safety'; g_permit_categories(6) := 'Health';
     g_permit_categories(7) := 'Construction';  g_permit_categories(8) := 'Environmental';
-    g_permit_categories(9) := 'Security';
+    g_permit_categories(9) := 'Security';      g_permit_categories(10) := 'Other';
 
     g_platform_names(1)  := 'Ticketmaster Belgium'; g_platform_names(2)  := 'Paylogic';
     g_platform_names(3)  := 'See Tickets';          g_platform_names(4)  := 'Eventbrite';
