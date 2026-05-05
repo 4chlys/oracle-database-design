@@ -1,9 +1,8 @@
 CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
-    -- Bulk-insert plumbing reused by the M5 random generators.
-    g_bulk_errors EXCEPTION;
-    PRAGMA EXCEPTION_INIT(g_bulk_errors, -24381);
-    C_BULK_CHUNK CONSTANT PLS_INTEGER := 10000;
+    -- Bulk-insert plumbing (PKG_SAMEN_festivals.bulk_errors,
+    -- PKG_SAMEN_festivals.C_BULK_CHUNK) and the log / log_bulk_errors
+    -- helpers live in the SAMEN package and are referenced in-line below.
 
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_festival_id(p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN FESTIVAL.FESTIVAL_ID%type IS
@@ -106,29 +105,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
 -- ------------------------------------------------------M5-------------------------------------------------------------
 
-    -- PRIVATE LOGGING HELPER:
-    PROCEDURE log(p_proc IN VARCHAR2, p_param IN VARCHAR2,
-                  p_rows IN NUMBER, p_secs IN NUMBER) IS
-    BEGIN
-        DBMS_OUTPUT.PUT_LINE('[LOG] ' || p_proc
-            || ' | params: ' || p_param
-            || ' | rows added: ' || p_rows
-            || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
-    END log;
-
-    -- Reports each row that SAVE EXCEPTIONS skipped, without aborting the run.
-    PROCEDURE log_bulk_errors(p_proc IN VARCHAR2, p_offset IN PLS_INTEGER DEFAULT 0) IS
-    BEGIN
-        FOR e IN 1 .. SQL%BULK_EXCEPTIONS.COUNT LOOP
-            DBMS_OUTPUT.PUT_LINE('[BULK ERR] ' || p_proc || ' row '
-                || (p_offset + SQL%BULK_EXCEPTIONS(e).ERROR_INDEX) || ': '
-                || SQLERRM(-SQL%BULK_EXCEPTIONS(e).ERROR_CODE));
-        END LOOP;
-    END log_bulk_errors;
-
-
     PROCEDURE generateRandomGenres(p_amount IN NUMBER) IS
         v_start     TIMESTAMP := SYSTIMESTAMP;
+        v_gen_done  TIMESTAMP;
+        v_end       TIMESTAMP;
+        v_rows      PLS_INTEGER;
         TYPE t_names     IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
         TYPE t_years     IS TABLE OF NUMBER        INDEX BY PLS_INTEGER;
         TYPE t_locations IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
@@ -148,22 +129,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             v_locations(i) := PKG_SAMEN_festivals.give_random_location;
             v_bpms(i)      := PKG_SAMEN_festivals.give_random_number(60, 200);
         END LOOP;
+        v_gen_done := SYSTIMESTAMP;
 
         BEGIN
             FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
                 INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
                 VALUES (v_names(i), v_years(i), v_locations(i), v_bpms(i));
         EXCEPTION
-            WHEN g_bulk_errors THEN
-                log_bulk_errors('generateRandomGenres');
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                PKG_SAMEN_festivals.log_bulk_errors('generateRandomGenres');
         END;
+        v_rows := SQL%ROWCOUNT;
+        v_end  := SYSTIMESTAMP;
 
-        log('generateRandomGenres', 'p_amount=' || p_amount,
-            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+        PKG_SAMEN_festivals.log('generateRandomGenres', 'p_amount=' || p_amount,
+            v_rows,
+            PKG_SAMEN_festivals.timestamp_diff(v_gen_done, v_start),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_gen_done),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_start));
     END generateRandomGenres;
 
     PROCEDURE generateRandomArtists(p_amount IN NUMBER) IS
         v_start     TIMESTAMP := SYSTIMESTAMP;
+        v_gen_done  TIMESTAMP;
+        v_end       TIMESTAMP;
+        v_rows      PLS_INTEGER;
         TYPE t_names IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
         TYPE t_countries IS TABLE OF VARCHAR2(200) INDEX BY PLS_INTEGER;
         TYPE t_dates IS TABLE OF DATE INDEX BY PLS_INTEGER;
@@ -186,6 +176,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 v_prices(i) := PKG_SAMEN_festivals.give_random_number(10000, 500000);
                 v_currs(i)  := PKG_SAMEN_festivals.give_random_currency;
             END LOOP;
+        v_gen_done := SYSTIMESTAMP;
 
         BEGIN
             FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
@@ -193,16 +184,24 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                                     Artist_Price_Currency, Artist_Land_Of_Birth)
                 VALUES (v_names(i), v_bdays(i), v_prices(i), v_currs(i), v_countries(i));
         EXCEPTION
-            WHEN g_bulk_errors THEN
-                log_bulk_errors('generateRandomArtists');
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                PKG_SAMEN_festivals.log_bulk_errors('generateRandomArtists');
         END;
+        v_rows := SQL%ROWCOUNT;
+        v_end  := SYSTIMESTAMP;
 
-        log('generateRandomArtists', 'p_amount=' || p_amount,
-            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+        PKG_SAMEN_festivals.log('generateRandomArtists', 'p_amount=' || p_amount,
+            v_rows,
+            PKG_SAMEN_festivals.timestamp_diff(v_gen_done, v_start),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_gen_done),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_start));
     END generateRandomArtists;
 
     PROCEDURE generateRandomFestivals(p_amount IN NUMBER) IS
         v_start      TIMESTAMP := SYSTIMESTAMP;
+        v_gen_done   TIMESTAMP;
+        v_end        TIMESTAMP;
+        v_rows       PLS_INTEGER;
 
         TYPE t_id_tab   IS TABLE OF NUMBER                              INDEX BY PLS_INTEGER;
         TYPE t_name_tab IS TABLE OF VARCHAR2(200)                       INDEX BY PLS_INTEGER;
@@ -254,6 +253,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             v_closes(i)   := v_open + PKG_SAMEN_festivals.give_random_number(10, 18) / 24;
             v_caps(i)     := PKG_SAMEN_festivals.give_random_number(10000, 200000);
         END LOOP;
+        v_gen_done := SYSTIMESTAMP;
 
         BEGIN
             FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
@@ -265,12 +265,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                         v_ends(i), v_locs(i), v_city_arr(i),
                         v_opens(i), v_closes(i), v_caps(i));
         EXCEPTION
-            WHEN g_bulk_errors THEN
-                log_bulk_errors('generateRandomFestivals');
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                PKG_SAMEN_festivals.log_bulk_errors('generateRandomFestivals');
         END;
+        v_rows := SQL%ROWCOUNT;
+        v_end  := SYSTIMESTAMP;
 
-        log('generateRandomFestivals', 'p_amount=' || p_amount,
-            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+        PKG_SAMEN_festivals.log('generateRandomFestivals', 'p_amount=' || p_amount,
+            v_rows,
+            PKG_SAMEN_festivals.timestamp_diff(v_gen_done, v_start),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_gen_done),
+            PKG_SAMEN_festivals.timestamp_diff(v_end,      v_start));
     END generateRandomFestivals;
 
     -- ===========================================================
@@ -282,6 +287,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     -- ===========================================================
     PROCEDURE generateRandomStages(p_per_festival IN NUMBER) IS
         v_start        TIMESTAMP := SYSTIMESTAMP;
+        v_gen_secs     NUMBER    := 0;   -- accumulates random-data-prep time
+        v_ins_secs     NUMBER    := 0;   -- accumulates FORALL bulk-insert time
+        v_seg_start    TIMESTAMP;        -- start of the current generation segment
 
         -- NESTED TABLE collection (required by assignment for Tabel Y)
         TYPE t_festival_tab IS TABLE OF FESTIVAL.FESTIVAL_ID%TYPE;
@@ -306,8 +314,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_desc_max   PLS_INTEGER;
 
         PROCEDURE flush IS
+            t_ins_start TIMESTAMP;
         BEGIN
             IF k = 0 THEN RETURN; END IF;
+            t_ins_start := SYSTIMESTAMP;
             BEGIN
                 FORALL i IN 1 .. k SAVE EXCEPTIONS
                     INSERT INTO Stage (Stage_Name, Festival_ID,
@@ -319,9 +329,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                     VALUES (v_names(i), v_fid_arr(i), v_styles(i),
                             v_caps(i), v_toilets(i), v_descs(i), v_roofed(i));
             EXCEPTION
-                WHEN g_bulk_errors THEN
-                    log_bulk_errors('generateRandomStages', v_total);
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomStages', v_total);
             END;
+            v_ins_secs := v_ins_secs
+                + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, t_ins_start);
             v_total := v_total + SQL%ROWCOUNT;
             v_fid_arr.DELETE; v_names.DELETE; v_styles.DELETE;
             v_caps.DELETE; v_toilets.DELETE; v_descs.DELETE; v_roofed.DELETE;
@@ -344,7 +356,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 );
         END IF;
 
-        -- Build rows in PL/SQL, flushing every C_BULK_CHUNK to bound PGA usage.
+        -- Build rows in PL/SQL, flushing every PKG_SAMEN_festivals.C_BULK_CHUNK to bound PGA usage.
+        -- Pause the gen timer around each flush so v_gen_secs only counts
+        -- random-data preparation, not the FORALL bulk insert.
+        v_seg_start := SYSTIMESTAMP;
         FOR fi IN 1 .. v_festival_ids.COUNT LOOP
             FOR si IN 1 .. p_per_festival LOOP
                 k := k + 1;
@@ -367,15 +382,25 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                                      1, v_style_max);
                 v_descs(k)    := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
 
-                IF k >= C_BULK_CHUNK THEN flush; END IF;
+                IF k >= PKG_SAMEN_festivals.C_BULK_CHUNK THEN
+                    v_gen_secs := v_gen_secs
+                        + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_seg_start);
+                    flush;
+                    v_seg_start := SYSTIMESTAMP;
+                END IF;
             END LOOP;
         END LOOP;
+        v_gen_secs := v_gen_secs
+            + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_seg_start);
         flush;
 
-        log('generateRandomStages',
+        PKG_SAMEN_festivals.log('generateRandomStages',
             'p_per_festival=' || p_per_festival
                 || ', festivals_processed=' || v_festival_ids.COUNT,
-            v_total, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            v_total,
+            v_gen_secs,
+            v_ins_secs,
+            PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomStages;
 
     -- ===========================================================
@@ -388,6 +413,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
     -- ===========================================================
     PROCEDURE generateRandomPerformances(p_per_stage IN NUMBER) IS
         v_start      TIMESTAMP := SYSTIMESTAMP;
+        v_gen_secs   NUMBER    := 0;   -- accumulates random-data-prep time
+        v_ins_secs   NUMBER    := 0;   -- accumulates FORALL bulk-insert time
+        v_seg_start  TIMESTAMP;        -- start of the current generation segment
 
         -- Record type for stage context
         TYPE t_stage_rec IS RECORD
@@ -432,8 +460,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_desc_max     PLS_INTEGER;
 
         PROCEDURE flush IS
+            t_ins_start TIMESTAMP;
         BEGIN
             IF k = 0 THEN RETURN; END IF;
+            t_ins_start := SYSTIMESTAMP;
             BEGIN
                 FORALL i IN 1 .. k SAVE EXCEPTIONS
                     INSERT INTO Performance (Performance_Start_Time,
@@ -444,9 +474,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                             v_ins_artist(i), v_ins_genre(i),
                             v_ins_stage(i), v_descs(i));
             EXCEPTION
-                WHEN g_bulk_errors THEN
-                    log_bulk_errors('generateRandomPerformances', v_total);
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomPerformances', v_total);
             END;
+            v_ins_secs := v_ins_secs
+                + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, t_ins_start);
             v_total := v_total + SQL%ROWCOUNT;
             v_perf_starts.DELETE; v_perf_ends.DELETE;
             v_ins_artist.DELETE; v_ins_genre.DELETE; v_ins_stage.DELETE;
@@ -487,9 +519,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 'generateRandomPerformances requires Artist and Genre to be populated first.');
         END IF;
 
-        -- Build rows in PL/SQL, flushing every C_BULK_CHUNK to bound PGA usage.
+        -- Build rows in PL/SQL, flushing every PKG_SAMEN_festivals.C_BULK_CHUNK to bound PGA usage.
         -- Constrain so the END time still falls within the festival's date range
         -- (add_performance only checks the start, but the bulk path enforces both).
+        -- Pause the gen timer around each flush so v_gen_secs only counts
+        -- random-data preparation, not the FORALL bulk insert.
+        v_seg_start := SYSTIMESTAMP;
         FOR si IN 1 .. v_idx LOOP
             FOR pi IN 1 .. p_per_stage LOOP
                 k := k + 1;
@@ -507,26 +542,36 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 v_ins_stage(k)   := v_stages(si).stage_id;
                 v_descs(k)       := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
 
-                IF k >= C_BULK_CHUNK THEN flush; END IF;
+                IF k >= PKG_SAMEN_festivals.C_BULK_CHUNK THEN
+                    v_gen_secs := v_gen_secs
+                        + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_seg_start);
+                    flush;
+                    v_seg_start := SYSTIMESTAMP;
+                END IF;
             END LOOP;
         END LOOP;
+        v_gen_secs := v_gen_secs
+            + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_seg_start);
         flush;
 
-        log('generateRandomPerformances',
+        PKG_SAMEN_festivals.log('generateRandomPerformances',
             'p_per_stage=' || p_per_stage
                 || ', stages_processed=' || v_idx,
-            v_total, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            v_total,
+            v_gen_secs,
+            v_ins_secs,
+            PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomPerformances;
 
-    PROCEDURE bewijs_M5_S2(p_festivals IN NUMBER,
-                                    p_genres    IN NUMBER,
+    PROCEDURE bewijs_M5_S2(p_genres    IN NUMBER,
+                                    p_festivals IN NUMBER,
                                     p_stages    IN NUMBER,
                                     p_perfs     IN NUMBER) IS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S2 START ===');
-        DBMS_OUTPUT.PUT_LINE('params: p_festivals=' || p_festivals
-            || ' | p_genres=' || p_genres
+        DBMS_OUTPUT.PUT_LINE('params: p_genres=' || p_genres
+            || ' | p_festivals=' || p_festivals
             || ' | p_stages=' || p_stages
             || ' | p_perfs=' || p_perfs);
 

@@ -16,8 +16,13 @@ CREATE OR REPLACE PACKAGE PKG_S2_festivals AS
     PROCEDURE generateRandomFestivals(p_amount IN NUMBER);
     PROCEDURE generateRandomStages(p_per_festival IN NUMBER);
     PROCEDURE generateRandomPerformances(p_per_stage IN NUMBER);
-    PROCEDURE bewijs_M5_S2(p_festivals IN NUMBER,
-                                    p_genres    IN NUMBER,
+    -- Parameters follow the W-X-Y-Z order from the assignment:
+    --   p_genres    = W count (Genre rows)
+    --   p_festivals = X count (Festival rows)
+    --   p_stages    = Y per X (Stage rows per Festival)
+    --   p_perfs     = Z per Y (Performance rows per Stage)
+    PROCEDURE bewijs_M5_S2(p_genres    IN NUMBER,
+                                    p_festivals IN NUMBER,
                                     p_stages    IN NUMBER,
                                     p_perfs     IN NUMBER);
 

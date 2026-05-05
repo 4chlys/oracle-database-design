@@ -192,6 +192,34 @@ CREATE OR REPLACE PACKAGE BODY PKG_SAMEN_festivals AS
     END timestamp_diff;
 
     -- =========================================================
+    -- Shared logging helpers
+    -- =========================================================
+    PROCEDURE log(p_proc       IN VARCHAR2,
+                  p_param      IN VARCHAR2,
+                  p_rows       IN NUMBER,
+                  p_gen_secs   IN NUMBER,
+                  p_ins_secs   IN NUMBER,
+                  p_total_secs IN NUMBER) IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('[LOG] ' || p_proc
+            || ' | params: ' || p_param
+            || ' | rows added: ' || p_rows
+            || ' | gen: '    || ROUND(p_gen_secs   * 1000) || ' ms'
+            || ' | insert: ' || ROUND(p_ins_secs   * 1000) || ' ms'
+            || ' | total: '  || ROUND(p_total_secs * 1000) || ' ms');
+    END log;
+
+    PROCEDURE log_bulk_errors(p_proc   IN VARCHAR2,
+                              p_offset IN PLS_INTEGER DEFAULT 0) IS
+    BEGIN
+        FOR e IN 1 .. SQL%BULK_EXCEPTIONS.COUNT LOOP
+            DBMS_OUTPUT.PUT_LINE('[BULK ERR] ' || p_proc || ' row '
+                || (p_offset + SQL%BULK_EXCEPTIONS(e).ERROR_INDEX) || ': '
+                || SQLERRM(-SQL%BULK_EXCEPTIONS(e).ERROR_CODE));
+        END LOOP;
+    END log_bulk_errors;
+
+    -- =========================================================
     -- STAP 4 – bewijs_Random_M5
     --   Demonstrates every helper function with DBMS_OUTPUT
     --   and reports total duration via timestamp_diff.

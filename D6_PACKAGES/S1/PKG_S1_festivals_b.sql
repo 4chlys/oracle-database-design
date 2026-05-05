@@ -13,9 +13,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     TYPE t_str10 IS TABLE OF VARCHAR2(10) INDEX BY PLS_INTEGER;
     TYPE t_char3 IS TABLE OF VARCHAR2(3) INDEX BY PLS_INTEGER;
 
-    -- Mapped to ORA-24381 so FORALL SAVE EXCEPTIONS can be caught by name
-    e_bulk_errors EXCEPTION;
-    PRAGMA EXCEPTION_INIT (e_bulk_errors, -24381);
+    -- Bulk-insert exception lives in PKG_SAMEN_festivals.bulk_errors
+    -- (shared with S2 to avoid duplicating the PRAGMA EXCEPTION_INIT).
 
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
@@ -727,7 +726,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
 --   • Value arrays  – built in a FOR loop (pure PL/SQL, no SQL)
 --   • FORALL + SAVE EXCEPTIONS – sends all INSERTs in one batch;
 --     individual constraint violations (ORA-00001) are silently
---     skipped via e_bulk_errors; every other error is re-raised.
+--     skipped via PKG_SAMEN_festivals.bulk_errors; every other error is re-raised.
 -- =============================================================
 
     -- ---------------------------------------------------------
@@ -756,7 +755,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 INSERT INTO CITY (ZIPCODE, CITY, COUNTRY)
                 VALUES (v_zips(i), v_names(i), v_cntrs(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomCities(' || p_amount || '): inserted ' || v_ins ||
@@ -786,7 +785,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 INSERT INTO COMPANY (COMPANY_NAME, COMPANY_FOUNDING_YEAR)
                 VALUES (v_names(i), v_years(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomCompanies(' || p_amount || '): inserted ' || v_ins ||
@@ -816,7 +815,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 INSERT INTO TICKETPLATFORM (TICKETPLATFORM_NAME, TICKETPLATFORM_URL)
                 VALUES (v_names(i), v_urls(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomTicketplatforms(' || p_amount || '): inserted ' || v_ins ||
@@ -875,7 +874,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 VALUES (v_fnames(i), v_lnames(i), v_births(i), v_emails(i),
                         v_streets(i), v_snums(i), v_cids(i), v_genders(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomVisitors(' || p_amount || '): inserted ' || v_ins ||
@@ -994,7 +993,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                         v_descs(i), v_barcodes(i), v_types(i), v_statuses(i),
                         v_qr_codes(i), v_ins_plats(i), v_ins_vis(i), v_ins_fests(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := p_amount - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomTickets(' || p_amount || '): inserted ' || v_ins ||
@@ -1073,7 +1072,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 VALUES (v_cats(i), v_descs(i), v_rec_dates(i), v_exp_dates(i),
                         v_app_dates(i), v_fids(i));
         EXCEPTION
-            WHEN e_bulk_errors THEN v_ins := v_total - SQL%BULK_EXCEPTIONS.COUNT;
+            WHEN PKG_SAMEN_festivals.bulk_errors THEN v_ins := v_total - SQL%BULK_EXCEPTIONS.COUNT;
         END;
         COMMIT;
         DBMS_OUTPUT.PUT_LINE('generateRandomPermits(' || p_per_festival || ' per festival): inserted ' || v_ins ||
