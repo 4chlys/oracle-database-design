@@ -111,6 +111,21 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
     END log;
 
+    -- Bulk-insert plumbing reused by all generators below.
+    g_bulk_errors EXCEPTION;
+    PRAGMA EXCEPTION_INIT(g_bulk_errors, -24381);
+    C_BULK_CHUNK CONSTANT PLS_INTEGER := 10000;
+
+    -- Reports each row that SAVE EXCEPTIONS skipped, without aborting the run.
+    PROCEDURE log_bulk_errors(p_proc IN VARCHAR2, p_offset IN PLS_INTEGER DEFAULT 0) IS
+    BEGIN
+        FOR e IN 1 .. SQL%BULK_EXCEPTIONS.COUNT LOOP
+            DBMS_OUTPUT.PUT_LINE('[BULK ERR] ' || p_proc || ' row '
+                || (p_offset + SQL%BULK_EXCEPTIONS(e).ERROR_INDEX) || ': '
+                || SQLERRM(-SQL%BULK_EXCEPTIONS(e).ERROR_CODE));
+        END LOOP;
+    END log_bulk_errors;
+
 
     PROCEDURE generateRandomGenres(p_amount IN NUMBER) IS
         v_start     TIMESTAMP := SYSTIMESTAMP;
@@ -134,12 +149,17 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             v_bpms(i)      := PKG_SAMEN_festivals.give_random_number(60, 200);
         END LOOP;
 
-        FORALL i IN 1 .. p_amount
-            INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
-            VALUES (v_names(i), v_years(i), v_locations(i), v_bpms(i));
+        BEGIN
+            FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
+                INSERT INTO Genre (Genre_Name, Genre_Origin_Year, Genre_Origin_Location, Genre_BPM)
+                VALUES (v_names(i), v_years(i), v_locations(i), v_bpms(i));
+        EXCEPTION
+            WHEN g_bulk_errors THEN
+                log_bulk_errors('generateRandomGenres');
+        END;
 
         log('generateRandomGenres', 'p_amount=' || p_amount,
-            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomGenres;
 
     PROCEDURE generateRandomArtists(p_amount IN NUMBER) IS
@@ -167,13 +187,18 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 v_currs(i)  := PKG_SAMEN_festivals.give_random_currency;
             END LOOP;
 
-        FORALL i IN 1 .. p_amount
-            INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
-                                Artist_Price_Currency, Artist_Land_Of_Birth)
-            VALUES (v_names(i), v_bdays(i), v_prices(i), v_currs(i), v_countries(i));
+        BEGIN
+            FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
+                INSERT INTO Artist (Artist_Name, Artist_Birthday, Artist_Price,
+                                    Artist_Price_Currency, Artist_Land_Of_Birth)
+                VALUES (v_names(i), v_bdays(i), v_prices(i), v_currs(i), v_countries(i));
+        EXCEPTION
+            WHEN g_bulk_errors THEN
+                log_bulk_errors('generateRandomArtists');
+        END;
 
         log('generateRandomArtists', 'p_amount=' || p_amount,
-            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomArtists;
 
     PROCEDURE generateRandomFestivals(p_amount IN NUMBER) IS
@@ -230,17 +255,22 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             v_caps(i)     := PKG_SAMEN_festivals.give_random_number(10000, 200000);
         END LOOP;
 
-        FORALL i IN 1 .. p_amount
-            INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate,
-                                  Festival_EndDate, Festival_Location, City_ID,
-                                  Festival_Opening_Hour, Festival_Closing_Hour,
-                                  Festival_Capacity)
-            VALUES (v_names(i), v_comp_arr(i), v_starts(i),
-                    v_ends(i), v_locs(i), v_city_arr(i),
-                    v_opens(i), v_closes(i), v_caps(i));
+        BEGIN
+            FORALL i IN 1 .. p_amount SAVE EXCEPTIONS
+                INSERT INTO Festival (Festival_Name, Company_ID, Festival_StartDate,
+                                      Festival_EndDate, Festival_Location, City_ID,
+                                      Festival_Opening_Hour, Festival_Closing_Hour,
+                                      Festival_Capacity)
+                VALUES (v_names(i), v_comp_arr(i), v_starts(i),
+                        v_ends(i), v_locs(i), v_city_arr(i),
+                        v_opens(i), v_closes(i), v_caps(i));
+        EXCEPTION
+            WHEN g_bulk_errors THEN
+                log_bulk_errors('generateRandomFestivals');
+        END;
 
         log('generateRandomFestivals', 'p_amount=' || p_amount,
-            p_amount, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            SQL%ROWCOUNT, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomFestivals;
 
     -- ===========================================================
@@ -260,7 +290,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         TYPE t_id_tab  IS TABLE OF NUMBER       INDEX BY PLS_INTEGER;
         TYPE t_str_tab IS TABLE OF VARCHAR2(500) INDEX BY PLS_INTEGER;
 
-        -- Insert arrays (one slot per stage row across all festivals)
+        -- Insert arrays (one chunk's worth of rows; reset on each flush)
         v_fid_arr  t_id_tab;
         v_names    t_str_tab;
         v_styles   t_str_tab;
@@ -271,8 +301,32 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
         v_roofed_val NUMBER;
         k            PLS_INTEGER := 0;
+        v_total      PLS_INTEGER := 0;
         v_style_max  PLS_INTEGER;
         v_desc_max   PLS_INTEGER;
+
+        PROCEDURE flush IS
+        BEGIN
+            IF k = 0 THEN RETURN; END IF;
+            BEGIN
+                FORALL i IN 1 .. k SAVE EXCEPTIONS
+                    INSERT INTO Stage (Stage_Name, Festival_ID,
+                                       Stage_Style_Description,
+                                       Stage_Standing_Capacity,
+                                       Stage_Toilet_Count,
+                                       Stage_Description,
+                                       Stage_Roofed_Status)
+                    VALUES (v_names(i), v_fid_arr(i), v_styles(i),
+                            v_caps(i), v_toilets(i), v_descs(i), v_roofed(i));
+            EXCEPTION
+                WHEN g_bulk_errors THEN
+                    log_bulk_errors('generateRandomStages', v_total);
+            END;
+            v_total := v_total + SQL%ROWCOUNT;
+            v_fid_arr.DELETE; v_names.DELETE; v_styles.DELETE;
+            v_caps.DELETE; v_toilets.DELETE; v_descs.DELETE; v_roofed.DELETE;
+            k := 0;
+        END flush;
     BEGIN
         SELECT DATA_LENGTH INTO v_style_max
         FROM USER_TAB_COLUMNS
@@ -290,15 +344,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 );
         END IF;
 
-        -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
+        -- Build rows in PL/SQL, flushing every C_BULK_CHUNK to bound PGA usage.
         FOR fi IN 1 .. v_festival_ids.COUNT LOOP
             FOR si IN 1 .. p_per_festival LOOP
                 k := k + 1;
                 v_fid_arr(k)  := v_festival_ids(fi);
                 v_names(k)    := PKG_SAMEN_festivals.give_random_combo(
                                      PKG_SAMEN_festivals.give_random_artist_prefix
-                                         || ' ' || PKG_SAMEN_festivals.give_random_stage_suffix || SYS_GUID(),
-                                     (fi - 1) * p_per_festival + si);
+                                         || ' ' || PKG_SAMEN_festivals.give_random_stage_suffix,
+                                     (fi - 1) * p_per_festival + si)
+                                 || SYS_GUID();
                 v_roofed_val  := PKG_SAMEN_festivals.give_random_number(0, 1);
                 v_roofed(k)   := v_roofed_val;
                 v_caps(k)     := PKG_SAMEN_festivals.give_random_number(3000, 80000);
@@ -311,23 +366,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                                      || PKG_SAMEN_festivals.give_random_description,
                                      1, v_style_max);
                 v_descs(k)    := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
+
+                IF k >= C_BULK_CHUNK THEN flush; END IF;
             END LOOP;
         END LOOP;
-
-        FORALL i IN 1 .. k
-            INSERT INTO Stage (Stage_Name, Festival_ID,
-                               Stage_Style_Description,
-                               Stage_Standing_Capacity,
-                               Stage_Toilet_Count,
-                               Stage_Description,
-                               Stage_Roofed_Status)
-            VALUES (v_names(i), v_fid_arr(i), v_styles(i),
-                    v_caps(i), v_toilets(i), v_descs(i), v_roofed(i));
+        flush;
 
         log('generateRandomStages',
             'p_per_festival=' || p_per_festival
                 || ', festivals_processed=' || v_festival_ids.COUNT,
-            k, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            v_total, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomStages;
 
     -- ===========================================================
@@ -367,7 +415,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_art_count  PLS_INTEGER;
         v_gen_count  PLS_INTEGER;
 
-        -- Insert arrays (one slot per performance row across all stages)
+        -- Insert arrays (one chunk's worth of rows; reset on each flush)
         TYPE t_str_list IS TABLE OF VARCHAR2(500) INDEX BY PLS_INTEGER;
         v_perf_starts t_date_list;
         v_perf_ends   t_date_list;
@@ -380,7 +428,31 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         v_duration_hr  PLS_INTEGER;
         v_latest_start DATE;
         k              PLS_INTEGER := 0;
+        v_total        PLS_INTEGER := 0;
         v_desc_max     PLS_INTEGER;
+
+        PROCEDURE flush IS
+        BEGIN
+            IF k = 0 THEN RETURN; END IF;
+            BEGIN
+                FORALL i IN 1 .. k SAVE EXCEPTIONS
+                    INSERT INTO Performance (Performance_Start_Time,
+                                             Performance_End_Time,
+                                             Artist_ID, Genre_ID, Stage_ID,
+                                             Performance_Description)
+                    VALUES (v_perf_starts(i), v_perf_ends(i),
+                            v_ins_artist(i), v_ins_genre(i),
+                            v_ins_stage(i), v_descs(i));
+            EXCEPTION
+                WHEN g_bulk_errors THEN
+                    log_bulk_errors('generateRandomPerformances', v_total);
+            END;
+            v_total := v_total + SQL%ROWCOUNT;
+            v_perf_starts.DELETE; v_perf_ends.DELETE;
+            v_ins_artist.DELETE; v_ins_genre.DELETE; v_ins_stage.DELETE;
+            v_descs.DELETE;
+            k := 0;
+        END flush;
     BEGIN
         SELECT DATA_LENGTH INTO v_desc_max
         FROM USER_TAB_COLUMNS
@@ -415,7 +487,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 'generateRandomPerformances requires Artist and Genre to be populated first.');
         END IF;
 
-        -- Build all rows in PL/SQL; one FORALL replaces the nested INSERT loop
+        -- Build rows in PL/SQL, flushing every C_BULK_CHUNK to bound PGA usage.
         -- Constrain so the END time still falls within the festival's date range
         -- (add_performance only checks the start, but the bulk path enforces both).
         FOR si IN 1 .. v_idx LOOP
@@ -434,22 +506,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                 v_ins_genre(k)   := v_genre_ids(PKG_SAMEN_festivals.give_random_number(1, v_gen_count));
                 v_ins_stage(k)   := v_stages(si).stage_id;
                 v_descs(k)       := SUBSTR(PKG_SAMEN_festivals.give_random_description, 1, v_desc_max);
+
+                IF k >= C_BULK_CHUNK THEN flush; END IF;
             END LOOP;
         END LOOP;
-
-        FORALL i IN 1 .. k
-            INSERT INTO Performance (Performance_Start_Time,
-                                     Performance_End_Time,
-                                     Artist_ID, Genre_ID, Stage_ID,
-                                     Performance_Description)
-            VALUES (v_perf_starts(i), v_perf_ends(i),
-                    v_ins_artist(i), v_ins_genre(i),
-                    v_ins_stage(i), v_descs(i));
+        flush;
 
         log('generateRandomPerformances',
             'p_per_stage=' || p_per_stage
                 || ', stages_processed=' || v_idx,
-            k, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+            v_total, PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
     END generateRandomPerformances;
 
     PROCEDURE bewijs_M5_S2(p_festivals IN NUMBER,
