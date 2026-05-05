@@ -330,7 +330,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                             v_caps(i), v_toilets(i), v_descs(i), v_roofed(i));
             EXCEPTION
                 WHEN PKG_SAMEN_festivals.bulk_errors THEN
-                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomStages', v_total);
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomStages');
             END;
             v_ins_secs := v_ins_secs
                 + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, t_ins_start);
@@ -474,7 +474,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
                             v_ins_stage(i), v_descs(i));
             EXCEPTION
                 WHEN PKG_SAMEN_festivals.bulk_errors THEN
-                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomPerformances', v_total);
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomPerformances');
             END;
             v_ins_secs := v_ins_secs
                 + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, t_ins_start);

@@ -33,9 +33,9 @@ CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
                   p_ins_secs   IN NUMBER,
                   p_total_secs IN NUMBER);
 
-    -- Reports each row that SAVE EXCEPTIONS skipped, without aborting.
-    PROCEDURE log_bulk_errors(p_proc   IN VARCHAR2,
-                              p_offset IN PLS_INTEGER DEFAULT 0);
+    -- Summarises rows that SAVE EXCEPTIONS skipped: one line per
+    -- distinct error code, with the count of skipped rows.
+    PROCEDURE log_bulk_errors(p_proc IN VARCHAR2);
 
     -- -------------------------------------------------------
     -- STAP 1: Random helper functions

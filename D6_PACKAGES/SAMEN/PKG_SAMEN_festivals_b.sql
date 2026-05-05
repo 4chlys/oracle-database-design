@@ -216,13 +216,26 @@ CREATE OR REPLACE PACKAGE BODY PKG_SAMEN_festivals AS
             || ' | total: '  || ROUND(p_total_secs * 1000) || ' ms');
     END log;
 
-    PROCEDURE log_bulk_errors(p_proc   IN VARCHAR2,
-                              p_offset IN PLS_INTEGER DEFAULT 0) IS
+    PROCEDURE log_bulk_errors(p_proc IN VARCHAR2) IS
+        TYPE t_count_map IS TABLE OF PLS_INTEGER INDEX BY PLS_INTEGER;
+        v_counts t_count_map;
+        v_code   PLS_INTEGER;
     BEGIN
         FOR e IN 1 .. SQL%BULK_EXCEPTIONS.COUNT LOOP
-            DBMS_OUTPUT.PUT_LINE('[BULK ERR] ' || p_proc || ' row '
-                || (p_offset + SQL%BULK_EXCEPTIONS(e).ERROR_INDEX) || ': '
-                || SQLERRM(-SQL%BULK_EXCEPTIONS(e).ERROR_CODE));
+            v_code := SQL%BULK_EXCEPTIONS(e).ERROR_CODE;
+            IF v_counts.EXISTS(v_code) THEN
+                v_counts(v_code) := v_counts(v_code) + 1;
+            ELSE
+                v_counts(v_code) := 1;
+            END IF;
+        END LOOP;
+
+        v_code := v_counts.FIRST;
+        WHILE v_code IS NOT NULL LOOP
+            DBMS_OUTPUT.PUT_LINE('[BULK ERR] ' || p_proc
+                || ': ' || v_counts(v_code) || ' rows skipped ('
+                || RTRIM(SQLERRM(-v_code), CHR(10)) || ')');
+            v_code := v_counts.NEXT(v_code);
         END LOOP;
     END log_bulk_errors;
 
