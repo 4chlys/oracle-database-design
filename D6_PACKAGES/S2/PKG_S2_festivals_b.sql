@@ -1,5 +1,10 @@
 CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
 
+    -- Bulk-insert plumbing reused by the M5 random generators.
+    g_bulk_errors EXCEPTION;
+    PRAGMA EXCEPTION_INIT(g_bulk_errors, -24381);
+    C_BULK_CHUNK CONSTANT PLS_INTEGER := 10000;
+
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_festival_id(p_festival_name IN FESTIVAL.FESTIVAL_NAME%type) RETURN FESTIVAL.FESTIVAL_ID%type IS
         v_id FESTIVAL.FESTIVAL_ID%type;
@@ -110,11 +115,6 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             || ' | rows added: ' || p_rows
             || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
     END log;
-
-    -- Bulk-insert plumbing reused by all generators below.
-    g_bulk_errors EXCEPTION;
-    PRAGMA EXCEPTION_INIT(g_bulk_errors, -24381);
-    C_BULK_CHUNK CONSTANT PLS_INTEGER := 10000;
 
     -- Reports each row that SAVE EXCEPTIONS skipped, without aborting the run.
     PROCEDURE log_bulk_errors(p_proc IN VARCHAR2, p_offset IN PLS_INTEGER DEFAULT 0) IS
