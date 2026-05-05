@@ -574,12 +574,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             || ' | p_stages=' || p_stages
             || ' | p_perfs=' || p_perfs);
 
-        -- p_genres is reused as the Artist count too: every Genre row gets a
-        -- companion Artist so the Performance generator has variety on both axes.
+        -- p_genres is reused as the Artist count too: every Genre row gets ten
+        -- companion Artists so the Performance generator has variety on both axes.
         -- Genres must exist before Performances (FK) and before any code that
         -- references Genre, so generate them first.
         generateRandomGenres(p_genres);
-        generateRandomArtists(p_genres);
+        generateRandomArtists(p_genres*10);
 
         -- Tabel W/X: Festivals
         generateRandomFestivals(p_festivals);

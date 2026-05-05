@@ -1,7 +1,7 @@
 -- =============================================================
 -- MILESTONE 5 – full cross-schema demonstration
 --
--- Mapping (matches the verification SELECT below):
+-- Mapping
 --   S1 (N-N junction)
 --     A = VISITOR          (3000)
 --     C = TICKETPLATFORM   (3000)
