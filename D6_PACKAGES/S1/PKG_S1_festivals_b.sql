@@ -17,6 +17,16 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     e_bulk_errors EXCEPTION;
     PRAGMA EXCEPTION_INIT (e_bulk_errors, -24381);
 
+    -- Private logging helper – matches S2's format for consistency at the defence
+    PROCEDURE log(p_proc IN VARCHAR2, p_param IN VARCHAR2,
+                  p_rows IN NUMBER, p_secs IN NUMBER) IS
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('[LOG] ' || p_proc
+            || ' | params: ' || p_param
+            || ' | rows added: ' || p_rows
+            || ' | duration: ' || ROUND(p_secs * 1000) || ' ms');
+    END log;
+
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
         v_id COMPANY.COMPANY_ID%type;
