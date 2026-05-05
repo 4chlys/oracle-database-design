@@ -1,15 +1,51 @@
+-- =============================================================
+-- MILESTONE 5 – full cross-schema demonstration
+--
+-- Mapping (matches the verification SELECT below):
+--   S1 (N-N junction)
+--     A = VISITOR          (3000)
+--     C = TICKETPLATFORM   (3000)
+--     D = TICKET           (40000)   -- junction A x C x S2.FESTIVAL
+--     aux: COMPANY, CITY, PERMIT
+--   S2 (parent-child 2 levels deep)
+--     W = ARTIST           (sibling FK on Z)
+--     X = FESTIVAL         (30)
+--     Y = STAGE            (900     = 30 X * 30 per X)
+--     Z = PERFORMANCE      (54000   = 900 Y * 60 per Y)
+--     aux: GENRE
+--
+-- Order constraints (cross-schema FKs):
+--   FESTIVAL (S2) -> COMPANY, CITY (S1)        -> S1 base must run first
+--   TICKET, PERMIT (S1) -> FESTIVAL (S2)       -> S1 children must run last
+-- =============================================================
 BEGIN
-    -- === EMPTY (interleaved because of cross-schema FKs) ===
-    PKG_S1_festivals.empty_s1_children;   -- TICKET, PERMIT (children of S2.FESTIVAL)
+    -- === EMPTY (children first to satisfy cross-schema FKs) ===
+    PKG_S1_festivals.empty_s1_children;   -- TICKET, PERMIT
     PKG_S2_festivals.empty_tables_S2;     -- PERFORMANCE, STAGE, FESTIVAL, ARTIST, GENRE
     PKG_S1_festivals.empty_s1_base;       -- TICKETPLATFORM, VISITOR, COMPANY, CITY
--- --
--- --     -- === FILL (interleaved: COMPANY before FESTIVAL, FESTIVAL before TICKET/PERMIT) ===
-    PKG_S1_festivals.fill_s1_base;        -- COMPANY, CITY, VISITOR, TICKETPLATFORM
---     PKG_S2_festivals.bewijs_M4_S2;        -- FESTIVAL, GENRE, ARTIST, STAGE, PERFORMANCE
---     PKG_S1_festivals.fill_s1_children;    -- PERMIT, TICKET
 
-    PKG_S2_festivals.bewijs_M5_S2(30,30,30,60);
+    -- === FILL with M5 RANDOM data, interleaved ===
+    --   1) S1 base       (CITY, COMPANY, TICKETPLATFORM, VISITOR)
+    --   2) S2 W-X-Y-Z    (GENRE, ARTIST, FESTIVAL, STAGE, PERFORMANCE)
+    --   3) S1 children   (TICKET, PERMIT) – needs FESTIVAL to exist
+    PKG_S1_festivals.bewijs_milestone_5_S1_base(
+        p_cities    => 3000,
+        p_companies => 3000,
+        p_platforms => 3000,
+        p_visitors  => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+        p_genres    => 30,
+        p_festivals => 30,
+        p_stages    => 30,    -- per festival -> 900 stages
+        p_perfs     => 60);   -- per stage    -> 54000 performances
+
+    PKG_S1_festivals.bewijs_milestone_5_S1_children(
+        p_tickets          => 40000,
+        p_permits_per_fest => 5);
+
+    -- === STAP 4: showcase every random helper via DBMS_OUTPUT ===
+    PKG_SAMEN_festivals.bewijs_Random_M5;
 END;
 /
 SELECT 'S1-A   : Visitor' AS "Table", COUNT(*) AS "Count"

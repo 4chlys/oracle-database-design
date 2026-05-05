@@ -74,6 +74,14 @@ CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
     FUNCTION give_random_combo(p_base IN VARCHAR2, p_counter IN NUMBER)
         RETURN VARCHAR2;
 
+    -- 4b) Same as give_random_combo but with a SYS_GUID suffix so the
+    --     result is guaranteed unique even when the same (base, counter)
+    --     pair would otherwise collide across runs or with existing rows.
+    --     Used by S2 generators that must satisfy UNIQUE constraints
+    --     on Festival_Name and Stage_Name.
+    FUNCTION give_unique_combo(p_base IN VARCHAR2, p_counter IN NUMBER)
+        RETURN VARCHAR2;
+
     -- Precision timer helper (provided by assignment)
     FUNCTION timestamp_diff(a TIMESTAMP, b TIMESTAMP)
         RETURN NUMBER;

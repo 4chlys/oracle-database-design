@@ -238,9 +238,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
         END IF;
 
         FOR i IN 1 .. p_amount LOOP
-            v_names(i)    := PKG_SAMEN_festivals.give_random_combo(
+            v_names(i)    := PKG_SAMEN_festivals.give_unique_combo(
                                  PKG_SAMEN_festivals.give_random_location
-                                     || ' ' || PKG_SAMEN_festivals.give_random_festival_suffix, i) || SYS_GUID();
+                                     || ' ' || PKG_SAMEN_festivals.give_random_festival_suffix, i);
             v_comp_arr(i) := v_comp_pool(PKG_SAMEN_festivals.give_random_number(1, v_comp_count));
             v_city_arr(i) := v_city_pool(PKG_SAMEN_festivals.give_random_number(1, v_city_count));
             v_starts(i)   := PKG_SAMEN_festivals.give_random_date(
@@ -364,11 +364,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S2_festivals AS
             FOR si IN 1 .. p_per_festival LOOP
                 k := k + 1;
                 v_fid_arr(k)  := v_festival_ids(fi);
-                v_names(k)    := PKG_SAMEN_festivals.give_random_combo(
+                v_names(k)    := PKG_SAMEN_festivals.give_unique_combo(
                                      PKG_SAMEN_festivals.give_random_artist_prefix
                                          || ' ' || PKG_SAMEN_festivals.give_random_stage_suffix,
-                                     (fi - 1) * p_per_festival + si)
-                                 || SYS_GUID();
+                                     (fi - 1) * p_per_festival + si);
                 v_roofed_val  := PKG_SAMEN_festivals.give_random_number(0, 1);
                 v_roofed(k)   := v_roofed_val;
                 v_caps(k)     := PKG_SAMEN_festivals.give_random_number(3000, 80000);

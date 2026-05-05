@@ -181,6 +181,13 @@ CREATE OR REPLACE PACKAGE BODY PKG_SAMEN_festivals AS
         RETURN p_base || '_' || LPAD(TO_CHAR(p_counter), 4, '0');
     END give_random_combo;
 
+    -- 4b) give_random_combo + SYS_GUID for guaranteed uniqueness.
+    FUNCTION give_unique_combo(p_base IN VARCHAR2, p_counter IN NUMBER)
+        RETURN VARCHAR2 IS
+    BEGIN
+        RETURN give_random_combo(p_base, p_counter) || SYS_GUID();
+    END give_unique_combo;
+
     -- Precision timer (provided by assignment)
     FUNCTION timestamp_diff(a TIMESTAMP, b TIMESTAMP)
         RETURN NUMBER IS
