@@ -7,3 +7,6 @@ Assignments/
 
 # MacOS
 .DS_Store/
+
+# Documentation
+**/*_documentation.md
