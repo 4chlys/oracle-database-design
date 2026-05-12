@@ -17,7 +17,7 @@ CREATE OR REPLACE PACKAGE PKG_SAMEN_festivals AS
     -- Chunk size used by the parent-child generators when flushing
     -- accumulated PL/SQL arrays back to the SQL engine.  Bounds PGA
     -- usage on the 50k-row inserts.
-    C_BULK_CHUNK CONSTANT PLS_INTEGER := 10000;
+    C_BULK_CHUNK CONSTANT PLS_INTEGER := 1000000;
 
     -- -------------------------------------------------------
     -- Shared logging helpers (used by S1 and S2 generators)
