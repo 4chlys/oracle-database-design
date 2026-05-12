@@ -170,7 +170,7 @@ BEGIN
 
     PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
-            p_festivals => 30,
+            p_festivals => 300,
             p_stages    => 30,
             p_perfs     => 60,
             p_mode      => 'SINGLE');
@@ -201,7 +201,7 @@ BEGIN
 
     PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
-            p_festivals => 30,
+            p_festivals => 300,
             p_stages    => 30,
             p_perfs     => 60,
             p_mode      => 'BULK');
@@ -211,6 +211,45 @@ BEGIN
             p_permits_per_fest => 5);
 END;
 /
+
+-- =============================================================
+-- MILESTONE 6 – S1 proof, SMALL run (mode=BOTH, ~49 000 S1 rows)
+--   Runs SINGLE then BULK internally and prints a speedup comparison.
+--   cities = GREATEST(CEIL(3000 / 20), 50) = 150
+-- =============================================================
+BEGIN
+    PKG_S1_festivals.bewijs_milestone_6_S1(
+            p_visitors         => 3000,
+            p_companies        => 3000,
+            p_platforms        => 3000,
+            p_tickets          => 40000,
+            p_permits_per_fest => 5,
+            p_festivals        => 30,
+            p_mode             => 'BOTH');
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – S1 proof, LARGE run (mode=BOTH, ~490 000 S1 rows)
+--   Same structure as SMALL run – larger scale to amplify timing gap.
+-- =============================================================
+BEGIN
+    PKG_S1_festivals.bewijs_milestone_6_S1(
+            p_visitors         => 3000,
+            p_companies        => 3000,
+            p_platforms        => 3000,
+            p_tickets          => 400000,
+            p_permits_per_fest => 5,
+            p_festivals        => 300,
+            p_mode             => 'BOTH');
+END;
+/
+
+SELECT segment_name,segment_type, SUM(bytes/1024/1024) MB ,
+       (select   COUNT(*) FROM TICKET) as table_count
+FROM dba_segments
+WHERE segment_name='TICKET'
+GROUP BY segment_name,segment_type;
 
 -- =============================================================
 -- MILESTONE 6 – S2 proof, SMALL run (30, 30, 30, 60, 'BOTH')
@@ -366,3 +405,6 @@ ORDER BY DBMS_RANDOM.VALUE()
 SELECT FESTIVAL_ID, COUNT(TICKET_ID)
 FROM Ticket
 GROUP BY FESTIVAL_ID;
+
+SELECT COUNT(*) FROM (SELECT DISTINCT FESTIVAL_ID, VISITOR_ID
+FROM TICKET);/

@@ -15,7 +15,6 @@ CREATE TABLE Company
     Company_Founding_Year NUMBER(4),
     CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
     CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
-    CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < 2026),
     CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
 );
 
@@ -43,7 +42,6 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
-    CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
     CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01')
 );
 
