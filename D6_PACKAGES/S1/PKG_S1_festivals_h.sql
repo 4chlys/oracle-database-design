@@ -43,5 +43,60 @@ CREATE OR REPLACE PACKAGE PKG_S1_festivals AS
                                     p_tickets IN NUMBER,
                                     p_permits_per_fest IN NUMBER);
 
+    -- M6: Single-insert generators (row-by-row INSERT, for performance comparison)
+    PROCEDURE generateRandomCities_single(p_amount IN NUMBER);
+    PROCEDURE generateRandomCompanies_single(p_amount IN NUMBER);
+    PROCEDURE generateRandomTicketplatforms_single(p_amount IN NUMBER);
+    PROCEDURE generateRandomVisitors_single(p_amount IN NUMBER);
+    PROCEDURE generateRandomTickets_single(p_amount IN NUMBER);
+    PROCEDURE generateRandomPermits_single(p_per_festival IN NUMBER);
+
+    -- M6: Bulk generators with chunking (arrays capped at C_BULK_CHUNK; memory-safe for 400k+)
+    PROCEDURE generateRandomCities_bulk(p_amount IN NUMBER);
+    PROCEDURE generateRandomCompanies_bulk(p_amount IN NUMBER);
+    PROCEDURE generateRandomTicketplatforms_bulk(p_amount IN NUMBER);
+    PROCEDURE generateRandomVisitors_bulk(p_amount IN NUMBER);
+    PROCEDURE generateRandomTickets_bulk(p_amount IN NUMBER);
+    PROCEDURE generateRandomPermits_bulk(p_per_festival IN NUMBER);
+
+    -- M6: Phase wrappers (mirror M5's base/children split; respect S2 FK dependency)
+    --   bewijs_milestone_6_S1_base_single     must run BEFORE bewijs_M6_S2 (S2 needs companies)
+    --   bewijs_milestone_6_S1_base_bulk       must run BEFORE bewijs_M6_S2
+    --   bewijs_milestone_6_S1_children_single must run AFTER  bewijs_M6_S2 (tickets/permits need festivals)
+    --   bewijs_milestone_6_S1_children_bulk   must run AFTER  bewijs_M6_S2
+    --   SAMEN script orchestrates: S1_base → S2 → S1_children  (same order as M5)
+    PROCEDURE bewijs_milestone_6_S1_base_single(p_cities    IN NUMBER,
+                                                p_companies IN NUMBER,
+                                                p_platforms IN NUMBER,
+                                                p_visitors  IN NUMBER);
+
+    PROCEDURE bewijs_milestone_6_S1_base_bulk(p_cities    IN NUMBER,
+                                              p_companies IN NUMBER,
+                                              p_platforms IN NUMBER,
+                                              p_visitors  IN NUMBER);
+
+    PROCEDURE bewijs_milestone_6_S1_children_single(p_tickets          IN NUMBER,
+                                                    p_permits_per_fest IN NUMBER);
+
+    PROCEDURE bewijs_milestone_6_S1_children_bulk(p_tickets          IN NUMBER,
+                                                  p_permits_per_fest IN NUMBER);
+
+    -- M6: Proof procedure
+    --   p_mode = 'BOTH' | 'BULK' | 'SINGLE'
+    --   Each run: reset to M4 baseline → S1 base → S2 → S1 children
+    --   S2 time excluded from S1 timing so the SINGLE vs BULK comparison is fair.
+    --   NOTE: currently calls bewijs_M5_S2 for S2; update to bewijs_M6_S2
+    --         once PKG_S2_festivals.bewijs_M6_S2 is available.
+    PROCEDURE bewijs_milestone_6_S1(p_visitors         IN NUMBER,
+                                    p_companies        IN NUMBER,
+                                    p_platforms        IN NUMBER,
+                                    p_tickets          IN NUMBER,
+                                    p_permits_per_fest IN NUMBER,
+                                    p_genres           IN NUMBER,
+                                    p_festivals        IN NUMBER,
+                                    p_stages           IN NUMBER,
+                                    p_perfs            IN NUMBER,
+                                    p_mode             IN VARCHAR2);
+
 END PKG_S1_festivals;
 /

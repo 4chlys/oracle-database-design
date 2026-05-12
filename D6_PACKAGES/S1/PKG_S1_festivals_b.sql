@@ -16,6 +16,20 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     -- Bulk-insert exception lives in PKG_SAMEN_festivals.bulk_errors
     -- (shared with S2 to avoid duplicating the PRAGMA EXCEPTION_INIT).
 
+    -- Private: realistic email domain selector (used by visitor generators)
+    FUNCTION random_email_domain RETURN VARCHAR2 IS
+        TYPE t_domains IS TABLE OF VARCHAR2(30) INDEX BY PLS_INTEGER;
+        v_d t_domains;
+    BEGIN
+        v_d(1) := 'gmail.com';      v_d(2) := 'outlook.com';
+        v_d(3) := 'hotmail.com';    v_d(4) := 'yahoo.com';
+        v_d(5) := 'live.com';       v_d(6) := 'icloud.com';
+        v_d(7) := 'protonmail.com';
+        RETURN v_d(PKG_SAMEN_festivals.give_random_number(1, 7));
+    END random_email_domain;
+
+    -- ---------------------------------------------------------
+
     -- PUBLIC LOOKUP (also used internally by this package)
     FUNCTION lookup_company_id(p_company_name IN COMPANY.COMPANY_NAME%type) RETURN COMPANY.COMPANY_ID%type IS
         v_id COMPANY.COMPANY_ID%type;
@@ -870,6 +884,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_cids     t_id_tab;
         v_genders  t_str50;
         v_fname    VARCHAR2(50);
+        v_lname    VARCHAR2(50);
         v_ci       PLS_INTEGER;
         v_rows     PLS_INTEGER;
     BEGIN
@@ -885,10 +900,12 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
             LOOP
                 v_ci := PKG_SAMEN_festivals.give_random_number(1, v_city_ids.COUNT);
                 v_fname := PKG_SAMEN_festivals.give_random_first_name;
+                v_lname := PKG_SAMEN_festivals.give_random_last_name;
                 v_fnames(i) := v_fname;
-                v_lnames(i) := PKG_SAMEN_festivals.give_random_last_name;
+                v_lnames(i) := v_lname;
                 v_births(i) := PKG_SAMEN_festivals.give_random_date(DATE '1960-01-01', DATE '2005-12-31');
-                v_emails(i) := LOWER(v_fname) || (v_offset + i) || '@rnd.com';
+                v_emails(i) := LOWER(v_fname) || '.' || LOWER(v_lname)
+                            || (v_offset + i) || '@' || random_email_domain;
                 v_streets(i) := PKG_SAMEN_festivals.give_random_street;
                 v_snums(i) := TO_CHAR(PKG_SAMEN_festivals.give_random_number(1, 999));
                 v_cids(i) := v_city_ids(v_ci);
@@ -982,7 +999,6 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_tmp_d        DATE;
         v_tmp_s        VARCHAR2(100);
     BEGIN
-        -- Pure SQL scans – no DBMS_RANDOM in SQL, zero context switches
         SELECT FESTIVAL_ID,
                FESTIVAL_NAME,
                FESTIVAL_STARTDATE,
@@ -1023,8 +1039,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 v_tmp_d := v_fest_ends(k); v_fest_ends(k) := v_fest_ends(v_j); v_fest_ends(v_j) := v_tmp_d;
             END LOOP;
 
-        -- Stick-breaking: each festival claims a random slice of the remaining budget,
-        -- so ticket counts range from 0 to p_amount across festivals.
+        -- Stick-breaking: each festival claims a random slice of the remaining budget, so ticket counts range from 0 to p_amount across festivals.
         v_remaining := p_amount;
         FOR f IN 1..v_fest_count - 1
             LOOP
@@ -1114,6 +1129,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
     -- ---------------------------------------------------------
     PROCEDURE generateRandomPermits(p_per_festival IN NUMBER) IS
         v_fest_ids    t_id_tab;
+        v_fest_names  t_str100;
         v_fest_starts t_date_tab;
         v_cats        t_str50;
         v_descs       t_str100;
@@ -1133,9 +1149,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_rows        PLS_INTEGER;
     BEGIN
         SELECT FESTIVAL_ID,
+               FESTIVAL_NAME,
                FESTIVAL_STARTDATE
             BULK COLLECT
-        INTO v_fest_ids, v_fest_starts
+        INTO v_fest_ids, v_fest_names, v_fest_starts
         FROM FESTIVAL;
 
         IF v_fest_ids.COUNT = 0 THEN
@@ -1158,7 +1175,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                         v_rec_date := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
                         v_cats(v_idx) := PKG_SAMEN_festivals.give_random_permit_category;
                         v_descs(v_idx) := v_cats(v_idx) || ' permit for '
-                            || PKG_SAMEN_festivals.give_random_festival_suffix || ' event';
+                            || v_fest_names(fi);
                         v_app_dates(v_idx) := v_app_date;
                         v_rec_dates(v_idx) := v_rec_date;
                         v_exp_dates(v_idx) := PKG_SAMEN_festivals.give_random_date(v_rec_date + 1, v_rec_date + 180);
@@ -1249,6 +1266,944 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_5_S1 DONE | total duration: '
             || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000) || ' ms ===');
     END bewijs_milestone_5_S1;
+
+-- =============================================================
+-- M6 – SINGLE-INSERT GENERATORS
+-- Row-by-row INSERT; DUP_VAL_ON_INDEX is silently skipped.
+-- gen_secs is 0 because generation and insertion are interleaved.
+-- =============================================================
+
+    -- ---------------------------------------------------------
+    -- generateRandomCities_single
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomCities_single(p_amount IN NUMBER) IS
+        v_start  TIMESTAMP   := SYSTIMESTAMP;
+        v_end    TIMESTAMP;
+        v_offset NUMBER;
+        v_rows   PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM CITY;
+        FOR i IN 1 .. p_amount LOOP
+            BEGIN
+                INSERT INTO CITY (ZIPCODE, CITY, COUNTRY)
+                VALUES ('Z' || LPAD(TO_CHAR(v_offset + i), 8, '0'),
+                        PKG_SAMEN_festivals.give_random_location
+                            || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0'),
+                        PKG_SAMEN_festivals.give_random_country);
+                v_rows := v_rows + 1;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN NULL;
+            END;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomCities_single', 'p_amount=' || p_amount,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomCities_single;
+
+    -- ---------------------------------------------------------
+    -- generateRandomCompanies_single
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomCompanies_single(p_amount IN NUMBER) IS
+        v_start  TIMESTAMP   := SYSTIMESTAMP;
+        v_end    TIMESTAMP;
+        v_offset NUMBER;
+        v_rows   PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM COMPANY;
+        FOR i IN 1 .. p_amount LOOP
+            BEGIN
+                INSERT INTO COMPANY (COMPANY_NAME, COMPANY_FOUNDING_YEAR)
+                VALUES ('RndCo_' || LPAD(TO_CHAR(v_offset + i), 6, '0'),
+                        PKG_SAMEN_festivals.give_random_number(1800, 2025));
+                v_rows := v_rows + 1;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN NULL;
+            END;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomCompanies_single', 'p_amount=' || p_amount,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomCompanies_single;
+
+    -- ---------------------------------------------------------
+    -- generateRandomTicketplatforms_single
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomTicketplatforms_single(p_amount IN NUMBER) IS
+        v_start  TIMESTAMP   := SYSTIMESTAMP;
+        v_end    TIMESTAMP;
+        v_offset NUMBER;
+        v_rows   PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM TICKETPLATFORM;
+        FOR i IN 1 .. p_amount LOOP
+            BEGIN
+                INSERT INTO TICKETPLATFORM (TICKETPLATFORM_NAME, TICKETPLATFORM_URL)
+                VALUES (PKG_SAMEN_festivals.give_random_platform_name
+                            || '_' || LPAD(TO_CHAR(v_offset + i), 5, '0'),
+                        'https://platform' || LPAD(TO_CHAR(v_offset + i), 8, '0') || '.com');
+                v_rows := v_rows + 1;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN NULL;
+            END;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomTicketplatforms_single', 'p_amount=' || p_amount,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomTicketplatforms_single;
+
+    -- ---------------------------------------------------------
+    -- generateRandomVisitors_single
+    --   City pool BULK COLLECTed once (read-only).
+    --   Email: firstname.lastname<counter>@<realistic-domain>
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomVisitors_single(p_amount IN NUMBER) IS
+        v_city_ids t_id_tab;
+        v_start    TIMESTAMP   := SYSTIMESTAMP;
+        v_end      TIMESTAMP;
+        v_offset   NUMBER;
+        v_rows     PLS_INTEGER := 0;
+        v_ci       PLS_INTEGER;
+        v_fname    VARCHAR2(50);
+        v_lname    VARCHAR2(50);
+    BEGIN
+        SELECT CITY_ID BULK COLLECT INTO v_city_ids FROM CITY;
+        IF v_city_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomVisitors_single: no cities – run generateRandomCities first');
+            RETURN;
+        END IF;
+        SELECT COUNT(*) INTO v_offset FROM VISITOR;
+
+        FOR i IN 1 .. p_amount LOOP
+            v_ci    := PKG_SAMEN_festivals.give_random_number(1, v_city_ids.COUNT);
+            v_fname := PKG_SAMEN_festivals.give_random_first_name;
+            v_lname := PKG_SAMEN_festivals.give_random_last_name;
+            BEGIN
+                INSERT INTO VISITOR (VISITOR_FIRSTNAME, VISITOR_LASTNAME, VISITOR_BIRTHDATE,
+                                     VISITOR_EMAIL, VISITOR_STREET_NAME, VISITOR_STREET_NUMBER,
+                                     CITY_ID, VISITOR_GENDER)
+                VALUES (v_fname,
+                        v_lname,
+                        PKG_SAMEN_festivals.give_random_date(DATE '1960-01-01', DATE '2005-12-31'),
+                        LOWER(v_fname) || '.' || LOWER(v_lname)
+                            || (v_offset + i) || '@' || random_email_domain,
+                        PKG_SAMEN_festivals.give_random_street,
+                        TO_CHAR(PKG_SAMEN_festivals.give_random_number(1, 999)),
+                        v_city_ids(v_ci),
+                        PKG_SAMEN_festivals.give_random_gender);
+                v_rows := v_rows + 1;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN NULL;
+            END;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomVisitors_single', 'p_amount=' || p_amount,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomVisitors_single;
+
+    -- ---------------------------------------------------------
+    -- generateRandomTickets_single
+    --   Parent pools BULK COLLECTed once; each ticket inserted
+    --   individually; duplicates silently skipped.
+    --   Barcodes use 'S' prefix to distinguish from bulk runs.
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomTickets_single(p_amount IN NUMBER) IS
+        v_fest_ids    t_id_tab;
+        v_fest_names  t_str100;
+        v_fest_starts t_date_tab;
+        v_fest_ends   t_date_tab;
+        v_all_vis     t_id_tab;
+        v_plat_pool   t_id_tab;
+        v_start       TIMESTAMP   := SYSTIMESTAMP;
+        v_end         TIMESTAMP;
+        v_offset      NUMBER;
+        v_rows        PLS_INTEGER := 0;
+        v_fi          PLS_INTEGER;
+        v_vi          PLS_INTEGER;
+        v_pi          PLS_INTEGER;
+        v_tkt_date    DATE;
+        v_max_purch   DATE;
+        v_barcode     VARCHAR2(14);
+        v_type        VARCHAR2(50);
+    BEGIN
+        SELECT FESTIVAL_ID, FESTIVAL_NAME, FESTIVAL_STARTDATE, FESTIVAL_ENDDATE
+            BULK COLLECT INTO v_fest_ids, v_fest_names, v_fest_starts, v_fest_ends
+        FROM FESTIVAL;
+        SELECT VISITOR_ID        BULK COLLECT INTO v_all_vis   FROM VISITOR;
+        SELECT TICKETPLATFORM_ID BULK COLLECT INTO v_plat_pool FROM TICKETPLATFORM;
+
+        IF v_fest_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_single: no festivals');  RETURN;
+        END IF;
+        IF v_all_vis.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_single: no visitors');   RETURN;
+        END IF;
+        IF v_plat_pool.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_single: no platforms');  RETURN;
+        END IF;
+
+        SELECT COUNT(*) INTO v_offset FROM TICKET;
+
+        FOR i IN 1 .. p_amount LOOP
+            v_fi        := PKG_SAMEN_festivals.give_random_number(1, v_fest_ids.COUNT);
+            v_vi        := PKG_SAMEN_festivals.give_random_number(1, v_all_vis.COUNT);
+            v_pi        := PKG_SAMEN_festivals.give_random_number(1, v_plat_pool.COUNT);
+            v_tkt_date  := PKG_SAMEN_festivals.give_random_date(v_fest_starts(v_fi), v_fest_ends(v_fi));
+            v_max_purch := LEAST(v_tkt_date, DATE '2026-03-10');
+            v_barcode   := 'S' || LPAD(TO_CHAR(v_offset + i), 12, '0');
+            v_type      := PKG_SAMEN_festivals.give_random_ticket_type;
+            BEGIN
+                INSERT INTO TICKET (TICKET_PRICE, TICKET_CURRENCY, TICKET_DATE,
+                                    TICKET_PURCHASE_DATE, TICKET_DESCRIPTION,
+                                    TICKET_BARCODE, TICKET_TYPE, TICKET_STATUS,
+                                    TICKET_QR_CODE, TICKETPLATFORM_ID, VISITOR_ID, FESTIVAL_ID)
+                VALUES (PKG_SAMEN_festivals.give_random_number(50, 500),
+                        PKG_SAMEN_festivals.give_random_currency,
+                        v_tkt_date,
+                        PKG_SAMEN_festivals.give_random_date(
+                            GREATEST(v_max_purch - 365, DATE '2020-01-01'), v_max_purch),
+                        v_type || ' ticket for ' || v_fest_names(v_fi),
+                        v_barcode,
+                        v_type,
+                        PKG_SAMEN_festivals.give_random_ticket_status,
+                        'https://qr.rnd.be/' || v_barcode,
+                        v_plat_pool(v_pi),
+                        v_all_vis(v_vi),
+                        v_fest_ids(v_fi));
+                v_rows := v_rows + 1;
+            EXCEPTION
+                WHEN DUP_VAL_ON_INDEX THEN NULL;
+            END;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomTickets_single', 'p_amount=' || p_amount,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomTickets_single;
+
+    -- ---------------------------------------------------------
+    -- generateRandomPermits_single
+    --   Iterates over every festival (FESTIVAL_NAME included in
+    --   BULK COLLECT) and inserts p_per_festival permits one
+    --   at a time, referencing the real festival name.
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomPermits_single(p_per_festival IN NUMBER) IS
+        v_fest_ids    t_id_tab;
+        v_fest_names  t_str100;
+        v_fest_starts t_date_tab;
+        v_start       TIMESTAMP   := SYSTIMESTAMP;
+        v_end         TIMESTAMP;
+        v_rows        PLS_INTEGER := 0;
+        v_max_app     DATE;
+        v_min_app     DATE;
+        v_app_date    DATE;
+        v_rec_date    DATE;
+        v_cat         VARCHAR2(50);
+    BEGIN
+        SELECT FESTIVAL_ID, FESTIVAL_NAME, FESTIVAL_STARTDATE
+            BULK COLLECT INTO v_fest_ids, v_fest_names, v_fest_starts
+        FROM FESTIVAL;
+        IF v_fest_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomPermits_single: no festivals');  RETURN;
+        END IF;
+
+        FOR fi IN 1 .. v_fest_ids.COUNT LOOP
+            v_max_app := LEAST(v_fest_starts(fi) - 1, DATE '2026-03-10');
+            v_min_app := GREATEST(v_max_app - 365, DATE '2020-01-01');
+            IF v_min_app > v_max_app THEN v_min_app := v_max_app; END IF;
+
+            FOR j IN 1 .. p_per_festival LOOP
+                v_app_date := PKG_SAMEN_festivals.give_random_date(v_min_app, v_max_app);
+                v_rec_date := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
+                v_cat      := PKG_SAMEN_festivals.give_random_permit_category;
+                BEGIN
+                    INSERT INTO PERMIT (PERMIT_CATEGORY, PERMIT_DESCRIPTION,
+                                        PERMIT_RECEPTION_DATE, PERMIT_EXPIRATION_DATE,
+                                        PERMIT_APPLICATION_DATE, FESTIVAL_ID)
+                    VALUES (v_cat,
+                            v_cat || ' permit for ' || v_fest_names(fi),
+                            v_rec_date,
+                            PKG_SAMEN_festivals.give_random_date(v_rec_date + 1, v_rec_date + 180),
+                            v_app_date,
+                            v_fest_ids(fi));
+                    v_rows := v_rows + 1;
+                EXCEPTION
+                    WHEN DUP_VAL_ON_INDEX THEN NULL;
+                END;
+            END LOOP;
+        END LOOP;
+        v_end := SYSTIMESTAMP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomPermits_single', 'p_per_festival=' || p_per_festival,
+                                v_rows, 0,
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start),
+                                PKG_SAMEN_festivals.timestamp_diff(v_end, v_start));
+    END generateRandomPermits_single;
+
+-- =============================================================
+-- M6 – BULK GENERATORS WITH CHUNKING
+-- Arrays capped at C_BULK_CHUNK; outer WHILE loop refills and
+-- flushes until p_amount rows are inserted.  Prevents PGA
+-- exhaustion at 400 000+ rows.  Gen time and insert time are
+-- accumulated separately across chunks.
+-- =============================================================
+
+    -- ---------------------------------------------------------
+    -- generateRandomCities_bulk
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomCities_bulk(p_amount IN NUMBER) IS
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc    NUMBER      := 0;
+        v_ins_acc    NUMBER      := 0;
+        v_t0         TIMESTAMP;
+        v_t1         TIMESTAMP;
+        v_offset     NUMBER;
+        v_zips       t_str10;
+        v_names      t_str50;
+        v_cntrs      t_str50;
+        v_chunk      PLS_INTEGER;
+        v_done       PLS_INTEGER := 0;
+        v_total_rows PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM CITY;
+        WHILE v_done < p_amount LOOP
+            v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
+            v_t0 := SYSTIMESTAMP;
+            FOR i IN 1 .. v_chunk LOOP
+                v_zips(i)  := 'Z' || LPAD(TO_CHAR(v_offset + v_done + i), 8, '0');
+                v_names(i) := PKG_SAMEN_festivals.give_random_location
+                           || '_' || LPAD(TO_CHAR(v_offset + v_done + i), 5, '0');
+                v_cntrs(i) := PKG_SAMEN_festivals.give_random_country;
+            END LOOP;
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+            BEGIN
+                FORALL i IN 1 .. v_chunk SAVE EXCEPTIONS
+                    INSERT INTO CITY (ZIPCODE, CITY, COUNTRY)
+                    VALUES (v_zips(i), v_names(i), v_cntrs(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomCities_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+            v_done       := v_done + v_chunk;
+            v_zips.DELETE; v_names.DELETE; v_cntrs.DELETE;
+        END LOOP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomCities_bulk', 'p_amount=' || p_amount,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomCities_bulk;
+
+    -- ---------------------------------------------------------
+    -- generateRandomCompanies_bulk
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomCompanies_bulk(p_amount IN NUMBER) IS
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc    NUMBER      := 0;
+        v_ins_acc    NUMBER      := 0;
+        v_t0         TIMESTAMP;
+        v_t1         TIMESTAMP;
+        v_offset     NUMBER;
+        v_names      t_str50;
+        v_years      t_id_tab;
+        v_chunk      PLS_INTEGER;
+        v_done       PLS_INTEGER := 0;
+        v_total_rows PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM COMPANY;
+        WHILE v_done < p_amount LOOP
+            v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
+            v_t0 := SYSTIMESTAMP;
+            FOR i IN 1 .. v_chunk LOOP
+                v_names(i) := 'RndCo_' || LPAD(TO_CHAR(v_offset + v_done + i), 6, '0');
+                v_years(i) := PKG_SAMEN_festivals.give_random_number(1800, 2025);
+            END LOOP;
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+            BEGIN
+                FORALL i IN 1 .. v_chunk SAVE EXCEPTIONS
+                    INSERT INTO COMPANY (COMPANY_NAME, COMPANY_FOUNDING_YEAR)
+                    VALUES (v_names(i), v_years(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomCompanies_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+            v_done       := v_done + v_chunk;
+            v_names.DELETE; v_years.DELETE;
+        END LOOP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomCompanies_bulk', 'p_amount=' || p_amount,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomCompanies_bulk;
+
+    -- ---------------------------------------------------------
+    -- generateRandomTicketplatforms_bulk
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomTicketplatforms_bulk(p_amount IN NUMBER) IS
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc    NUMBER      := 0;
+        v_ins_acc    NUMBER      := 0;
+        v_t0         TIMESTAMP;
+        v_t1         TIMESTAMP;
+        v_offset     NUMBER;
+        v_names      t_str100;
+        v_urls       t_str500;
+        v_chunk      PLS_INTEGER;
+        v_done       PLS_INTEGER := 0;
+        v_total_rows PLS_INTEGER := 0;
+    BEGIN
+        SELECT COUNT(*) INTO v_offset FROM TICKETPLATFORM;
+        WHILE v_done < p_amount LOOP
+            v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
+            v_t0 := SYSTIMESTAMP;
+            FOR i IN 1 .. v_chunk LOOP
+                v_names(i) := PKG_SAMEN_festivals.give_random_platform_name
+                           || '_' || LPAD(TO_CHAR(v_offset + v_done + i), 5, '0');
+                v_urls(i)  := 'https://platform' || LPAD(TO_CHAR(v_offset + v_done + i), 8, '0') || '.com';
+            END LOOP;
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+            BEGIN
+                FORALL i IN 1 .. v_chunk SAVE EXCEPTIONS
+                    INSERT INTO TICKETPLATFORM (TICKETPLATFORM_NAME, TICKETPLATFORM_URL)
+                    VALUES (v_names(i), v_urls(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomTicketplatforms_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+            v_done       := v_done + v_chunk;
+            v_names.DELETE; v_urls.DELETE;
+        END LOOP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomTicketplatforms_bulk', 'p_amount=' || p_amount,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomTicketplatforms_bulk;
+
+    -- ---------------------------------------------------------
+    -- generateRandomVisitors_bulk
+    --   City pool loaded once; rows produced in chunks.
+    --   Email: firstname.lastname<counter>@<realistic-domain>
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomVisitors_bulk(p_amount IN NUMBER) IS
+        v_city_ids   t_id_tab;
+        v_start      TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc    NUMBER      := 0;
+        v_ins_acc    NUMBER      := 0;
+        v_t0         TIMESTAMP;
+        v_t1         TIMESTAMP;
+        v_offset     NUMBER;
+        v_fnames     t_str50;
+        v_lnames     t_str50;
+        v_births     t_date_tab;
+        v_emails     t_str100;
+        v_streets    t_str50;
+        v_snums      t_str10;
+        v_cids       t_id_tab;
+        v_genders    t_str50;
+        v_chunk      PLS_INTEGER;
+        v_done       PLS_INTEGER := 0;
+        v_total_rows PLS_INTEGER := 0;
+        v_ci         PLS_INTEGER;
+        v_fname      VARCHAR2(50);
+        v_lname      VARCHAR2(50);
+    BEGIN
+        SELECT CITY_ID BULK COLLECT INTO v_city_ids FROM CITY;
+        IF v_city_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomVisitors_bulk: no cities');  RETURN;
+        END IF;
+        SELECT COUNT(*) INTO v_offset FROM VISITOR;
+
+        WHILE v_done < p_amount LOOP
+            v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
+            v_t0 := SYSTIMESTAMP;
+            FOR i IN 1 .. v_chunk LOOP
+                v_ci         := PKG_SAMEN_festivals.give_random_number(1, v_city_ids.COUNT);
+                v_fname      := PKG_SAMEN_festivals.give_random_first_name;
+                v_lname      := PKG_SAMEN_festivals.give_random_last_name;
+                v_fnames(i)  := v_fname;
+                v_lnames(i)  := v_lname;
+                v_births(i)  := PKG_SAMEN_festivals.give_random_date(DATE '1960-01-01', DATE '2005-12-31');
+                v_emails(i)  := LOWER(v_fname) || '.' || LOWER(v_lname)
+                             || (v_offset + v_done + i) || '@' || random_email_domain;
+                v_streets(i) := PKG_SAMEN_festivals.give_random_street;
+                v_snums(i)   := TO_CHAR(PKG_SAMEN_festivals.give_random_number(1, 999));
+                v_cids(i)    := v_city_ids(v_ci);
+                v_genders(i) := PKG_SAMEN_festivals.give_random_gender;
+            END LOOP;
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+            BEGIN
+                FORALL i IN 1 .. v_chunk SAVE EXCEPTIONS
+                    INSERT INTO VISITOR (VISITOR_FIRSTNAME, VISITOR_LASTNAME, VISITOR_BIRTHDATE,
+                                         VISITOR_EMAIL, VISITOR_STREET_NAME, VISITOR_STREET_NUMBER,
+                                         CITY_ID, VISITOR_GENDER)
+                    VALUES (v_fnames(i), v_lnames(i), v_births(i), v_emails(i),
+                            v_streets(i), v_snums(i), v_cids(i), v_genders(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomVisitors_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+            v_done       := v_done + v_chunk;
+            v_fnames.DELETE;  v_lnames.DELETE;  v_births.DELETE;
+            v_emails.DELETE;  v_streets.DELETE; v_snums.DELETE;
+            v_cids.DELETE;    v_genders.DELETE;
+        END LOOP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomVisitors_bulk', 'p_amount=' || p_amount,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomVisitors_bulk;
+
+    -- ---------------------------------------------------------
+    -- generateRandomTickets_bulk
+    --   Twelve INSERT arrays capped at C_BULK_CHUNK; freed
+    --   between chunks so PGA stays bounded at 400 000+ rows.
+    --   Barcodes use 'B' prefix (M5='R', single='S').
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomTickets_bulk(p_amount IN NUMBER) IS
+        v_fest_ids    t_id_tab;
+        v_fest_names  t_str100;
+        v_fest_starts t_date_tab;
+        v_fest_ends   t_date_tab;
+        v_all_vis     t_id_tab;
+        v_plat_pool   t_id_tab;
+        v_start       TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc     NUMBER      := 0;
+        v_ins_acc     NUMBER      := 0;
+        v_t0          TIMESTAMP;
+        v_t1          TIMESTAMP;
+        v_offset      NUMBER;
+        v_prices      t_num10_2;
+        v_currencies  t_char3;
+        v_tkt_dates   t_date_tab;
+        v_purch_dates t_date_tab;
+        v_descs       t_str100;
+        v_barcodes    t_str14;
+        v_types       t_str50;
+        v_statuses    t_str50;
+        v_qr_codes    t_str500;
+        v_ins_plats   t_id_tab;
+        v_ins_vis     t_id_tab;
+        v_ins_fests   t_id_tab;
+        v_chunk       PLS_INTEGER;
+        v_done        PLS_INTEGER := 0;
+        v_total_rows  PLS_INTEGER := 0;
+        v_fi          PLS_INTEGER;
+        v_vi          PLS_INTEGER;
+        v_pi          PLS_INTEGER;
+        v_tkt_date    DATE;
+        v_max_purch   DATE;
+        v_barcode     VARCHAR2(14);
+        v_type        VARCHAR2(50);
+        v_fest_count  PLS_INTEGER;
+        v_vis_count   PLS_INTEGER;
+        v_plat_count  PLS_INTEGER;
+    BEGIN
+        SELECT FESTIVAL_ID, FESTIVAL_NAME, FESTIVAL_STARTDATE, FESTIVAL_ENDDATE
+            BULK COLLECT INTO v_fest_ids, v_fest_names, v_fest_starts, v_fest_ends
+        FROM FESTIVAL;
+        SELECT VISITOR_ID        BULK COLLECT INTO v_all_vis   FROM VISITOR;
+        SELECT TICKETPLATFORM_ID BULK COLLECT INTO v_plat_pool FROM TICKETPLATFORM;
+
+        IF v_fest_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_bulk: no festivals');  RETURN;
+        END IF;
+        IF v_all_vis.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_bulk: no visitors');   RETURN;
+        END IF;
+        IF v_plat_pool.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomTickets_bulk: no platforms');  RETURN;
+        END IF;
+
+        v_fest_count := v_fest_ids.COUNT;
+        v_vis_count  := v_all_vis.COUNT;
+        v_plat_count := v_plat_pool.COUNT;
+        SELECT COUNT(*) INTO v_offset FROM TICKET;
+
+        WHILE v_done < p_amount LOOP
+            v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
+            v_t0 := SYSTIMESTAMP;
+
+            FOR i IN 1 .. v_chunk LOOP
+                v_fi        := PKG_SAMEN_festivals.give_random_number(1, v_fest_count);
+                v_vi        := PKG_SAMEN_festivals.give_random_number(1, v_vis_count);
+                v_pi        := PKG_SAMEN_festivals.give_random_number(1, v_plat_count);
+                v_tkt_date  := PKG_SAMEN_festivals.give_random_date(v_fest_starts(v_fi), v_fest_ends(v_fi));
+                v_max_purch := LEAST(v_tkt_date, DATE '2026-03-10');
+                v_barcode   := 'B' || LPAD(TO_CHAR(v_offset + v_done + i), 12, '0');
+                v_type      := PKG_SAMEN_festivals.give_random_ticket_type;
+
+                v_prices(i)      := PKG_SAMEN_festivals.give_random_number(50, 500);
+                v_currencies(i)  := PKG_SAMEN_festivals.give_random_currency;
+                v_tkt_dates(i)   := v_tkt_date;
+                v_purch_dates(i) := PKG_SAMEN_festivals.give_random_date(
+                                        GREATEST(v_max_purch - 365, DATE '2020-01-01'), v_max_purch);
+                v_descs(i)       := v_type || ' ticket for ' || v_fest_names(v_fi);
+                v_barcodes(i)    := v_barcode;
+                v_types(i)       := v_type;
+                v_statuses(i)    := PKG_SAMEN_festivals.give_random_ticket_status;
+                v_qr_codes(i)    := 'https://qr.rnd.be/' || v_barcode;
+                v_ins_plats(i)   := v_plat_pool(v_pi);
+                v_ins_vis(i)     := v_all_vis(v_vi);
+                v_ins_fests(i)   := v_fest_ids(v_fi);
+            END LOOP;
+
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+
+            BEGIN
+                FORALL i IN 1 .. v_chunk SAVE EXCEPTIONS
+                    INSERT INTO TICKET (TICKET_PRICE, TICKET_CURRENCY, TICKET_DATE,
+                                        TICKET_PURCHASE_DATE, TICKET_DESCRIPTION,
+                                        TICKET_BARCODE, TICKET_TYPE, TICKET_STATUS,
+                                        TICKET_QR_CODE, TICKETPLATFORM_ID, VISITOR_ID, FESTIVAL_ID)
+                    VALUES (v_prices(i), v_currencies(i), v_tkt_dates(i), v_purch_dates(i),
+                            v_descs(i), v_barcodes(i), v_types(i), v_statuses(i),
+                            v_qr_codes(i), v_ins_plats(i), v_ins_vis(i), v_ins_fests(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomTickets_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+
+            v_done := v_done + v_chunk;
+            v_prices.DELETE;      v_currencies.DELETE;  v_tkt_dates.DELETE;
+            v_purch_dates.DELETE; v_descs.DELETE;       v_barcodes.DELETE;
+            v_types.DELETE;       v_statuses.DELETE;    v_qr_codes.DELETE;
+            v_ins_plats.DELETE;   v_ins_vis.DELETE;     v_ins_fests.DELETE;
+        END LOOP;
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomTickets_bulk', 'p_amount=' || p_amount,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomTickets_bulk;
+
+    -- ---------------------------------------------------------
+    -- generateRandomPermits_bulk
+    --   FESTIVAL_NAME loaded alongside FESTIVAL_ID so the
+    --   description references the real festival name.
+    --   Rows accumulate in a buffer; flushed per C_BULK_CHUNK.
+    -- ---------------------------------------------------------
+    PROCEDURE generateRandomPermits_bulk(p_per_festival IN NUMBER) IS
+        v_fest_ids    t_id_tab;
+        v_fest_names  t_str100;
+        v_fest_starts t_date_tab;
+        v_start       TIMESTAMP   := SYSTIMESTAMP;
+        v_gen_acc     NUMBER      := 0;
+        v_ins_acc     NUMBER      := 0;
+        v_t0          TIMESTAMP;
+        v_t1          TIMESTAMP;
+        v_cats        t_str50;
+        v_descs       t_str100;
+        v_app_dates   t_date_tab;
+        v_rec_dates   t_date_tab;
+        v_exp_dates   t_date_tab;
+        v_fids        t_id_tab;
+        v_buf_idx     PLS_INTEGER := 0;
+        v_total_rows  PLS_INTEGER := 0;
+        v_max_app     DATE;
+        v_min_app     DATE;
+        v_app_date    DATE;
+        v_rec_date    DATE;
+        v_cat         VARCHAR2(50);
+    BEGIN
+        SELECT FESTIVAL_ID, FESTIVAL_NAME, FESTIVAL_STARTDATE
+            BULK COLLECT INTO v_fest_ids, v_fest_names, v_fest_starts
+        FROM FESTIVAL;
+        IF v_fest_ids.COUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('generateRandomPermits_bulk: no festivals');  RETURN;
+        END IF;
+
+        v_t0 := SYSTIMESTAMP;
+
+        FOR fi IN 1 .. v_fest_ids.COUNT LOOP
+            v_max_app := LEAST(v_fest_starts(fi) - 1, DATE '2026-03-10');
+            v_min_app := GREATEST(v_max_app - 365, DATE '2020-01-01');
+            IF v_min_app > v_max_app THEN v_min_app := v_max_app; END IF;
+
+            FOR j IN 1 .. p_per_festival LOOP
+                v_app_date     := PKG_SAMEN_festivals.give_random_date(v_min_app, v_max_app);
+                v_rec_date     := PKG_SAMEN_festivals.give_random_date(v_app_date + 1, v_app_date + 60);
+                v_cat          := PKG_SAMEN_festivals.give_random_permit_category;
+                v_buf_idx      := v_buf_idx + 1;
+                v_cats(v_buf_idx)      := v_cat;
+                v_descs(v_buf_idx)     := v_cat || ' permit for ' || v_fest_names(fi);
+                v_app_dates(v_buf_idx) := v_app_date;
+                v_rec_dates(v_buf_idx) := v_rec_date;
+                v_exp_dates(v_buf_idx) := PKG_SAMEN_festivals.give_random_date(
+                                              v_rec_date + 1, v_rec_date + 180);
+                v_fids(v_buf_idx)      := v_fest_ids(fi);
+
+                IF v_buf_idx >= PKG_SAMEN_festivals.C_BULK_CHUNK THEN
+                    v_t1      := SYSTIMESTAMP;
+                    v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+                    BEGIN
+                        FORALL i IN 1 .. v_buf_idx SAVE EXCEPTIONS
+                            INSERT INTO PERMIT (PERMIT_CATEGORY, PERMIT_DESCRIPTION,
+                                                PERMIT_RECEPTION_DATE, PERMIT_EXPIRATION_DATE,
+                                                PERMIT_APPLICATION_DATE, FESTIVAL_ID)
+                            VALUES (v_cats(i), v_descs(i), v_rec_dates(i), v_exp_dates(i),
+                                    v_app_dates(i), v_fids(i));
+                    EXCEPTION
+                        WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                            PKG_SAMEN_festivals.log_bulk_errors('generateRandomPermits_bulk');
+                    END;
+                    v_total_rows := v_total_rows + SQL%ROWCOUNT;
+                    v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+                    v_cats.DELETE; v_descs.DELETE; v_app_dates.DELETE;
+                    v_rec_dates.DELETE; v_exp_dates.DELETE; v_fids.DELETE;
+                    v_buf_idx := 0;
+                    v_t0 := SYSTIMESTAMP;
+                END IF;
+            END LOOP;
+        END LOOP;
+
+        -- Flush remaining rows
+        IF v_buf_idx > 0 THEN
+            v_t1      := SYSTIMESTAMP;
+            v_gen_acc := v_gen_acc + PKG_SAMEN_festivals.timestamp_diff(v_t1, v_t0);
+            BEGIN
+                FORALL i IN 1 .. v_buf_idx SAVE EXCEPTIONS
+                    INSERT INTO PERMIT (PERMIT_CATEGORY, PERMIT_DESCRIPTION,
+                                        PERMIT_RECEPTION_DATE, PERMIT_EXPIRATION_DATE,
+                                        PERMIT_APPLICATION_DATE, FESTIVAL_ID)
+                    VALUES (v_cats(i), v_descs(i), v_rec_dates(i), v_exp_dates(i),
+                            v_app_dates(i), v_fids(i));
+            EXCEPTION
+                WHEN PKG_SAMEN_festivals.bulk_errors THEN
+                    PKG_SAMEN_festivals.log_bulk_errors('generateRandomPermits_bulk');
+            END;
+            v_total_rows := v_total_rows + SQL%ROWCOUNT;
+            v_ins_acc    := v_ins_acc + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_t1);
+        END IF;
+
+        COMMIT;
+        PKG_SAMEN_festivals.log('generateRandomPermits_bulk', 'p_per_festival=' || p_per_festival,
+                                v_total_rows, v_gen_acc, v_ins_acc,
+                                PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));
+    END generateRandomPermits_bulk;
+
+-- =============================================================
+-- M6 – PHASE WRAPPERS
+-- Mirror the M5 base/children split so SAMEN can orchestrate:
+--   bewijs_milestone_6_S1_base_*   → bewijs_M6_S2 → bewijs_milestone_6_S1_children_*
+-- S2 must run between base and children due to cross-schema FKs:
+--   FESTIVAL (S2) -> COMPANY/CITY (S1)   base must precede S2
+--   TICKET/PERMIT (S1) -> FESTIVAL (S2)  children must follow S2
+-- =============================================================
+
+    PROCEDURE bewijs_milestone_6_S1_base_single(p_cities    IN NUMBER,
+                                                p_companies IN NUMBER,
+                                                p_platforms IN NUMBER,
+                                                p_visitors  IN NUMBER) IS
+        v_start TIMESTAMP := SYSTIMESTAMP;
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_single START ===');
+        generateRandomCities_single(p_cities);
+        generateRandomCompanies_single(p_companies);
+        generateRandomTicketplatforms_single(p_platforms);
+        generateRandomVisitors_single(p_visitors);
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_single DONE | '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000) || ' ms ===');
+    END bewijs_milestone_6_S1_base_single;
+
+    -- ---------------------------------------------------------
+
+    PROCEDURE bewijs_milestone_6_S1_base_bulk(p_cities    IN NUMBER,
+                                              p_companies IN NUMBER,
+                                              p_platforms IN NUMBER,
+                                              p_visitors  IN NUMBER) IS
+        v_start TIMESTAMP := SYSTIMESTAMP;
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_bulk START ===');
+        generateRandomCities_bulk(p_cities);
+        generateRandomCompanies_bulk(p_companies);
+        generateRandomTicketplatforms_bulk(p_platforms);
+        generateRandomVisitors_bulk(p_visitors);
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_bulk DONE | '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000) || ' ms ===');
+    END bewijs_milestone_6_S1_base_bulk;
+
+    -- ---------------------------------------------------------
+
+    PROCEDURE bewijs_milestone_6_S1_children_single(p_tickets          IN NUMBER,
+                                                    p_permits_per_fest IN NUMBER) IS
+        v_start TIMESTAMP := SYSTIMESTAMP;
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_children_single START ===');
+        generateRandomTickets_single(p_tickets);
+        generateRandomPermits_single(p_permits_per_fest);
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_children_single DONE | '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000) || ' ms ===');
+    END bewijs_milestone_6_S1_children_single;
+
+    -- ---------------------------------------------------------
+
+    PROCEDURE bewijs_milestone_6_S1_children_bulk(p_tickets          IN NUMBER,
+                                                  p_permits_per_fest IN NUMBER) IS
+        v_start TIMESTAMP := SYSTIMESTAMP;
+    BEGIN
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_children_bulk START ===');
+        generateRandomTickets_bulk(p_tickets);
+        generateRandomPermits_bulk(p_permits_per_fest);
+        DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_children_bulk DONE | '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start) * 1000) || ' ms ===');
+    END bewijs_milestone_6_S1_children_bulk;
+
+-- =============================================================
+-- M6 – PROOF PROCEDURE
+-- Each run: reset to M4 baseline → S1 base → S2 → S1 children
+-- S2 time excluded from S1 timing so the comparison is fair.
+-- Per-table gen/insert timings appear in individual [LOG] lines.
+-- =============================================================
+
+    PROCEDURE bewijs_milestone_6_S1(p_visitors         IN NUMBER,
+                                    p_companies        IN NUMBER,
+                                    p_platforms        IN NUMBER,
+                                    p_tickets          IN NUMBER,
+                                    p_permits_per_fest IN NUMBER,
+                                    p_genres           IN NUMBER,
+                                    p_festivals        IN NUMBER,
+                                    p_stages           IN NUMBER,
+                                    p_perfs            IN NUMBER,
+                                    p_mode             IN VARCHAR2) IS
+        v_mode           VARCHAR2(10) := UPPER(TRIM(p_mode));
+        v_total_start    TIMESTAMP   := SYSTIMESTAMP;
+        v_base_start     TIMESTAMP;
+        v_s2_start       TIMESTAMP;
+        v_children_start TIMESTAMP;
+        v_single_total   NUMBER      := 0;
+        v_bulk_total     NUMBER      := 0;
+        v_aux_cities     PLS_INTEGER := GREATEST(CEIL(p_visitors / 20), 50);
+    BEGIN
+        IF v_mode NOT IN ('BOTH', 'BULK', 'SINGLE') THEN
+            RAISE_APPLICATION_ERROR(-20020,
+                'bewijs_milestone_6_S1: invalid mode "' || p_mode
+                || '". Use BOTH, BULK, or SINGLE.');
+        END IF;
+
+        DBMS_OUTPUT.PUT_LINE('========================================');
+        DBMS_OUTPUT.PUT_LINE('bewijs_milestone_6_S1  mode=' || v_mode);
+        DBMS_OUTPUT.PUT_LINE('  visitors='         || p_visitors
+                          || '  companies='        || p_companies
+                          || '  platforms='        || p_platforms
+                          || '  tickets='          || p_tickets
+                          || '  permits_per_fest=' || p_permits_per_fest);
+        DBMS_OUTPUT.PUT_LINE('  genres='    || p_genres
+                          || '  festivals=' || p_festivals
+                          || '  stages='    || p_stages
+                          || '  perfs='     || p_perfs);
+        DBMS_OUTPUT.PUT_LINE('========================================');
+
+        -- ======================================================
+        -- SINGLE-INSERT run
+        -- ======================================================
+        IF v_mode IN ('BOTH', 'SINGLE') THEN
+            DBMS_OUTPUT.PUT_LINE('--- [SINGLE] resetting to M4 baseline ---');
+            empty_s1_children;
+            PKG_S2_festivals.empty_tables_S2;
+            empty_s1_base;
+            fill_s1_base;
+            PKG_S2_festivals.bewijs_M4_S2;
+            fill_s1_children;
+
+            -- S1 base (timed)
+            v_base_start := SYSTIMESTAMP;
+            bewijs_milestone_6_S1_base_single(v_aux_cities, p_companies, p_platforms, p_visitors);
+
+            -- S2 hierarchy (not timed – identical cost for both methods)
+            -- TODO: replace with PKG_S2_festivals.bewijs_M6_S2 once available
+            v_s2_start := SYSTIMESTAMP;
+            DBMS_OUTPUT.PUT_LINE('--- [SINGLE] S2 hierarchy ---');
+            PKG_S2_festivals.bewijs_M5_S2(p_genres, p_festivals, p_stages, p_perfs);
+
+            -- S1 children (timed)
+            v_children_start := SYSTIMESTAMP;
+            bewijs_milestone_6_S1_children_single(p_tickets, p_permits_per_fest);
+
+            -- S1-only time: base + children; S2 excluded
+            v_single_total := PKG_SAMEN_festivals.timestamp_diff(v_s2_start,       v_base_start)
+                           + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_children_start);
+            DBMS_OUTPUT.PUT_LINE('--- [SINGLE] S1 total (S2 excluded): '
+                || ROUND(v_single_total * 1000) || ' ms ---');
+        END IF;
+
+        -- ======================================================
+        -- BULK-INSERT run
+        -- ======================================================
+        IF v_mode IN ('BOTH', 'BULK') THEN
+            DBMS_OUTPUT.PUT_LINE('--- [BULK] resetting to M4 baseline ---');
+            empty_s1_children;
+            PKG_S2_festivals.empty_tables_S2;
+            empty_s1_base;
+            fill_s1_base;
+            PKG_S2_festivals.bewijs_M4_S2;
+            fill_s1_children;
+
+            -- S1 base (timed)
+            v_base_start := SYSTIMESTAMP;
+            bewijs_milestone_6_S1_base_bulk(v_aux_cities, p_companies, p_platforms, p_visitors);
+
+            -- S2 hierarchy (not timed – identical cost for both methods)
+            -- TODO: replace with PKG_S2_festivals.bewijs_M6_S2 once available
+            v_s2_start := SYSTIMESTAMP;
+            DBMS_OUTPUT.PUT_LINE('--- [BULK] S2 hierarchy ---');
+            PKG_S2_festivals.bewijs_M5_S2(p_genres, p_festivals, p_stages, p_perfs);
+
+            -- S1 children (timed)
+            v_children_start := SYSTIMESTAMP;
+            bewijs_milestone_6_S1_children_bulk(p_tickets, p_permits_per_fest);
+
+            -- S1-only time: base + children; S2 excluded
+            v_bulk_total := PKG_SAMEN_festivals.timestamp_diff(v_s2_start,       v_base_start)
+                         + PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_children_start);
+            DBMS_OUTPUT.PUT_LINE('--- [BULK] S1 total (S2 excluded): '
+                || ROUND(v_bulk_total * 1000) || ' ms ---');
+        END IF;
+
+        -- ======================================================
+        -- Comparison summary (only when both ran)
+        -- ======================================================
+        IF v_mode = 'BOTH' THEN
+            DBMS_OUTPUT.PUT_LINE('========================================');
+            DBMS_OUTPUT.PUT_LINE('SINGLE vs BULK comparison (S1 time only)');
+            DBMS_OUTPUT.PUT_LINE('  SINGLE: ' || ROUND(v_single_total * 1000) || ' ms');
+            DBMS_OUTPUT.PUT_LINE('  BULK  : ' || ROUND(v_bulk_total   * 1000) || ' ms');
+            IF v_bulk_total > 0 THEN
+                DBMS_OUTPUT.PUT_LINE('  Speedup: '
+                    || ROUND(v_single_total / v_bulk_total, 2) || 'x  (bulk vs single)');
+            END IF;
+            DBMS_OUTPUT.PUT_LINE('========================================');
+        END IF;
+
+        DBMS_OUTPUT.PUT_LINE('bewijs_milestone_6_S1 END  elapsed: '
+            || ROUND(PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_total_start) * 1000)
+            || ' ms');
+    END bewijs_milestone_6_S1;
 
 END PKG_S1_festivals;
 /
