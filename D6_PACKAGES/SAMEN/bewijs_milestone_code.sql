@@ -200,7 +200,7 @@ BEGIN
 
     PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
-            p_festivals => 30,
+            p_festivals => 300,
             p_stages    => 30,
             p_perfs     => 60,
             p_mode      => 'BULK');
@@ -365,3 +365,12 @@ ORDER BY DBMS_RANDOM.VALUE()
 SELECT FESTIVAL_ID, COUNT(TICKET_ID)
 FROM Ticket
 GROUP BY FESTIVAL_ID;
+
+SELECT segment_name,
+       segment_type,
+       ROUND(SUM(bytes/1024/1024), 2) AS MB
+FROM   dba_segments
+WHERE  owner = 'PROJECT'
+  AND segment_type = 'TABLE'
+GROUP  BY segment_name, segment_type
+ORDER  BY MB DESC;
