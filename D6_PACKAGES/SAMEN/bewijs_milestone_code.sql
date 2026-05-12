@@ -33,16 +33,16 @@ BEGIN
             p_cities => 3000,
             p_companies => 3000,
             p_platforms => 3000,
-            p_visitors => 3000);
+            p_visitors => 30000);
 
     PKG_S2_festivals.bewijs_M5_S2(
             p_genres => 30,
-            p_festivals => 30,
+            p_festivals => 100,
             p_stages => 30, -- per festival -> 900 stages
-            p_perfs => 60); -- per stage    -> 54000 performances
+            p_perfs => 200); -- per stage    -> 54000 performances
 
     PKG_S1_festivals.bewijs_milestone_5_S1_children(
-            p_tickets => 40000,
+            p_tickets => 500000,
             p_permits_per_fest => 5);
 
     -- === STAP 4: showcase every random helper via DBMS_OUTPUT ===
@@ -160,3 +160,13 @@ SELECT FESTIVAL_ID, COUNT(TICKET_ID)
 FROM Ticket
 GROUP BY FESTIVAL_ID;
 
+BEGIN
+    PKG_S1_festivals.empty_s1_children;  -- clear Ticket/Permit if present
+    PKG_S1_festivals.empty_s1_base;      -- clear Visitor/Platform/Company/City
+    PKG_S1_festivals.fill_s1_base;       -- reload M4 Company + City (+ Visitor, Platform)
+    COMMIT;
+END;
+BEGIN PKG_S2_festivals.bewijs_milestone_6_S2(30, 30, 30, 60,  'BOTH'); END;
+/
+BEGIN PKG_S2_festivals.bewijs_milestone_6_S2(30, 30, 30, 600, 'BOTH'); END;
+/
