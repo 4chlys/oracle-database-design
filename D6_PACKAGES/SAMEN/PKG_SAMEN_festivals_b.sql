@@ -40,6 +40,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_SAMEN_festivals AS
     g_desc_impact  t_str_list;
     g_desc_closing t_str_list;
 
+    g_seq PLS_INTEGER := 0;
+
     -- -------------------------------------------------------
     -- PRIVATE helper: pick a random element from a t_str_list
     -- -------------------------------------------------------
@@ -181,11 +183,11 @@ CREATE OR REPLACE PACKAGE BODY PKG_SAMEN_festivals AS
         RETURN p_base || '_' || LPAD(TO_CHAR(p_counter), 4, '0');
     END give_random_combo;
 
-    -- 4b) give_random_combo + SYS_GUID for guaranteed uniqueness.
     FUNCTION give_unique_combo(p_base IN VARCHAR2, p_counter IN NUMBER)
         RETURN VARCHAR2 IS
     BEGIN
-        RETURN give_random_combo(p_base, p_counter) || SYS_GUID();
+        g_seq := g_seq + 1;
+        RETURN give_random_combo(p_base, p_counter) || '_' || LPAD(TO_CHAR(g_seq), 10, '0');
     END give_unique_combo;
 
     -- Precision timer (provided by assignment)

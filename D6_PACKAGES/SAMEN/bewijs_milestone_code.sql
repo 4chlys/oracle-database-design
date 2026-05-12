@@ -71,11 +71,12 @@ BEGIN
             p_platforms => 3000,
             p_visitors  => 3000);
 
-    PKG_S2_festivals.bewijs_M5_S2(
+    PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
             p_festivals => 30,
             p_stages    => 30,
-            p_perfs     => 60);
+            p_perfs     => 60,
+            p_mode      => 'SINGLE');
 
     PKG_S1_festivals.bewijs_milestone_6_S1_children_single(
             p_tickets          => 40000,
@@ -100,11 +101,12 @@ BEGIN
             p_platforms => 3000,
             p_visitors  => 3000);
 
-    PKG_S2_festivals.bewijs_M5_S2(
+    PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
             p_festivals => 30,
             p_stages    => 30,
-            p_perfs     => 60);
+            p_perfs     => 60,
+            p_mode      => 'BULK');
 
     PKG_S1_festivals.bewijs_milestone_6_S1_children_bulk(
             p_tickets          => 40000,
@@ -166,11 +168,12 @@ BEGIN
             p_platforms => 3000,
             p_visitors  => 3000);
 
-    PKG_S2_festivals.bewijs_M5_S2(
+    PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
-            p_festivals => 300,
+            p_festivals => 30,
             p_stages    => 30,
-            p_perfs     => 60);
+            p_perfs     => 60,
+            p_mode      => 'SINGLE');
 
     PKG_S1_festivals.bewijs_milestone_6_S1_children_single(
             p_tickets          => 400000,
@@ -196,15 +199,60 @@ BEGIN
             p_platforms => 3000,
             p_visitors  => 3000);
 
-    PKG_S2_festivals.bewijs_M5_S2(
+    PKG_S2_festivals.bewijs_milestone_6_S2(
             p_genres    => 30,
-            p_festivals => 300,
+            p_festivals => 30,
             p_stages    => 30,
-            p_perfs     => 60);
+            p_perfs     => 60,
+            p_mode      => 'BULK');
 
     PKG_S1_festivals.bewijs_milestone_6_S1_children_bulk(
             p_tickets          => 400000,
             p_permits_per_fest => 5);
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – S2 proof, SMALL run (30, 30, 30, 60, 'BOTH')
+--   bewijs_milestone_6_S2 empties + refills the S2 tables with M4
+--   data internally between the BULK and SINGLE runs.  S1 base
+--   (COMPANY, CITY) must already be populated with the M4 baseline
+--   because bewijs_M4_S2 looks up companies by hardcoded name.
+--   Expected: minimum 54.000 rijen per method.
+-- =============================================================
+BEGIN
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+    PKG_S1_festivals.fill_s1_base;
+    COMMIT;
+
+    PKG_S2_festivals.bewijs_milestone_6_S2(
+            p_genres    => 30,
+            p_festivals => 30,
+            p_stages    => 30,
+            p_perfs     => 60,
+            p_mode      => 'BOTH');
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – S2 proof, LARGE run (30, 30, 30, 600, 'BOTH')
+--   Same prerequisites as the small run.  Expected: minimum
+--   540.000 rijen per method.
+-- =============================================================
+BEGIN
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+    PKG_S1_festivals.fill_s1_base;
+    COMMIT;
+    PKG_S2_festivals.bewijs_milestone_6_S2(
+            p_genres    => 30,
+            p_festivals => 30,
+            p_stages    => 30,
+            p_perfs     => 600,
+            p_mode      => 'BOTH');
 END;
 /
 
