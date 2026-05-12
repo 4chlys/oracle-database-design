@@ -2095,6 +2095,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_single START ===');
+        fill_s1_base;
         generateRandomCities_single(p_cities);
         generateRandomCompanies_single(p_companies);
         generateRandomTicketplatforms_single(p_platforms);
@@ -2112,6 +2113,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_start TIMESTAMP := SYSTIMESTAMP;
     BEGIN
         DBMS_OUTPUT.PUT_LINE('=== bewijs_milestone_6_S1_base_bulk START ===');
+        fill_s1_base;
         generateRandomCities_bulk(p_cities);
         generateRandomCompanies_bulk(p_companies);
         generateRandomTicketplatforms_bulk(p_platforms);
