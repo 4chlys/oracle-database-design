@@ -68,8 +68,7 @@ CREATE TABLE Permit
     Festival_ID             NUMBER,
     CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
     CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
-    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
-    CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= Date '2026-03-10')
+    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date)
 );
 
 CREATE TABLE Ticket
@@ -94,7 +93,6 @@ CREATE TABLE Ticket
     CONSTRAINT Ticket_TicketPlatform_FK FOREIGN KEY (TicketPlatform_ID) REFERENCES TicketPlatform (TicketPlatform_ID),
     CONSTRAINT Ticket_Price_chk CHECK (Ticket_Price > 0),
     CONSTRAINT Ticket_Barcode_chk CHECK (LENGTH(Ticket_Barcode) BETWEEN 8 AND 14),
-    CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= Date '2026-03-10'),
     CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
 );
 
