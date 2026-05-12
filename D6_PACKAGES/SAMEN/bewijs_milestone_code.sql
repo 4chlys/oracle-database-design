@@ -168,5 +168,14 @@ BEGIN
 END;
 BEGIN PKG_S2_festivals.bewijs_milestone_6_S2(30, 30, 30, 60,  'BOTH'); END;
 /
+
 BEGIN PKG_S2_festivals.bewijs_milestone_6_S2(30, 30, 30, 600, 'BOTH'); END;
 /
+
+SELECT segment_name,
+       segment_type,
+       SUM(bytes/1024/1024) AS MB,
+       (SELECT COUNT(*) FROM PERFORMANCE) AS table_count
+FROM dba_segments
+WHERE segment_name = 'PERFORMANCE'
+GROUP BY segment_name, segment_type;
