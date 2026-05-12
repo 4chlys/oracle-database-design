@@ -49,6 +49,165 @@ BEGIN
     PKG_SAMEN_festivals.bewijs_Random_M5;
 END;
 /
+
+-- =============================================================
+-- MILESTONE 6 – SMALL run, SINGLE insert (~49 000 S1 rows)
+--   S2 uses bewijs_M5_S2 (S2 single/bulk not yet available).
+--   cities = GREATEST(CEIL(3000 / 20), 50) = 150
+-- =============================================================
+BEGIN
+    -- === EMPTY ===
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+
+    -- === FILL with M6 SINGLE data ===
+    --   1) S1 base (CITY, COMPANY, TICKETPLATFORM, VISITOR)
+    --   2) S2 W-X-Y-Z – needs COMPANY, CITY to exist
+    --   3) S1 children (TICKET, PERMIT) – needs FESTIVAL to exist
+    PKG_S1_festivals.bewijs_milestone_6_S1_base_single(
+            p_cities    => 150,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors  => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+            p_genres    => 30,
+            p_festivals => 30,
+            p_stages    => 30,
+            p_perfs     => 60);
+
+    PKG_S1_festivals.bewijs_milestone_6_S1_children_single(
+            p_tickets          => 40000,
+            p_permits_per_fest => 5);
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – SMALL run, BULK insert (~49 000 S1 rows)
+--   Same parameters as SINGLE above – compare [LOG] timings.
+-- =============================================================
+BEGIN
+    -- === EMPTY ===
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+
+    -- === FILL with M6 BULK data ===
+    PKG_S1_festivals.bewijs_milestone_6_S1_base_bulk(
+            p_cities    => 150,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors  => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+            p_genres    => 30,
+            p_festivals => 30,
+            p_stages    => 30,
+            p_perfs     => 60);
+
+    PKG_S1_festivals.bewijs_milestone_6_S1_children_bulk(
+            p_tickets          => 40000,
+            p_permits_per_fest => 5);
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – LARGE run, BENCHMARK insert (~490 000 S1 rows)
+-- [LOG] generateRandomTickets | params: p_amount=400000 | rows added: 400000 | gen: 6441 ms | insert: 12388 ms | total: 18829 ms
+-- =============================================================
+BEGIN
+    -- === EMPTY (children first to satisfy cross-schema FKs) ===
+    PKG_S1_festivals.empty_s1_children; -- TICKET, PERMIT
+    PKG_S2_festivals.empty_tables_S2; -- PERFORMANCE, STAGE, FESTIVAL, ARTIST, GENRE
+    PKG_S1_festivals.empty_s1_base;
+    -- TICKETPLATFORM, VISITOR, COMPANY, CITY
+
+    -- === FILL with M5 RANDOM data, interleaved ===
+    --   1) S1 base       (CITY, COMPANY, TICKETPLATFORM, VISITOR)
+    --   2) S2 W-X-Y-Z    (GENRE, ARTIST, FESTIVAL, STAGE, PERFORMANCE)
+    --   3) S1 children   (TICKET, PERMIT) – needs FESTIVAL to exist
+    PKG_S1_festivals.bewijs_milestone_5_S1_base(
+            p_cities => 3000,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+            p_genres => 30,
+            p_festivals => 300,
+            p_stages => 30, -- per festival -> 900 stages
+            p_perfs => 60); -- per stage    -> 54000 performances
+
+    PKG_S1_festivals.bewijs_milestone_5_S1_children(
+            p_tickets => 400000,
+            p_permits_per_fest => 5);
+
+    -- === STAP 4: showcase every random helper via DBMS_OUTPUT ===
+    PKG_SAMEN_festivals.bewijs_Random_M5;
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – LARGE run, SINGLE insert (~490 000 S1 rows)
+--   At this scale the cost of row-by-row INSERT is most visible.
+-- [LOG] generateRandomTickets_single | params: p_amount=400000 | rows added: 400000 | gen: 0 ms | insert: 57733 ms | total: 57733 ms
+-- =============================================================
+BEGIN
+    -- === EMPTY ===
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+
+    -- === FILL with M6 SINGLE data ===
+    PKG_S1_festivals.bewijs_milestone_6_S1_base_single(
+            p_cities    => 150,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors  => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+            p_genres    => 30,
+            p_festivals => 300,
+            p_stages    => 30,
+            p_perfs     => 60);
+
+    PKG_S1_festivals.bewijs_milestone_6_S1_children_single(
+            p_tickets          => 400000,
+            p_permits_per_fest => 5);
+END;
+/
+
+-- =============================================================
+-- MILESTONE 6 – LARGE run, BULK insert (~490 000 S1 rows)
+--   Same parameters as SINGLE above – compare [LOG] timings.
+-- [LOG] generateRandomTickets_bulk | params: p_amount=400000 | rows added: 400000 | gen: 5975 ms | insert: 11359 ms | total: 17534 ms
+-- =============================================================
+BEGIN
+    -- === EMPTY ===
+    PKG_S1_festivals.empty_s1_children;
+    PKG_S2_festivals.empty_tables_S2;
+    PKG_S1_festivals.empty_s1_base;
+
+    -- === FILL with M6 BULK data ===
+    PKG_S1_festivals.bewijs_milestone_6_S1_base_bulk(
+            p_cities    => 150,
+            p_companies => 3000,
+            p_platforms => 3000,
+            p_visitors  => 3000);
+
+    PKG_S2_festivals.bewijs_M5_S2(
+            p_genres    => 30,
+            p_festivals => 300,
+            p_stages    => 30,
+            p_perfs     => 60);
+
+    PKG_S1_festivals.bewijs_milestone_6_S1_children_bulk(
+            p_tickets          => 400000,
+            p_permits_per_fest => 5);
+END;
+/
+
 SELECT 'S1-A   : Visitor' AS "Table", COUNT(*) AS "Count"
 FROM Visitor
 UNION ALL
@@ -159,4 +318,3 @@ ORDER BY DBMS_RANDOM.VALUE()
 SELECT FESTIVAL_ID, COUNT(TICKET_ID)
 FROM Ticket
 GROUP BY FESTIVAL_ID;
-
