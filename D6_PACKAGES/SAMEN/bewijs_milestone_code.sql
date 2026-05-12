@@ -52,7 +52,6 @@ END;
 
 -- =============================================================
 -- MILESTONE 6 – SMALL run, SINGLE insert (~49 000 S1 rows)
---   S2 uses bewijs_M5_S2 (S2 single/bulk not yet available).
 --   cities = GREATEST(CEIL(3000 / 20), 50) = 150
 -- =============================================================
 BEGIN
