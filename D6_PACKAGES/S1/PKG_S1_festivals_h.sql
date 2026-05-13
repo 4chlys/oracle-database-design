@@ -85,17 +85,14 @@ CREATE OR REPLACE PACKAGE PKG_S1_festivals AS
     --   p_mode = 'BOTH' | 'BULK' | 'SINGLE'
     --   Each run: reset to M4 baseline → S1 base → S2 → S1 children
     --   S2 time excluded from S1 timing so the SINGLE vs BULK comparison is fair.
-    --   NOTE: currently calls bewijs_M5_S2 for S2; update to bewijs_M6_S2
-    --         once PKG_S2_festivals.bewijs_M6_S2 is available.
+    --   Calls PKG_S2_festivals.generateRandomFestivals internally (only S2 festivals
+    --   are needed as FK anchors for Ticket/Permit; genres/stages/performances excluded).
     PROCEDURE bewijs_milestone_6_S1(p_visitors         IN NUMBER,
                                     p_companies        IN NUMBER,
                                     p_platforms        IN NUMBER,
                                     p_tickets          IN NUMBER,
                                     p_permits_per_fest IN NUMBER,
-                                    p_genres           IN NUMBER,
                                     p_festivals        IN NUMBER,
-                                    p_stages           IN NUMBER,
-                                    p_perfs            IN NUMBER,
                                     p_mode             IN VARCHAR2);
 
 END PKG_S1_festivals;

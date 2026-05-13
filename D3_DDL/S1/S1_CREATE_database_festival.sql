@@ -15,7 +15,6 @@ CREATE TABLE Company
     Company_Founding_Year NUMBER(4),
     CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
     CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
-    CONSTRAINT Company_FoundingYear_Upper_chk CHECK (Company_Founding_Year < 2026),
     CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
 );
 
@@ -43,7 +42,6 @@ CREATE TABLE Visitor
     CONSTRAINT Visitor_PK PRIMARY KEY (Visitor_ID),
     CONSTRAINT Visitor_Email_UQ UNIQUE (Visitor_Email),
     CONSTRAINT Visitor_City_FK FOREIGN KEY (City_ID) REFERENCES City (City_ID),
-    CONSTRAINT Visitor_Birthdate_Upper_chk CHECK (Visitor_Birthdate < Date '2026-03-10'),
     CONSTRAINT Visitor_Birthdate_Lower_chk CHECK (Visitor_Birthdate >= DATE '1900-01-01')
 );
 
@@ -68,8 +66,7 @@ CREATE TABLE Permit
     Festival_ID             NUMBER,
     CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
     CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
-    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
-    CONSTRAINT Permit_ApplicationDate_chk CHECK (Permit_Application_Date <= Date '2026-03-10')
+    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date)
 );
 
 CREATE TABLE Ticket
@@ -94,7 +91,6 @@ CREATE TABLE Ticket
     CONSTRAINT Ticket_TicketPlatform_FK FOREIGN KEY (TicketPlatform_ID) REFERENCES TicketPlatform (TicketPlatform_ID),
     CONSTRAINT Ticket_Price_chk CHECK (Ticket_Price > 0),
     CONSTRAINT Ticket_Barcode_chk CHECK (LENGTH(Ticket_Barcode) BETWEEN 8 AND 14),
-    CONSTRAINT Ticket_PurchaseDate_chk CHECK (Ticket_Purchase_Date <= Date '2026-03-10'),
     CONSTRAINT Ticket_Date_chk CHECK (Ticket_Purchase_Date <= Ticket_Date)
 );
 
