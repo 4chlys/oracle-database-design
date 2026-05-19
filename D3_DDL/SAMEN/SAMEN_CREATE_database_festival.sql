@@ -18,7 +18,7 @@ CREATE TABLE Company
     Company_Name          VARCHAR2(50 CHAR) NOT NULL,
     Company_Founding_Year NUMBER(4),
     CONSTRAINT Company_PK PRIMARY KEY (Company_ID),
-    CONSTRAINT Company_Name_UQ UNIQUE (Company_Name)
+    CONSTRAINT Company_Name_UQ UNIQUE (Company_Name),
     CONSTRAINT Company_FoundingYear_Lower_chk CHECK (Company_Founding_Year >= 1800)
 );
 
@@ -70,7 +70,7 @@ CREATE TABLE Permit
     Festival_ID             NUMBER,
     CONSTRAINT Permit_PK PRIMARY KEY (Permit_ID),
     CONSTRAINT Permit_ReceptExpire_chk CHECK (Permit_Reception_Date < Permit_Expiration_Date),
-    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date),
+    CONSTRAINT Permit_ApplyRecept_chk CHECK (Permit_Application_Date < Permit_Reception_Date)
 );
 
 CREATE TABLE Ticket
