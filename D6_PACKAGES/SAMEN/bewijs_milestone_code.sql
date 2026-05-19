@@ -407,3 +407,12 @@ GROUP BY FESTIVAL_ID;
 
 SELECT COUNT(*) FROM (SELECT DISTINCT FESTIVAL_ID, VISITOR_ID
 FROM TICKET);/
+
+SELECT segment_name,
+       segment_type,
+       ROUND(SUM(bytes/1024/1024), 2) AS MB
+FROM   dba_segments
+WHERE  owner = 'PROJECT'
+  AND segment_type = 'TABLE'
+GROUP  BY segment_name, segment_type
+ORDER  BY MB DESC;
