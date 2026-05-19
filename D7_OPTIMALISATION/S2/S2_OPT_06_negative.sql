@@ -1,7 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - NEGATIVE consequences of the materialized view
 -- Run order: 06
--- DataGrip / JDBC friendly: no SQL*Plus directives (SET/PROMPT/EXEC).
 -- =====================================================================
 -- We show three downsides:
 --   1. STORAGE OVERHEAD - the MV and the four MV logs occupy disk space
@@ -36,7 +35,6 @@ WHERE  m.master IN ('PERFORMANCE','STAGE','FESTIVAL','ARTIST');
 --    A/B comparison: same 1000-row insert + commit, run twice.
 --      (a) WITH the MV active   -> COMMIT also runs an incremental refresh
 --      (b) WITHOUT the MV       -> COMMIT does plain INSERT bookkeeping
---    Note both "completed in N ms" durations from DataGrip's bottom bar.
 -- ---------------------------------------------------------------------
 
 -- (a) WITH MV
@@ -137,7 +135,7 @@ FROM   user_mviews WHERE mview_name = 'MV_S2_FESTIVAL_PROGRAMMING';
 --    manually.
 --
 --    We track ONE specific festival (the lowest existing Festival_ID)
---    end-to-end so every screenshot shows the same row over time:
+--    end-to-end:
 --      A) BEFORE the probe insert      -> Performance_Count = X
 --      B) AFTER  the probe insert      -> Performance_Count = X  (stale!)
 --      C) AFTER  manual REFRESH        -> Performance_Count = X+1
