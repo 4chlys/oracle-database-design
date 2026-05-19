@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - Statistics + size check
--- Run order: 1 (also re-run after S2_OPT_refill.sql)
+-- Run order: 01 (also re-run after 07_refill)
 -- =====================================================================
 -- Run BEFORE capturing the "before" explain plan, and AGAIN after the
 -- database has been refilled. Fresh statistics let the Cost-Based

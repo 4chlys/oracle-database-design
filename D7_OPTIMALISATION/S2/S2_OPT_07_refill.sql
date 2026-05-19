@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - Refill the database with similar data
--- Run order: 9 (then re-run S2_OPT_stats.sql and S2_OPT_explain.sql)
+-- Run order: 07 (then re-run 01_stats and 03_explain)
 -- =====================================================================
 -- Assignment step: "Vul de database opnieuw met gelijkaardige data
 -- (zelfde aantallen)" - to demonstrate that the materialized view stays
@@ -8,8 +8,8 @@
 -- uses MAT_VIEW REWRITE ACCESS after data has changed.
 --
 -- After running this script, re-run in order:
---   1. S2_OPT_stats.sql   - re-gather statistics
---   2. S2_OPT_explain.sql - confirm the plan still uses the MV
+--   1. S2_OPT_01_stats.sql   - re-gather statistics
+--   2. S2_OPT_03_explain.sql - confirm the plan still uses the MV
 -- =====================================================================
 BEGIN
     DBMS_STATS.GATHER_TABLE_STATS('PROJECT', 'PERFORMANCE');

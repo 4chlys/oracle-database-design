@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - Materialized View
--- Run order: 5
+-- Run order: 05
 -- =====================================================================
 -- Strategy: REFRESH FAST ON COMMIT + ENABLE QUERY REWRITE
 --   * FAST          -> uses MV logs, applies only deltas (cheap)

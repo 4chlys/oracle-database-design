@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - Materialized View Logs
--- Run order: 4
+-- Run order: 04
 -- =====================================================================
 -- Required for REFRESH FAST ON COMMIT.
 -- Each base table referenced by the MV needs a log that captures:

@@ -2,7 +2,7 @@
 -- S2 - Milestone 7 - Optimisation Query
 -- Student: Jonas Friedhoff
 -- Domain : Festival programming dashboard (per-festival aggregate)
--- Run order: 2 (BEFORE timing) and 6 (AFTER timing)
+-- Run order: 02 (BEFORE timing) and again after 05 (AFTER timing)
 -- =====================================================================
 -- Source table D/Z : Performance (~559k rows)
 -- Result set       : 1 row per Festival (~310 rows)  =>  ~1800x reduction

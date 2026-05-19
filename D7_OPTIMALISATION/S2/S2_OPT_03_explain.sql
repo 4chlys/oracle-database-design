@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - Explain plan (BEFORE / AFTER)
--- Run order: 3 (BEFORE plan) and 7 (AFTER plan)
+-- Run order: 03 (BEFORE plan) and again after 05 (AFTER plan)
 -- =====================================================================
 -- Run this script TWICE for the report:
 --   (1) BEFORE creating the MV  -> baseline plan: 4-table join + HASH GROUP BY

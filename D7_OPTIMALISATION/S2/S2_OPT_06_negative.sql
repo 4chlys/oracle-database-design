@@ -1,6 +1,6 @@
 -- =====================================================================
 -- S2 - Milestone 7 - NEGATIVE consequences of the materialized view
--- Run order: 8
+-- Run order: 06
 -- DataGrip / JDBC friendly: no SQL*Plus directives (SET/PROMPT/EXEC).
 -- =====================================================================
 -- We show three downsides:
