@@ -18,6 +18,10 @@ SELECT COUNT(*) AS ticket_count FROM Ticket;
 -- 1B. Bereken statistieken op TICKET voor een accurate explain plan
 BEGIN
     DBMS_STATS.GATHER_TABLE_STATS(USER, 'TICKET');
+    DBMS_STATS.GATHER_TABLE_STATS(USER, 'VISITOR');
+    DBMS_STATS.GATHER_TABLE_STATS(USER, 'TICKETPLATFORM');
+    DBMS_STATS.GATHER_TABLE_STATS(USER, 'PERMIT');
+    DBMS_STATS.GATHER_TABLE_STATS(USER, 'COMPANY');
 END;
 /
 
@@ -32,18 +36,13 @@ FROM dba_segments
 WHERE segment_name = 'TICKET'
 GROUP BY segment_name, segment_type;
 
--- Alternatief zonder DBA-rechten:
-SELECT SUM(bytes / 1024 / 1024) AS MB
-FROM user_segments
-WHERE segment_name = 'TICKET';
-
 
 -- 1D. AGGREGATIEQUERY (domeinspecifiek, beperkt bereik)
 -- -------------------------------------------------------
 -- Bedrijfsvraag : Wat is de omzetanalyse per festival en tickettype
---                 voor tickets AANGEKOCHT in het kalenderjaar 2024?
+--                 voor tickets AANGEKOCHT in het kalenderjaar 2025?
 -- Groepering    : Festival + Ticket_Type
--- Bereik (WHERE): Ticket_Purchase_Date tussen 01-01-2024 en 31-12-2024
+-- Bereik (WHERE): Ticket_Purchase_Date tussen 01-01-2025 en 31-12-2025
 --                 => slechts een fractie van de volledige tabel wordt bevraagd
 -- -------------------------------------------------------
 SELECT f.Festival_Name                       AS Festival,
@@ -56,7 +55,7 @@ SELECT f.Festival_Name                       AS Festival,
 FROM   Ticket t
            JOIN Festival f ON f.Festival_ID = t.Festival_ID
 WHERE  t.Ticket_Purchase_Date
-           BETWEEN DATE '2024-01-01' AND DATE '2024-12-31'
+           BETWEEN DATE '2025-01-01' AND DATE '2025-12-31'
 GROUP BY f.Festival_Name, t.Ticket_Type
 ORDER BY Totale_Omzet_EUR DESC;
 
@@ -78,7 +77,7 @@ SELECT f.Festival_Name                       AS Festival,
 FROM   Ticket t
            JOIN Festival f ON f.Festival_ID = t.Festival_ID
 WHERE  t.Ticket_Purchase_Date
-           BETWEEN DATE '2024-01-01' AND DATE '2024-12-31'
+           BETWEEN DATE '2025-01-01' AND DATE '2025-12-31'
 GROUP BY f.Festival_Name, t.Ticket_Type
 ORDER BY Totale_Omzet_EUR DESC;
 
@@ -196,7 +195,7 @@ WHERE segment_name = 'TICKET';
 -- 3H. EXPLAIN PLAN – NÁ PARTITIONERING (met NOPARALLEL hint)
 -- ---------------------------------------------------------------
 -- Verwacht resultaat: PARTITION RANGE ITERATOR
---   => Oracle bevraagt ENKEL partitie ticket_p_2024
+--   => Oracle bevraagt ENKEL partitie ticket_p_2025
 --   => Geen volledige tabelscan meer
 -- NOPARALLEL-hint: forceert seriële uitvoering zodat het explain plan
 --                  duidelijk toont welke INDIVIDUELE partitie bevraagd wordt
@@ -213,12 +212,11 @@ SELECT /*+ NOPARALLEL(t) */
 FROM   Ticket t
            JOIN Festival f ON f.Festival_ID = t.Festival_ID
 WHERE  t.Ticket_Purchase_Date
-           BETWEEN DATE '2024-01-01' AND DATE '2024-12-31'
+           BETWEEN DATE '2025-01-01' AND DATE '2025-12-31'
 GROUP BY f.Festival_Name, t.Ticket_Type
 ORDER BY Totale_Omzet_EUR DESC;
 
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY(NULL, 'M7_S1_NA', 'ALL'));
-
 
 -- 3I. Grootte per partitie (bewijs dat alleen de nodige partities worden gebruikt)
 -- ---------------------------------------------------------------
@@ -228,9 +226,8 @@ SELECT partition_name,
        partition_position                              AS pos,
        num_rows,
        blocks,
-       ROUND(blocks * 8 / 1024, 2)                   AS approx_MB,
-       TO_CHAR(high_value)                            AS high_value
-FROM   user_tab_partitions
+       ROUND(blocks * 8 / 1024, 2)                   AS approx_MB
+FROM   all_tab_partitions
 WHERE  table_name = 'TICKET'
 ORDER BY partition_position;
 
@@ -249,21 +246,3 @@ SELECT segment_name,
 FROM   user_segments
 WHERE  segment_name = 'TICKET'
 ORDER BY partition_name;
-
-
--- =========================================================
--- BONUS: bevestig dat partitie-snoeien (pruning) werkt
---        via V$SQL_PLAN (dynamische analyse na uitvoering)
--- =========================================================
--- Voer eerst de query zelf uit (niet enkel EXPLAIN PLAN):
-SELECT /*+ NOPARALLEL(t) */
-    f.Festival_Name,
-    t.Ticket_Type,
-    COUNT(t.Ticket_ID)                    AS Aantal_Tickets,
-    SUM(t.Ticket_Price)                   AS Totale_Omzet_EUR
-FROM   Ticket t
-           JOIN Festival f ON f.Festival_ID = t.Festival_ID
-WHERE  t.Ticket_Purchase_Date
-           BETWEEN DATE '2024-01-01' AND DATE '2024-12-31'
-GROUP BY f.Festival_Name, t.Ticket_Type
-ORDER BY Totale_Omzet_EUR DESC;
