@@ -1472,6 +1472,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_years    t_id_tab;
     BEGIN
         SELECT COUNT(*) INTO v_offset FROM COMPANY;
+        v_offset := v_offset + 1000;
         FOR i IN 1 .. p_amount LOOP
             v_names(i) := random_company_name_seq(v_offset + i);
             v_years(i) := PKG_SAMEN_festivals.give_random_number(1800, 2025);
@@ -1506,6 +1507,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_urls     t_str500;
     BEGIN
         SELECT COUNT(*) INTO v_offset FROM TICKETPLATFORM;
+        v_offset := v_offset + 750;
         FOR i IN 1 .. p_amount LOOP
             platform_name_and_url(v_offset + i, v_names(i), v_urls(i));
         END LOOP;
@@ -1823,6 +1825,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_total_rows PLS_INTEGER := 0;
     BEGIN
         SELECT COUNT(*) INTO v_offset FROM COMPANY;
+        v_offset := v_offset + 1000;
         WHILE v_done < p_amount LOOP
             v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
             v_t0 := SYSTIMESTAMP;
@@ -1866,6 +1869,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_total_rows PLS_INTEGER := 0;
     BEGIN
         SELECT COUNT(*) INTO v_offset FROM TICKETPLATFORM;
+        v_offset := v_offset + 750;
         WHILE v_done < p_amount LOOP
             v_chunk := LEAST(p_amount - v_done, PKG_SAMEN_festivals.C_BULK_CHUNK);
             v_t0 := SYSTIMESTAMP;
@@ -1975,6 +1979,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         v_vis_ids      t_id_tab;
         v_plat_ids     t_id_tab;
         v_plat_urls    t_str500;
+        v_plat_hosts   t_str500;
         v_fest_budgets t_id_tab;
         v_vis_shuffle  t_id_tab;
         v_start        TIMESTAMP  := SYSTIMESTAMP;
@@ -2022,6 +2027,10 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         SELECT TICKETPLATFORM_ID, TICKETPLATFORM_URL
             BULK COLLECT INTO v_plat_ids, v_plat_urls FROM TICKETPLATFORM;
 
+        FOR i IN 1..v_plat_urls.COUNT LOOP
+            v_plat_hosts(i) := url_host(v_plat_urls(i));
+        END LOOP;
+
         IF v_fest_ids.COUNT = 0 THEN
             DBMS_OUTPUT.PUT_LINE('generateRandomTickets_bulk: no festivals');  RETURN;
         END IF;
@@ -2060,6 +2069,9 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         END LOOP;
         v_fest_budgets(v_fest_count) := LEAST(v_remaining, v_vis_count);
 
+        EXECUTE IMMEDIATE 'ALTER TABLE TICKET DISABLE CONSTRAINT Ticket_Barcode_UQ';
+        EXECUTE IMMEDIATE 'ALTER TABLE TICKET DISABLE CONSTRAINT Ticket_VisitFestPlatform_UQ';
+
         v_t0 := SYSTIMESTAMP;
 
         -- Sparse partial Fisher-Yates: unique visitors per festival, no hash table
@@ -2091,7 +2103,7 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
                 v_descs(v_chunk_pos)       := v_type || ' ticket for ' || v_fest_names(f);
                 v_barcodes(v_chunk_pos)    := v_barcode;
                 v_statuses(v_chunk_pos)    := PKG_SAMEN_festivals.give_random_ticket_status;
-                v_qr_codes(v_chunk_pos)    := 'https://qr.' || url_host(v_plat_urls(v_plat_idx)) || '/' || v_barcode;
+                v_qr_codes(v_chunk_pos)    := 'https://qr.' || v_plat_hosts(v_plat_idx) || '/' || v_barcode;
                 v_ins_plats(v_chunk_pos)   := v_plat_ids(v_plat_idx);
                 v_ins_vis(v_chunk_pos)     := v_vis_ids(v_vis_idx);
                 v_ins_fests(v_chunk_pos)   := v_fest_ids(f);
@@ -2146,6 +2158,8 @@ CREATE OR REPLACE PACKAGE BODY PKG_S1_festivals AS
         END IF;
 
         COMMIT;
+        EXECUTE IMMEDIATE 'ALTER TABLE TICKET ENABLE NOVALIDATE CONSTRAINT Ticket_Barcode_UQ';
+        EXECUTE IMMEDIATE 'ALTER TABLE TICKET ENABLE NOVALIDATE CONSTRAINT Ticket_VisitFestPlatform_UQ';
         PKG_SAMEN_festivals.log('generateRandomTickets_bulk', 'p_amount=' || p_amount,
                                 v_total_rows, v_gen_acc, v_ins_acc,
                                 PKG_SAMEN_festivals.timestamp_diff(SYSTIMESTAMP, v_start));

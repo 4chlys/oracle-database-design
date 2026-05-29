@@ -232,6 +232,9 @@ END;
 -- MILESTONE 6 – S1 proof, LARGE run (mode=BOTH, ~490 000 S1 rows)
 --   Same structure as SMALL run – larger scale to amplify timing gap.
 -- =============================================================
+SELECT COUNT(*) FROM COMPANY;        -- expect 0
+SELECT COUNT(*) FROM TICKETPLATFORM;
+
 BEGIN
     PKG_S1_festivals.bewijs_milestone_6_S1(
             p_visitors         => 3000,
@@ -240,7 +243,7 @@ BEGIN
             p_tickets          => 400000,
             p_permits_per_fest => 5,
             p_festivals        => 300,
-            p_mode             => 'BOTH');
+            p_mode             => 'BULK');
 END;
 /
 
